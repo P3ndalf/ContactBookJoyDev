@@ -11,7 +11,7 @@ class StartFragment : Fragment(R.layout.fragment_start) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle? ){
         super.onViewCreated(view, savedInstanceState)
         view.postDelayed({
-            findNavController().navigate(R.id.action_startFragment_to_loginFragment)
+            findNavController().navigate(R.id.action_startFragment_to_registerFragment)
         }, 3000)
     }
 }
