@@ -65,7 +65,7 @@
                 android:background="@android:color/white"
                 android:hint="@string/register_name_hint"
 
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true" />
 
@@ -84,7 +84,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@android:color/white"
                 android:hint="@string/register_lastname_hint"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:maxLines="1"
                 android:paddingStart="5dp"
                 android:singleLine="true" />
