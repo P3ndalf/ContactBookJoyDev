@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.contactbook.screens.Login.LoginFragment"
-        android:label="LoginFragment">
+        android:label="Login">
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -19,11 +19,11 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.contactbook.screens.MainFragment"
-        android:label="MainFragment" />
+        android:label="Main" />
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.contactbook.screens.Registration.RegisterFragment"
-        android:label="RegisterFragment" >
+        android:label="Register" >
         <action
             android:id="@+id/action_registerFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
