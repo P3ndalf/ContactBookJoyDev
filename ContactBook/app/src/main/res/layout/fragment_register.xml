@@ -13,7 +13,7 @@
         android:layout_height="50dp"
 
         android:layout_marginStart="40dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="30dp"
 
         android:layout_weight="1"
         android:backgroundTint="@android:color/white"
@@ -35,7 +35,7 @@
         android:layout_height="50dp"
 
         android:layout_marginStart="31dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="30dp"
 
         android:layout_marginEnd="40dp"
 
@@ -89,14 +89,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_fragment"
-        >
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:background="@android:color/white"
             android:hint="@string/register_name_hint"
             android:maxLines="1"
             android:paddingStart="10dp"
@@ -116,7 +114,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameError">
+        app:layout_constraintTop_toBottomOf="@+id/nameError"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/lastname"
@@ -124,7 +123,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
-            android:background="@android:color/white"
             android:hint="@string/register_lastname_hint"
             android:inputType="text"
             android:maxLines="1"
@@ -145,7 +143,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lastnameError">
+        app:layout_constraintTop_toBottomOf="@+id/lastnameError"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
@@ -153,7 +152,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
-            android:background="@android:color/white"
             android:hint="@string/register_email_hint"
             android:inputType="textEmailAddress"
             android:maxLines="1"
@@ -176,7 +174,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailError"
-        app:passwordToggleEnabled="true">
+        app:passwordToggleEnabled="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
@@ -185,7 +184,6 @@
             android:layout_height="match_parent"
 
             android:layout_marginTop="10dp"
-            android:background="@android:color/white"
             android:hint="@string/register_password_hint"
             android:inputType="textPassword"
             android:maxLines="1"
@@ -207,7 +205,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordError"
-        app:passwordToggleEnabled="true">
+        app:passwordToggleEnabled="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/confirmPassword"
@@ -216,7 +215,6 @@
             android:layout_height="match_parent"
 
             android:layout_marginTop="10dp"
-            android:background="@android:color/white"
             android:hint="@string/register_confirm_password_hint"
             android:maxLines="1"
             android:paddingStart="10dp"

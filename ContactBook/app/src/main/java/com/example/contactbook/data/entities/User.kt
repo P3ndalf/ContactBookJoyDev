@@ -16,6 +16,7 @@ data class User (
 
     val email : String,
 
+    @NonNull
     val password : String,
 
 

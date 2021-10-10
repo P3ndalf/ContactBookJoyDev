@@ -1,5 +1,6 @@
 package com.example.contactbook.screens.Registration
 
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -14,7 +15,6 @@ import com.example.contactbook.R
 import com.example.contactbook.data.entities.User
 import com.example.contactbook.data.viewModels.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 class RegisterFragment : Fragment() {
@@ -46,11 +46,15 @@ class RegisterFragment : Fragment() {
         val email = view?.findViewById<TextInputEditText>(R.id.email)?.text.toString()
         val password = view?.findViewById<TextInputEditText>(R.id.password)?.text.toString()
         val confirmedPassword = view?.findViewById<TextInputEditText>(R.id.confirmPassword)?.text.toString()
+
+
         if(inputValidation(name, lastName, email, password, confirmedPassword)){
             val user = User(userId, name, lastName, email, password)
 
+            saveCurrentUserData(user)
+
             mUserViewModel.addUser(user)
-            Toast.makeText(requireContext(), "New User were registered.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this.requireContext(), "New User were registered.", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
         }
         else{
@@ -100,5 +104,18 @@ class RegisterFragment : Fragment() {
             return false
         }
         return true
+    }
+
+    private fun saveCurrentUserData(user : User){
+        var sharedPreferences = this.requireActivity().getSharedPreferences("AuthorizedUser", Context.MODE_PRIVATE)
+
+        var editor = sharedPreferences.edit()
+
+        editor.apply{
+            putString("InsertedName", user.firstName)
+            putString("InsertedLastName", user.lastName)
+        }.apply()
+
+        Toast.makeText(requireContext(), "GOVNO", Toast.LENGTH_LONG).show()
     }
 }
