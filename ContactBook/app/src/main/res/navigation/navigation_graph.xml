@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/registerFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.contactbook.screens.Login.LoginFragment"
+        android:name="com.example.contactbook.screens.Authentication.Login.LoginFragment"
         android:label="Login">
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
@@ -22,7 +22,7 @@
         android:label="Main" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.contactbook.screens.Registration.RegisterFragment"
+        android:name="com.example.contactbook.screens.Authentication.Registration.RegisterFragment"
         android:label="Register" >
         <action
             android:id="@+id/action_registerFragment_to_mainFragment"

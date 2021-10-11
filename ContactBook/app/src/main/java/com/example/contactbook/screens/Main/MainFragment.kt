@@ -1,7 +1,9 @@
 package com.example.contactbook.screens.Main
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.FileObserver
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,33 +11,48 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainer
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.contactbook.R
 import com.example.contactbook.data.entities.User
+import com.example.contactbook.data.services.SharedPreferencesService
+import com.example.contactbook.data.viewModels.UserViewModel
+import com.example.contactbook.databinding.FragmentListBinding
+import com.example.contactbook.databinding.FragmentMainBinding
+import com.example.contactbook.screens.UserObserver
 
 class MainFragment : Fragment() {
 
-    private lateinit var currentUser : User
-    private lateinit var currentUserName : TextView
+    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var sharedPreferencesService: SharedPreferencesService
+    private lateinit var userObserver: UserObserver
+
+    private var _binding:FragmentMainBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_main,container,false)
-        currentUserName = view?.findViewById<TextView>(R.id.name)!!
-
-        loadCurrentUser()
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        val view = binding.root
+        mUserViewModel =  ViewModelProvider(this).get(com.example.contactbook.data.viewModels.UserViewModel::class.java)
+        sharedPreferencesService = SharedPreferencesService(this,"AuthorizedUser")
+        val currentUserId = sharedPreferencesService.loadCurrentUserId()
 
         return view
     }
 
-    private fun loadCurrentUser(){
-        var sharedPreferences = this.requireActivity().getSharedPreferences("AuthorizedUser", Context.MODE_PRIVATE)
-        var savedString = sharedPreferences.getString("InsertedName", null)
+    private fun fillUserFields(currentId : String) {
+        mUserViewModel.getUserById(currentId).observe(viewLifecycleOwner, Observer {
+            currentUser -> userObserver.setData(currentUser)
+        })
 
-        currentUserName.text = savedString
-        Toast.makeText(requireContext(), savedString, Toast.LENGTH_LONG).show()
+        binding.name.text = userObserver.user?.id
+
     }
+
+
 
 }

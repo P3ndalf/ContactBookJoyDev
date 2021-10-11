@@ -18,4 +18,7 @@ interface IUserDao {
 
     @Query("SELECT * FROM userTable WHERE email = :email AND password = :password ")
     fun authenticateUser(email : String, password : String) : LiveData<User>
+
+    @Query("SELECT * FROM userTable WHERE id = :id")
+    fun getUserById(id : String) : LiveData<User>
 }

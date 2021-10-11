@@ -13,9 +13,11 @@ import com.example.contactbook.databinding.FragmentListBinding
 
 class ListFragment: Fragment() {
     private lateinit var mUserViewModel : UserViewModel
-    private var _binding: FragmentListBinding? = null
 
+    private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
+
+
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,7 +31,7 @@ class ListFragment: Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mUserViewModel.getUsers.observe(viewLifecycleOwner, Observer{ users ->
+        mUserViewModel.users.observe(viewLifecycleOwner, Observer{ users ->
             adapter.setData(users)
         })
         return view

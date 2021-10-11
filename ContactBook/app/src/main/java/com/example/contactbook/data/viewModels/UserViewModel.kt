@@ -9,17 +9,17 @@ import com.example.contactbook.data.entities.User
 import com.example.contactbook.data.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
 
-    val getUsers : LiveData<List<User>>
+    val users : LiveData<List<User>>
 
     private val repository : UserRepository
 
-    init{
-        val userDao = UserDatabase.getDatabase(application).userDao()
-        repository = UserRepository(userDao)
-        getUsers = repository.getUsers
+    init {
+        repository = UserRepository(application)
+        users = repository.users
     }
 
     fun addUser(user : User){
@@ -30,6 +30,9 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     fun authenticateUser(email : String, password : String) : LiveData<User>{
         return repository.authenticateUser(email, password)
+    }
 
+    fun getUserById(id : String) : LiveData<User>{
+        return repository.getUserById(id)
     }
 }
