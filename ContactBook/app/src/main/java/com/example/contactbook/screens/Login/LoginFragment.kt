@@ -9,29 +9,29 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.contactbook.R
 import com.example.contactbook.data.entities.User
 import com.example.contactbook.data.viewModels.UserViewModel
 import com.example.contactbook.databinding.ActivityMainBinding
+import com.example.contactbook.screens.UserObserver
 import com.google.android.material.textfield.TextInputEditText
 
 class LoginFragment : Fragment() {
     private lateinit var mUserViewModel : UserViewModel
-
+    lateinit var userObserver: UserObserver
     override fun  onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ) : View? {
 
         val view = inflater.inflate(R.layout.fragment_login,container,false)
-
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-
         view.findViewById<Button>(R.id.register_fragment).setOnClickListener{
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
-
+        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        userObserver = UserObserver()
         view.findViewById<Button>(R.id.login).setOnClickListener{
             authenticateUser()
         }
@@ -42,12 +42,14 @@ class LoginFragment : Fragment() {
         val email = view?.findViewById<TextInputEditText>(R.id.email)?.text.toString()
         val password = view?.findViewById<TextInputEditText>(R.id.password)?.text.toString()
         if (inputValidation(email, password)){
-            var user = mUserViewModel.authenticateUser(email, password)
-            if(user == null ){
+            mUserViewModel.authenticateUser(email, password).observe(viewLifecycleOwner, Observer{
+                    currentUser -> userObserver.setData(currentUser)
+            })
+            if(userObserver.user == null ){
                 Toast.makeText(requireContext(), "Wrong email or password", Toast.LENGTH_LONG).show()
             }
             else{
-                saveCurrentUserData(user)
+                saveCurrentUserData(userObserver.user)
                 Toast.makeText(requireContext(), "Successful", Toast.LENGTH_LONG).show()
                 findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
             }
@@ -82,6 +84,6 @@ class LoginFragment : Fragment() {
             putString("InsertedLastName", user?.lastName)
         }.apply()
 
-        Toast.makeText(requireContext(), "GOVNO", Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), "Put", Toast.LENGTH_LONG).show()
     }
 }

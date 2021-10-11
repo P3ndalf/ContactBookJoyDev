@@ -1,4 +1,4 @@
-package com.example.contactbook.screens
+package com.example.contactbook.screens.Main
 
 import android.content.Context
 import android.os.Bundle
@@ -11,9 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainer
 import androidx.navigation.fragment.findNavController
 import com.example.contactbook.R
+import com.example.contactbook.data.entities.User
 
 class MainFragment : Fragment() {
 
+    private lateinit var currentUser : User
     private lateinit var currentUserName : TextView
 
     override fun onCreateView(

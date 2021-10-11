@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val getUsers : LiveData<List<User>>
+    val getUsers : LiveData<List<User>>
+
     private val repository : UserRepository
 
     init{
@@ -27,7 +28,8 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun authenticateUser(email : String, password : String) : User?{
+    fun authenticateUser(email : String, password : String) : LiveData<User>{
         return repository.authenticateUser(email, password)
+
     }
 }

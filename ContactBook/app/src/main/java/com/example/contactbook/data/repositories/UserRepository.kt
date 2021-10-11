@@ -10,9 +10,10 @@ class UserRepository(private val userDao : IUserDao) {
         userDao.addUser(user)
     }
 
-    fun authenticateUser(email: String, password : String) : User?{
-        return userDao.authenticateUser(email, password).value
+    fun authenticateUser(email : String, password : String) : LiveData<User>{
+        return userDao.authenticateUser(email, password)
     }
+
 
     val getUsers : LiveData<List<User>> = userDao.getUsers()
 }
