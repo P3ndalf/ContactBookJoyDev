@@ -30,7 +30,7 @@ class RegisterFragment : Fragment() {
 
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
-        view.findViewById<Button>(R.id.login_fragment).setOnClickListener{
+        view.findViewById<Button>(R.id.login_fragment_button).setOnClickListener{
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 

@@ -8,7 +8,7 @@
 
 
     <Button
-        android:id="@+id/login_fragment"
+        android:id="@+id/login_fragment_button"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="150dp"
         android:layout_height="50dp"
@@ -22,7 +22,7 @@
         android:textColor="@android:color/white"
         android:textSize="15sp"
 
-        app:layout_constraintEnd_toStartOf="@+id/register_fragment"
+        app:layout_constraintEnd_toStartOf="@+id/register_fragment_button"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +30,7 @@
         app:strokeWidth="2dp" />
 
     <Button
-        android:id="@+id/register_fragment"
+        android:id="@+id/register_fragment_button"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="150dp"
         android:layout_height="50dp"
@@ -86,7 +86,7 @@
         app:layout_constraintBottom_toTopOf="@+id/passwordError"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_fragment"
+        app:layout_constraintTop_toBottomOf="@+id/login_fragment_button"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText

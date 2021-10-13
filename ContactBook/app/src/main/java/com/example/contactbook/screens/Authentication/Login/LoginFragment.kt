@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.example.contactbook.R
 import com.example.contactbook.data.entities.User
@@ -18,11 +20,13 @@ import com.example.contactbook.data.services.SharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
 import com.example.contactbook.screens.UserObserver
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LoginFragment() : Fragment() {
     private lateinit var mUserViewModel : UserViewModel
     private lateinit var sharedPreferencesService : SharedPreferencesService
-    private lateinit var  authenticationInputValidationService: AuthenticationInputValidationService
+    private lateinit var authenticationInputValidationService: AuthenticationInputValidationService
     private lateinit var userObserver : UserObserver
 
     override fun  onCreateView(
@@ -32,7 +36,8 @@ class LoginFragment() : Fragment() {
         val view = inflater.inflate(R.layout.fragment_login,container,false)
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         userObserver = UserObserver()
-        view.findViewById<Button>(R.id.register_fragment).setOnClickListener{
+
+        view.findViewById<Button>(R.id.register_fragment_button).setOnClickListener{
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
         view.findViewById<Button>(R.id.login).setOnClickListener{
@@ -48,10 +53,12 @@ class LoginFragment() : Fragment() {
         authenticationInputValidationService = AuthenticationInputValidationService(this)
 
         if (authenticationInputValidationService.inputValidation(email, password)){
-            mUserViewModel.authenticateUser(email, password).observe(viewLifecycleOwner, Observer{
-                    currentUser -> userObserver.setData(currentUser)
-            })
-            if(userObserver == null ){
+
+            mUserViewModel.authenticateUser(email, password).observe(viewLifecycleOwner, Observer { currentUser ->
+                userObserver.setData(currentUser)
+            })// setData срабатывает после того, как данные отображаются на экране, на второй заход все срабатывает
+
+            if(userObserver.user == null ){
                 Toast.makeText(requireContext(), "Wrong email or password", Toast.LENGTH_LONG).show()
             }
             else{
