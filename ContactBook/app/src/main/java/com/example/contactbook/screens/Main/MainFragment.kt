@@ -24,6 +24,7 @@ import com.example.contactbook.databinding.FragmentListBinding
 import com.example.contactbook.databinding.FragmentMainBinding
 import com.example.contactbook.screens.UserObserver
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.lang.Thread.sleep
 
@@ -45,21 +46,21 @@ class MainFragment : Fragment() {
 
 
         mUserViewModel =  ViewModelProvider(this).get(com.example.contactbook.data.viewModels.UserViewModel::class.java)
-        sharedPreferencesService = SharedPreferencesService(this,"AuthorizedUser")
-        val currentUserId = sharedPreferencesService.loadCurrentUserId()
+        sharedPreferencesService = SharedPreferencesService(this.requireActivity(),"AuthorizedUser")
+        var currentUserId = ""
+        currentUserId = sharedPreferencesService.loadCurrentUserId()
+
+
 
         return view
     }
 
     private fun fillUserFields(currentId : String) {
-
-       mUserViewModel.getUserById(currentId).observe(viewLifecycleOwner, Observer {
-               currentUser -> userObserver.setData(currentUser)
-       })
-
-
+        mUserViewModel.getUserById(currentId).observe(viewLifecycleOwner, Observer {
+                currentUser ->
+                    lifecycleScope.launch{
+                        userObserver.setData(currentUser)
+                    }
+        })
     }
-
-
-
 }

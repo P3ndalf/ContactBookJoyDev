@@ -49,12 +49,14 @@ class RegisterFragment : Fragment() {
         val password = view?.findViewById<TextInputEditText>(R.id.password)?.text.toString()
         val confirmedPassword = view?.findViewById<TextInputEditText>(R.id.confirmPassword)?.text.toString()
 
-        val authenticationInputValidationService : AuthenticationInputValidationService = AuthenticationInputValidationService(this)
+        val authenticationInputValidationService : AuthenticationInputValidationService = AuthenticationInputValidationService(
+                                                                                            this.requireContext()
+                                                                                          )
 
         if(authenticationInputValidationService.inputValidation(name, lastName, email, password, confirmedPassword)){
             val user = User(userId, name, lastName, email, password)
 
-            sharedPreferencesService = SharedPreferencesService(this, "AuthorizedUser")
+            sharedPreferencesService = SharedPreferencesService(this.requireActivity(), "AuthorizedUser")
             sharedPreferencesService.saveCurrentUserData(user)
 
             mUserViewModel.addUser(user)
