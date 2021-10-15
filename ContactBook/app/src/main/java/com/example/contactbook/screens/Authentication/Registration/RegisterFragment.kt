@@ -1,7 +1,6 @@
 package com.example.contactbook.screens.Authentication.Registration
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.contactbook.R
 import com.example.contactbook.data.entities.User
-import com.example.contactbook.data.services.AuthenticationInputValidationService
-import com.example.contactbook.data.services.SharedPreferencesService
+import com.example.contactbook.services.AuthenticationInputValidationService
+import com.example.contactbook.services.SharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*

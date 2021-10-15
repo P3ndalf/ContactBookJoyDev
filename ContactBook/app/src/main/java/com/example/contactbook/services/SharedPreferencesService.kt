@@ -1,9 +1,8 @@
-package com.example.contactbook.data.services
+package com.example.contactbook.services
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.example.contactbook.data.entities.User
 
 class SharedPreferencesService(currentContext : Context, sharedPreferencesName : String) {

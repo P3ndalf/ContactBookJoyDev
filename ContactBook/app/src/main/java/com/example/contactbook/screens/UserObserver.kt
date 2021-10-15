@@ -13,10 +13,9 @@ class UserObserver{
 
     public var user : User? = null
 
-    public suspend fun setData(_user : User) {
+    public suspend fun setData(_user : User?) {
         withContext(Dispatchers.IO){
             user = _user
         }
     }
-
 }
