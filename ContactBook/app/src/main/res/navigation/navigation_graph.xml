@@ -19,7 +19,11 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.contactbook.screens.Main.MainFragment"
-        android:label="Main" />
+        android:label="Main" >
+        <action
+            android:id="@+id/action_mainFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.contactbook.screens.Authentication.Registration.RegisterFragment"

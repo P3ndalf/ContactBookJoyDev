@@ -28,7 +28,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun authenticateUser(email : String, password : String) : LiveData<User>{
+    fun authenticateUser(email : String, password : String) : LiveData<User> {
         return repository.authenticateUser(email, password)
     }
 

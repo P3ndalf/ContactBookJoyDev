@@ -24,6 +24,7 @@ import com.example.contactbook.databinding.FragmentListBinding
 import com.example.contactbook.databinding.FragmentMainBinding
 import com.example.contactbook.screens.UserObserver
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.lang.Thread.sleep
@@ -34,7 +35,7 @@ class MainFragment : Fragment() {
     private lateinit var sharedPreferencesService: SharedPreferencesService
     private lateinit var userObserver: UserObserver
 
-    private var _binding:FragmentMainBinding? = null
+    private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -44,13 +45,16 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         val view = binding.root
 
-
+        userObserver = UserObserver()
         mUserViewModel =  ViewModelProvider(this).get(com.example.contactbook.data.viewModels.UserViewModel::class.java)
         sharedPreferencesService = SharedPreferencesService(this.requireActivity(),"AuthorizedUser")
-        var currentUserId = ""
-        currentUserId = sharedPreferencesService.loadCurrentUserId()
+        var currentUserId = sharedPreferencesService.loadCurrentUserId()
 
+        fillUserFields(currentUserId)
 
+        binding.logOutBtn.setOnClickListener{
+            logOut()
+        }
 
         return view
     }
@@ -58,9 +62,19 @@ class MainFragment : Fragment() {
     private fun fillUserFields(currentId : String) {
         mUserViewModel.getUserById(currentId).observe(viewLifecycleOwner, Observer {
                 currentUser ->
-                    lifecycleScope.launch{
+                    lifecycleScope.launch(Main){
                         userObserver.setData(currentUser)
+                        binding.userNameTV.text = userObserver.user?.firstName
+                        binding.userLastNameTV.text = userObserver.user?.lastName
                     }
         })
     }
+
+    private fun logOut(){
+        sharedPreferencesService.deleteCurrentUserData()
+        findNavController().navigate(R.id.action_mainFragment_to_loginFragment)
+
+    }
+
+
 }

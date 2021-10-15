@@ -17,7 +17,7 @@ class UserRepository(private val application: Application) {
         userDao.addUser(user)
     }
 
-    fun authenticateUser(email : String, password : String) : LiveData<User>{
+     fun  authenticateUser(email : String, password : String) : LiveData<User>{
         return userDao.authenticateUser(email, password)
     }
 
