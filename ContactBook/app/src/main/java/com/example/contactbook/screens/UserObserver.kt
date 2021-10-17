@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Thread.sleep
 
-class UserObserver{
+class UserObserver {
 
     public var user : User? = null
 
