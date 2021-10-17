@@ -50,6 +50,7 @@ class UserProfileFragment : Fragment() {
     private fun fillUserFields(user : UserModel) {
         binding.userNameTV.text = user.name
         binding.userLastNameTV.text = user.lastName
+        binding.emailTV.text = user.email
     }
 
     private fun logOut(){
