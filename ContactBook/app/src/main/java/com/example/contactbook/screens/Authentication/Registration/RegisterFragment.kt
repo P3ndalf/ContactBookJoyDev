@@ -16,12 +16,14 @@ import com.example.contactbook.data.entities.User
 import com.example.contactbook.services.AuthenticationInputValidationService
 import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
+import com.example.contactbook.services.HashService
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 
 class RegisterFragment : Fragment() {
     private lateinit var mUserViewModel : UserViewModel
     private lateinit var authorizedUserSharedPreferencesService : AuthorizedUserSharedPreferencesService
+    private lateinit var hashService : HashService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -30,6 +32,7 @@ class RegisterFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_register,container,false)
 
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        hashService = HashService()
 
         view.findViewById<Button>(R.id.login_fragment_button).setOnClickListener{
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
@@ -55,7 +58,7 @@ class RegisterFragment : Fragment() {
                                                                                           )
 
         if(authenticationInputValidationService.inputValidation(name, lastName, email, password, confirmedPassword)){
-            val user = User(userId, name, lastName, email, password)
+            val user = User(userId, name, lastName, email, hashService.getHash(password,"SHA-256"))
 
             authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity(), "AuthorizedUser")
             authorizedUserSharedPreferencesService.saveCurrentUserData(user)

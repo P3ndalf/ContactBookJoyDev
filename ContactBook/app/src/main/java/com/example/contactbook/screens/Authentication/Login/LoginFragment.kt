@@ -19,6 +19,7 @@ import com.example.contactbook.services.AuthenticationInputValidationService
 import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
 import com.example.contactbook.screens.UserObserver
+import com.example.contactbook.services.HashService
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
@@ -28,6 +29,7 @@ class LoginFragment() : Fragment() {
     private lateinit var mUserViewModel : UserViewModel
     private lateinit var authorizedUserSharedPreferencesService : AuthorizedUserSharedPreferencesService
     private lateinit var authenticationInputValidationService: AuthenticationInputValidationService
+    private lateinit var hashService : HashService
     private var userObserver : UserObserver = UserObserver()
 
     override fun onAttach(activity: Activity) {
@@ -40,6 +42,7 @@ class LoginFragment() : Fragment() {
     ) : View? {
         val view = inflater.inflate(R.layout.fragment_login,container,false)
         authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity(), "AuthorizedUser")
+        hashService = HashService()
 
         if (authorizedUserSharedPreferencesService.isAuthorized()) {
             startActivity(Intent(requireActivity(), MainActivity::class.java))
@@ -53,7 +56,7 @@ class LoginFragment() : Fragment() {
                 val password = view?.findViewById<TextInputEditText>(R.id.password)?.text.toString()
                 authenticationInputValidationService = AuthenticationInputValidationService(this.requireContext())
                 if (authenticationInputValidationService.inputValidation(email, password)){
-                        authenticateUser(email,password)
+                        authenticateUser(email,hashService.getHash(password, "SHA-256"))
                 }
             }
         }
@@ -65,12 +68,12 @@ class LoginFragment() : Fragment() {
             lifecycleScope.launch(Main){
                 userObserver.setData(currentUser)
                 if(userObserver.user == null ){
-                    Toast.makeText(requireActivity(), "Wrong email or password", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Wrong email or password", Toast.LENGTH_LONG).show()
                 }
                 else{
                     authorizedUserSharedPreferencesService.saveCurrentUserData(userObserver.user)
                     Toast.makeText(requireActivity(), "Successful", Toast.LENGTH_LONG).show()
-                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
                 }
             }
         })
