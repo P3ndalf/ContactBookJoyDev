@@ -15,7 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.contactbook.MainActivity
 import com.example.contactbook.R
-import com.example.contactbook.services.AuthenticationInputValidationService
+import com.example.contactbook.services.InputValidationService
 import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
 import com.example.contactbook.screens.UserObserver
@@ -28,7 +28,7 @@ class LoginFragment() : Fragment() {
 
     private lateinit var mUserViewModel : UserViewModel
     private lateinit var authorizedUserSharedPreferencesService : AuthorizedUserSharedPreferencesService
-    private lateinit var authenticationInputValidationService: AuthenticationInputValidationService
+    private lateinit var inputValidationService: InputValidationService
     private lateinit var hashService : HashService
     private var userObserver : UserObserver = UserObserver()
 
@@ -54,8 +54,8 @@ class LoginFragment() : Fragment() {
             view.findViewById<Button>(R.id.login).setOnClickListener{
                 val email = view?.findViewById<TextInputEditText>(R.id.email)?.text.toString()
                 val password = view?.findViewById<TextInputEditText>(R.id.password)?.text.toString()
-                authenticationInputValidationService = AuthenticationInputValidationService(this.requireContext())
-                if (authenticationInputValidationService.inputValidation(email, password)){
+                inputValidationService = InputValidationService(this.requireContext())
+                if (inputValidationService.loginInputValidation(email, password)){
                         authenticateUser(email,hashService.getHash(password, "SHA-256"))
                 }
             }

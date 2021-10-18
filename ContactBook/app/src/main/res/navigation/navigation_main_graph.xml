@@ -6,14 +6,26 @@
 
     <fragment
         android:id="@+id/contactsFragment"
-        android:name="com.example.contactbook.screens.Main.ContactsFragment"
-        android:label="ContactsFragment" />
+        android:name="com.example.contactbook.screens.Main.contacts.ContactsFragment"
+        android:label="Contacts" >
+        <action
+            android:id="@+id/action_contactsFragment_to_addContactFragment"
+            app:destination="@id/addContactFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.contactbook.screens.Main.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="Settings" />
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.example.contactbook.screens.Main.UserProfileFragment"
-        android:label="UserProfileFragment" />
+        android:label="User Profile" />
+    <fragment
+        android:id="@+id/addContactFragment"
+        android:name="com.example.contactbook.screens.Main.contacts.AddContactFragment"
+        android:label="AddContactFragment" >
+        <action
+            android:id="@+id/action_addContactFragment_to_contactsFragment"
+            app:destination="@id/contactsFragment" />
+    </fragment>
 </navigation>

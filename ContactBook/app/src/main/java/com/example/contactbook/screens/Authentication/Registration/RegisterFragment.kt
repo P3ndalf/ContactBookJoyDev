@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.contactbook.MainActivity
 import com.example.contactbook.R
 import com.example.contactbook.data.entities.User
-import com.example.contactbook.services.AuthenticationInputValidationService
+import com.example.contactbook.services.InputValidationService
 import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
 import com.example.contactbook.services.HashService
@@ -53,11 +53,11 @@ class RegisterFragment : Fragment() {
         val password = view?.findViewById<TextInputEditText>(R.id.password)?.text.toString()
         val confirmedPassword = view?.findViewById<TextInputEditText>(R.id.confirmPassword)?.text.toString()
 
-        val authenticationInputValidationService : AuthenticationInputValidationService = AuthenticationInputValidationService(
+        val inputValidationService : InputValidationService = InputValidationService(
                                                                                             this.requireContext()
                                                                                           )
 
-        if(authenticationInputValidationService.inputValidation(name, lastName, email, password, confirmedPassword)){
+        if(inputValidationService.registerInputValidation(name, lastName, email, password, confirmedPassword)){
             val user = User(userId, name, lastName, email, hashService.getHash(password,"SHA-256"))
 
             authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity(), "AuthorizedUser")
