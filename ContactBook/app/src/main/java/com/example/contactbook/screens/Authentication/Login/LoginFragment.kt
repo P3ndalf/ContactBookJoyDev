@@ -15,11 +15,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.contactbook.MainActivity
 import com.example.contactbook.R
+import com.example.contactbook.data.Model.UserModel
 import com.example.contactbook.services.InputValidationService
 import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
-import com.example.contactbook.screens.UserObserver
 import com.example.contactbook.services.HashService
+import com.example.contactbook.services.abstractions.IAuthorizedUserSharedPreferencesService
+import com.example.contactbook.services.abstractions.IHashService
+import com.example.contactbook.services.abstractions.IInputValidationService
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
@@ -27,10 +30,10 @@ import kotlinx.coroutines.Dispatchers.Main
 class LoginFragment() : Fragment() {
 
     private lateinit var mUserViewModel : UserViewModel
-    private lateinit var authorizedUserSharedPreferencesService : AuthorizedUserSharedPreferencesService
-    private lateinit var inputValidationService: InputValidationService
-    private lateinit var hashService : HashService
-    private var userObserver : UserObserver = UserObserver()
+    private lateinit var authorizedUserSharedPreferencesService : IAuthorizedUserSharedPreferencesService
+    private lateinit var inputValidationService: IInputValidationService
+    private lateinit var hashService : IHashService
+    private lateinit var userModel : UserModel
 
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
@@ -41,7 +44,7 @@ class LoginFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ) : View? {
         val view = inflater.inflate(R.layout.fragment_login,container,false)
-        authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity(), "AuthorizedUser")
+        authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity())
         hashService = HashService()
 
         if (authorizedUserSharedPreferencesService.isAuthorized()) {
@@ -66,13 +69,11 @@ class LoginFragment() : Fragment() {
     private fun authenticateUser(email : String, password : String) {
         mUserViewModel.authenticateUser(email, password).observe(viewLifecycleOwner, Observer { currentUser ->
             lifecycleScope.launch(Main){
-                userObserver.setData(currentUser)
-                if(userObserver.user == null ){
+                if(currentUser == null){
                     Toast.makeText(requireContext(), "Wrong email or password", Toast.LENGTH_LONG).show()
                 }
                 else{
-                    authorizedUserSharedPreferencesService.saveCurrentUserData(userObserver.user)
-                    Toast.makeText(requireActivity(), "Successful", Toast.LENGTH_LONG).show()
+                    authorizedUserSharedPreferencesService.saveCurrentUserData(UserModel(currentUser.id,currentUser.firstName,currentUser.lastName,currentUser.email))
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                 }
             }

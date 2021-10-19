@@ -1,16 +1,15 @@
 package com.example.contactbook.data.viewModels
 
 import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.contactbook.data.entities.Contact
 import com.example.contactbook.data.repositories.ContactRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class ContactViewModel(application : Application) : ViewModel() {
+class ContactViewModel(application : Application) : AndroidViewModel(application) {
 
     private val repository : ContactRepository
 

@@ -1,15 +1,16 @@
 package com.example.contactbook.services
 
+import com.example.contactbook.services.abstractions.IHashService
 import java.security.MessageDigest
 
-class HashService {
+class HashService : IHashService {
 
-    public fun getHash(inputString : String, algorithm : String): String{
+    override fun getHash(inputString : String, algorithm : String): String{
         val bytes = MessageDigest.getInstance(algorithm).digest(inputString.toByteArray())
         return toHex(bytes)
     }
 
-    private fun toHex(byteArray : ByteArray): String {
+    override fun toHex(byteArray : ByteArray): String {
         return byteArray.joinToString (""){ "%02x".format(it) }
     }
 
