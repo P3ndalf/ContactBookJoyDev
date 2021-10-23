@@ -15,4 +15,6 @@
     <string name="welcome">Welcome</string>
     <string name="instagram">instagram</string>
     <string name="phoneNumber">phone number</string>
+    <string name="birthday">birthday</string>
+    <string name="gender">gender</string>
 </resources>

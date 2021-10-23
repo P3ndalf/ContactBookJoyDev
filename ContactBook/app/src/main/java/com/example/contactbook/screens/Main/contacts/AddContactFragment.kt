@@ -49,11 +49,14 @@ class AddContactFragment : Fragment() {
     private fun addContact() {
         var id = UUID.randomUUID().toString()
         var nameET = binding.nameET.text.toString()
-        var instagramET = binding.instagramET.text.toString()
         var phoneET = binding.phoneNumberTV.text.toString()
+        var birthday = Calendar.getInstance().timeInMillis
+        var gender = true
+        var instagramET = binding.instagramET.text.toString()
         var ownerId = authorizedUserSharedPreferencesService.loadCurrentUser().id
+
         if(inputValidationService.addContactInputValidation(nameET, instagramET, phoneET)){
-            mContactViewModel.addContact(Contact(id, nameET,phoneET, true, instagramET, ownerId))
+            mContactViewModel.addContact(Contact(id, nameET,phoneET, birthday, gender, instagramET, ownerId))
             findNavController().navigate(R.id.action_addContactFragment_to_contactsFragment)
         }
         else{

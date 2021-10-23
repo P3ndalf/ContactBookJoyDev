@@ -5,13 +5,7 @@ import android.text.TextUtils
 import android.widget.Toast
 import com.example.contactbook.services.abstractions.IInputValidationService
 
-class InputValidationService(currentContext: Context) : IInputValidationService {
-
-    private lateinit var currentContext: Context
-
-    init {
-        this.currentContext = currentContext
-    }
+class InputValidationService(private var currentContext: Context) : IInputValidationService {
 
     override fun loginInputValidation(
         email: String, password: String,
@@ -42,6 +36,7 @@ class InputValidationService(currentContext: Context) : IInputValidationService 
             Toast.makeText(currentContext,"Fill phone field",Toast.LENGTH_LONG).show()
             return false
         }
+
         return true
     }
 
