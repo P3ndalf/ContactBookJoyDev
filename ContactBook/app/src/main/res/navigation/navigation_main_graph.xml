@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.contactbook.screens.Main.SettingsFragment"
+        android:name="com.example.contactbook.screens.Main.settings.SettingsFragment"
         android:label="Settings" />
     <fragment
         android:id="@+id/userProfileFragment"

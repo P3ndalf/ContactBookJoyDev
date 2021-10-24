@@ -30,7 +30,6 @@ class AddContactFragment : Fragment() {
     ): View? {
         _binding = FragmentAddContactBinding.inflate(inflater, container, false)
 
-
         binding.cancelBtn.setOnClickListener{
             findNavController().navigate(R.id.action_addContactFragment_to_contactsFragment)
         }
