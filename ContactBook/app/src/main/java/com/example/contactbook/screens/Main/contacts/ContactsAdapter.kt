@@ -30,7 +30,6 @@ class ContactsAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: ListAdapter.MyViewHolder, position: Int) {
         val currentItem = contactsList[position]
         holder.itemView.findViewById<TextView>(R.id.nameTV).text = currentItem.contactName
-        holder.itemView.findViewById<TextView>(R.id.instagramTV).text = currentItem.instagram
         holder.itemView.findViewById<TextView>(R.id.phoneNumberTV).text = currentItem.phoneNumber
     }
 

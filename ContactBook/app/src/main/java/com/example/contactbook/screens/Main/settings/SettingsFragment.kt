@@ -20,8 +20,6 @@ class SettingsFragment : Fragment() {
     ): View? {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
-        scrollView = binding.settingsScrollView
-
         return binding.root
     }
 }

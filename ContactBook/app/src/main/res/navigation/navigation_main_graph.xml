@@ -11,9 +11,6 @@
         <action
             android:id="@+id/action_contactsFragment_to_addContactFragment"
             app:destination="@id/addContactFragment" />
-        <action
-            android:id="@+id/action_contactsFragment_to_detailContactFragment"
-            app:destination="@id/detailContactFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -36,18 +33,15 @@
         android:name="com.example.contactbook.screens.Main.contacts.EditContactFragment"
         android:label="EditContactFragment" >
         <action
-            android:id="@+id/action_editContactFragment_to_detailContactFragment"
-            app:destination="@id/detailContactFragment" />
+            android:id="@+id/action_editContactFragment_to_contactDetailFragment"
+            app:destination="@id/contactDetailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/detailContactFragment"
-        android:name="com.example.contactbook.screens.Main.contacts.DetailContactFragment"
-        android:label="DetailContactFragment" >
+        android:id="@+id/contactDetailFragment"
+        android:name="com.example.contactbook.screens.Main.contacts.ContactDetailFragment"
+        android:label="ContactDetailFragment" >
         <action
-            android:id="@+id/action_detailContactFragment_to_contactsFragment"
-            app:destination="@id/contactsFragment" />
-        <action
-            android:id="@+id/action_detailContactFragment_to_editContactFragment"
+            android:id="@+id/action_contactDetailFragment_to_editContactFragment"
             app:destination="@id/editContactFragment" />
     </fragment>
 </navigation>

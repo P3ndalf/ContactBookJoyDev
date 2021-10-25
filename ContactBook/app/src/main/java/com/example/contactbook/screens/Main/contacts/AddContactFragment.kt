@@ -58,8 +58,5 @@ class AddContactFragment : Fragment() {
             mContactViewModel.addContact(Contact(id, nameET,phoneET, birthday, gender, instagramET, ownerId))
             findNavController().navigate(R.id.action_addContactFragment_to_contactsFragment)
         }
-        else{
-
-        }
     }
 }

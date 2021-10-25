@@ -22,7 +22,7 @@ class EditContactFragment : Fragment() {
 
 
         binding.cancelBtn.setOnClickListener{
-            findNavController().navigate(R.id.action_editContactFragment_to_detailContactFragment)
+            findNavController().navigate(R.id.action_editContactFragment_to_contactDetailFragment)
         }
         return binding.root
     }
