@@ -9,14 +9,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Thread.sleep
 
-class UserObserver{
+class UserObserver {
 
     public var user : User? = null
 
-    public suspend fun setData(_user : User) {
+    public suspend fun setData(_user : User?) {
         withContext(Dispatchers.IO){
             user = _user
         }
     }
-
 }
