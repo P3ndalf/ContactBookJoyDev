@@ -1,7 +1,7 @@
 package com.example.contactbook.screens.Authentication.Registration
 
-import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,18 +10,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.contactbook.MainActivity
 import com.example.contactbook.R
 import com.example.contactbook.data.entities.User
-import com.example.contactbook.services.AuthenticationInputValidationService
-import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
+import com.example.contactbook.data.services.AuthenticationInputValidationService
+import com.example.contactbook.data.services.SharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 
 class RegisterFragment : Fragment() {
     private lateinit var mUserViewModel : UserViewModel
-    private lateinit var authorizedUserSharedPreferencesService : AuthorizedUserSharedPreferencesService
+    private lateinit var sharedPreferencesService : SharedPreferencesService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -57,13 +56,13 @@ class RegisterFragment : Fragment() {
         if(authenticationInputValidationService.inputValidation(name, lastName, email, password, confirmedPassword)){
             val user = User(userId, name, lastName, email, password)
 
-            authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity(), "AuthorizedUser")
-            authorizedUserSharedPreferencesService.saveCurrentUserData(user)
+            sharedPreferencesService = SharedPreferencesService(this.requireActivity(), "AuthorizedUser")
+            sharedPreferencesService.saveCurrentUserData(user)
 
             mUserViewModel.addUser(user)
 
             Toast.makeText(this.requireContext(), "New User were registered.", Toast.LENGTH_LONG).show()
-            startActivity(Intent(requireActivity(), MainActivity::class.java))
+            findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
         }
         else{
             Toast.makeText(requireContext(), "Fill all input fields.", Toast.LENGTH_LONG).show()
