@@ -5,33 +5,25 @@ import android.content.SharedPreferences
 import android.widget.Toast
 import com.example.contactbook.data.Model.UserModel
 import com.example.contactbook.data.entities.User
+import com.example.contactbook.services.abstractions.IAuthorizedUserSharedPreferencesService
 
-class AuthorizedUserSharedPreferencesService(currentContext : Context, sharedPreferencesName : String) {
+class AuthorizedUserSharedPreferencesService(private val currentContext : Context) : IAuthorizedUserSharedPreferencesService{
 
-    private val currentContext : Context
-    private val sharedPreferencesName : String
-    var sharedPreferences : SharedPreferences
+    private val sharedPreferencesName : String = "AuthorizedUser"
+    var sharedPreferences : SharedPreferences = currentContext.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
-    init{
-        this.currentContext = currentContext
-        this.sharedPreferencesName = sharedPreferencesName
-        this.sharedPreferences = currentContext.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
-    }
-
-    fun saveCurrentUserData(user : User?){
+    override fun saveCurrentUserData(user : UserModel){
         var editor = sharedPreferences.edit()
 
         editor.apply{
-            putString("AuthorizedUser id", user?.id)
-            putString("AuthorizedUser name", user?.firstName)
-            putString("AuthorizedUser lastname", user?.lastName)
-            putString("AuthorizedUser email", user?.email)
+            putString("AuthorizedUser id", user.id)
+            putString("AuthorizedUser firstName", user.firstName)
+            putString("AuthorizedUser lastname", user.lastName)
+            putString("AuthorizedUser email", user.email)
         }.apply()
-
-        Toast.makeText(currentContext, "Put", Toast.LENGTH_LONG).show()
     }
 
-    fun deleteCurrentUserData(){
+    override fun deleteCurrentUserData(){
         var editor = sharedPreferences.edit()
 
         editor.apply{
@@ -39,16 +31,16 @@ class AuthorizedUserSharedPreferencesService(currentContext : Context, sharedPre
         }.apply()
     }
 
-    fun loadCurrentUser() : UserModel {
+    override fun loadCurrentUser() : UserModel {
         var userId = sharedPreferences.getString("AuthorizedUser id", "").toString()
-        var userName = sharedPreferences.getString("AuthorizedUser name", "").toString()
+        var userName = sharedPreferences.getString("AuthorizedUser firstName", "").toString()
         var userLastName = sharedPreferences.getString("AuthorizedUser lastname", "").toString()
         var userEmail = sharedPreferences.getString("AuthorizedUser email", "").toString()
 
         return UserModel(userId,userName,userLastName,userEmail)
     }
 
-    fun isAuthorized() : Boolean {
+    override fun isAuthorized() : Boolean {
         return sharedPreferences.getString("AuthorizedUser id", "") != ""
     }
 

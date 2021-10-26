@@ -3,16 +3,11 @@ package com.example.contactbook.services
 import android.content.Context
 import android.text.TextUtils
 import android.widget.Toast
+import com.example.contactbook.services.abstractions.IInputValidationService
 
-class AuthenticationInputValidationService(currentContext: Context) {
+class InputValidationService(private var currentContext: Context) : IInputValidationService {
 
-    private lateinit var currentContext: Context
-
-    init {
-        this.currentContext = currentContext
-    }
-
-    public fun inputValidation(
+    override fun loginInputValidation(
         email: String, password: String,
     ): Boolean {
         if(!email.contains("@", false)){
@@ -30,13 +25,28 @@ class AuthenticationInputValidationService(currentContext: Context) {
         return true
     }
 
-    public fun inputValidation(
+    override fun addContactInputValidation(
+        name : String, instagram : String, phoneNumber : String
+    ): Boolean {
+        if (TextUtils.isEmpty(name)){
+            Toast.makeText(currentContext,"Fill firstName field",Toast.LENGTH_LONG).show()
+            return false
+        }
+        if (TextUtils.isEmpty(phoneNumber)){
+            Toast.makeText(currentContext,"Fill phone field",Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        return true
+    }
+
+    override fun registerInputValidation(
         name: String, lastName: String,
         email: String, password: String,
         confirmedPassword : String
     ): Boolean {
         if (TextUtils.isEmpty(name)) {
-            Toast.makeText(currentContext, "Fill name field",Toast.LENGTH_LONG).show()
+            Toast.makeText(currentContext, "Fill firstName field",Toast.LENGTH_LONG).show()
             return false
         }
         if (TextUtils.isEmpty(lastName)) {

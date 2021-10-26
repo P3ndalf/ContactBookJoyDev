@@ -7,19 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.contactbook.AuthenticationActivity
-import com.example.contactbook.MainActivity
-import com.example.contactbook.R
 import com.example.contactbook.data.Model.UserModel
 import com.example.contactbook.data.viewModels.UserViewModel
 import com.example.contactbook.databinding.FragmentUserprofileBinding
 import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
+import com.example.contactbook.services.abstractions.IAuthorizedUserSharedPreferencesService
 
 class UserProfileFragment : Fragment() {
 
     private lateinit var mUserViewModel: UserViewModel
-    private lateinit var authorizedUserSharedPreferencesService: AuthorizedUserSharedPreferencesService
+    private lateinit var authorizedUserSharedPreferencesService: IAuthorizedUserSharedPreferencesService
     private lateinit var user : UserModel
 
     private var _binding: FragmentUserprofileBinding? = null
@@ -30,10 +28,9 @@ class UserProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentUserprofileBinding.inflate(inflater, container, false)
-        val view = binding.root
 
         mUserViewModel =  ViewModelProvider(this).get(UserViewModel::class.java)
-        authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity(),"AuthorizedUser")
+        authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity())
 
         user = authorizedUserSharedPreferencesService.loadCurrentUser()
 
@@ -44,11 +41,11 @@ class UserProfileFragment : Fragment() {
         }
 
 
-        return view
+        return binding.root
     }
 
     private fun fillUserFields(user : UserModel) {
-        binding.userNameTV.text = user.name
+        binding.userNameTV.text = user.firstName
         binding.userLastNameTV.text = user.lastName
         binding.emailTV.text = user.email
     }
