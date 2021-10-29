@@ -4,12 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.contactbook.data.UserDatabase
 import com.example.contactbook.data.entities.User
 import com.example.contactbook.data.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
 

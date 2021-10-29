@@ -14,10 +14,9 @@ data class User (
 
     val lastName : String,
 
+    @NonNull
     val email : String,
 
-    @NonNull
-    val password : String,
-
-
+	@NonNull
+    val passwordHash : String,
 )

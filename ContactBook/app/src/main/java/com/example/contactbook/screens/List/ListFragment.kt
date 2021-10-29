@@ -23,7 +23,6 @@ class ListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View?{
         _binding = FragmentListBinding.inflate(inflater, container, false)
-        val view = binding.root
 
         val adapter = ListAdapter()
         val recyclerView = binding.recycleview
@@ -34,7 +33,7 @@ class ListFragment: Fragment() {
         mUserViewModel.users.observe(viewLifecycleOwner, Observer{ users ->
             adapter.setData(users)
         })
-        return view
+        return binding.root
     }
 
 }
