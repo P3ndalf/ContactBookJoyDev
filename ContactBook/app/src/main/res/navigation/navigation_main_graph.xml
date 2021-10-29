@@ -11,7 +11,7 @@
         <action
             android:id="@+id/action_contactsFragment_to_addContactFragment"
             app:destination="@id/addContactFragment" />
-    </fragment>
+    </fragment> 
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.contactbook.screens.Main.settings.SettingsFragment"

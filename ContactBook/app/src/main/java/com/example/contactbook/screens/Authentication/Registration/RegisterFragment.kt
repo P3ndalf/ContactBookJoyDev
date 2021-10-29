@@ -70,9 +70,6 @@ class RegisterFragment : Fragment() {
 
             startActivity(Intent(requireActivity(), MainActivity::class.java))
         }
-        else{
-            Toast.makeText(requireContext(), "Fill all input fields.", Toast.LENGTH_LONG).show()
-        }
     }
 
 

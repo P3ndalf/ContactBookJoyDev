@@ -10,9 +10,4 @@ class UserModel(var id : String, var firstName : String, var lastName : String, 
             lastName = _user.lastName
             email = _user.email
      }
-
-    fun isEmpty() : Boolean {
-        if(id == null) return false
-        return true
-    }
 }

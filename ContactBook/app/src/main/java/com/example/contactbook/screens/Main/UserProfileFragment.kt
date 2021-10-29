@@ -39,8 +39,6 @@ class UserProfileFragment : Fragment() {
         binding.logOutBtn.setOnClickListener{
             logOut()
         }
-
-
         return binding.root
     }
 
