@@ -4,18 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.contactbook.data.daos.IContactDao
 import com.example.contactbook.data.daos.IUserDao
+import com.example.contactbook.data.entities.Contact
 import com.example.contactbook.data.entities.User
 
-@Database(entities = [User::class], version = 1, exportSchema = false)
-abstract class UserDatabase: RoomDatabase() {
+@Database(entities = [User::class, Contact::class], version = 1, exportSchema = false)
+abstract class ApplicationDatabase: RoomDatabase() {
 
-    abstract  fun userDao() : IUserDao
+    abstract fun userDao() : IUserDao
+    abstract fun contactDao() : IContactDao
     companion object{
         @Volatile
-        private var INSTANCE:UserDatabase? = null
+        private var INSTANCE: com.example.contactbook.data.ApplicationDatabase? = null
 
-        fun getDatabase(context : Context) : UserDatabase{
+        fun getDatabase(context : Context) : com.example.contactbook.data.ApplicationDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null){
                 return  tempInstance
@@ -23,9 +26,10 @@ abstract class UserDatabase: RoomDatabase() {
             synchronized(this){
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    UserDatabase::class.java,
-                    "userDatabase"
+                    ApplicationDatabase::class.java,
+                    "applicationDatabase"
                 ).build()
+
                 INSTANCE = instance
                 return instance
             }

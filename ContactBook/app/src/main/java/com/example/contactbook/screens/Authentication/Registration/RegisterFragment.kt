@@ -1,26 +1,31 @@
 package com.example.contactbook.screens.Authentication.Registration
 
+import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.contactbook.MainActivity
 import com.example.contactbook.R
+import com.example.contactbook.data.Model.UserModel
 import com.example.contactbook.data.entities.User
-import com.example.contactbook.data.services.AuthenticationInputValidationService
-import com.example.contactbook.data.services.SharedPreferencesService
+import com.example.contactbook.data.services.InputValidationService
+import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
+import com.example.contactbook.services.HashService
+import com.example.contactbook.services.abstractions.IAuthorizedUserSharedPreferencesService
+import com.example.contactbook.services.abstractions.IHashService
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 
 class RegisterFragment : Fragment() {
     private lateinit var mUserViewModel : UserViewModel
-    private lateinit var sharedPreferencesService : SharedPreferencesService
+    private lateinit var authorizedUserSharedPreferencesService : IAuthorizedUserSharedPreferencesService
+    private lateinit var hashService : IHashService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -29,6 +34,7 @@ class RegisterFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_register,container,false)
 
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        hashService = HashService()
 
         view.findViewById<Button>(R.id.login_fragment_button).setOnClickListener{
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
@@ -49,26 +55,18 @@ class RegisterFragment : Fragment() {
         val password = view?.findViewById<TextInputEditText>(R.id.password)?.text.toString()
         val confirmedPassword = view?.findViewById<TextInputEditText>(R.id.confirmPassword)?.text.toString()
 
-        val authenticationInputValidationService : AuthenticationInputValidationService = AuthenticationInputValidationService(
+        val inputValidationService : InputValidationService = InputValidationService(
                                                                                             this.requireContext()
                                                                                           )
 
-        if(authenticationInputValidationService.inputValidation(name, lastName, email, password, confirmedPassword)){
-            val user = User(userId, name, lastName, email, password)
-
-            sharedPreferencesService = SharedPreferencesService(this.requireActivity(), "AuthorizedUser")
-            sharedPreferencesService.saveCurrentUserData(user)
+        if(inputValidationService.registerInputValidation(name, lastName, email, password, confirmedPassword)){
+            val user = User(userId, name, lastName, email, hashService.getHash(password,"SHA-256"))
+            authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity())
+            authorizedUserSharedPreferencesService.saveCurrentUserData(UserModel(userId, name, lastName,email))
 
             mUserViewModel.addUser(user)
 
-            Toast.makeText(this.requireContext(), "New User were registered.", Toast.LENGTH_LONG).show()
-            findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
-        }
-        else{
-            Toast.makeText(requireContext(), "Fill all input fields.", Toast.LENGTH_LONG).show()
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
         }
     }
-
-
-
 }

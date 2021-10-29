@@ -2,16 +2,12 @@ package com.example.contactbook.data.repositories
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import com.example.contactbook.data.UserDatabase
-import com.example.contactbook.data.daos.IUserDao
+import com.example.contactbook.data.ApplicationDatabase
 import com.example.contactbook.data.entities.User
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.suspendCoroutine
 
 class UserRepository(private val application: Application) {
 
-    private  val userDao = UserDatabase.getDatabase(application).userDao()
+    private  val userDao = ApplicationDatabase.getDatabase(application).userDao()
 
     suspend fun addUser(user : User){
         userDao.addUser(user)

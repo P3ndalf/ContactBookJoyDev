@@ -1,9 +1,8 @@
 package com.example.contactbook.screens.Authentication.Login
 
-import android.content.Context
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.os.strictmode.ContentUriWithoutPermissionViolation
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,36 +12,43 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
+import com.example.contactbook.MainActivity
 import com.example.contactbook.R
-import com.example.contactbook.data.entities.User
-import com.example.contactbook.data.services.AuthenticationInputValidationService
-import com.example.contactbook.data.services.SharedPreferencesService
+import com.example.contactbook.data.Model.UserModel
+import com.example.contactbook.data.services.InputValidationService
+import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
-import com.example.contactbook.screens.UserObserver
+import com.example.contactbook.services.HashService
+import com.example.contactbook.services.abstractions.IAuthorizedUserSharedPreferencesService
+import com.example.contactbook.services.abstractions.IHashService
+import com.example.contactbook.services.abstractions.IInputValidationService
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 
 class LoginFragment() : Fragment() {
-    private lateinit var mUserViewModel : UserViewModel
-    private lateinit var sharedPreferencesService : SharedPreferencesService
-    private lateinit var authenticationInputValidationService: AuthenticationInputValidationService
-    private lateinit var userObserver : UserObserver
 
-    override fun  onCreateView(
+    private lateinit var mUserViewModel : UserViewModel
+    private lateinit var authorizedUserSharedPreferencesService : IAuthorizedUserSharedPreferencesService
+    private lateinit var inputValidationService: IInputValidationService
+    private lateinit var hashService : IHashService
+    private lateinit var userModel : UserModel
+
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity)
+        mUserViewModel = ViewModelProvider(this).get(com.example.contactbook.data.viewModels.UserViewModel::class.java)
+    }
+
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ) : View? {
         val view = inflater.inflate(R.layout.fragment_login,container,false)
-        sharedPreferencesService = SharedPreferencesService(this.requireActivity(), "AuthorizedUser")
+        authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity())
+        hashService = HashService()
 
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        userObserver = UserObserver()
-
-        if (sharedPreferencesService.isAuthorized()) {
-            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+        if (authorizedUserSharedPreferencesService.isAuthorized()) {
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
         }
         else{
             view.findViewById<Button>(R.id.register_fragment_button).setOnClickListener{
@@ -51,9 +57,9 @@ class LoginFragment() : Fragment() {
             view.findViewById<Button>(R.id.login).setOnClickListener{
                 val email = view?.findViewById<TextInputEditText>(R.id.email)?.text.toString()
                 val password = view?.findViewById<TextInputEditText>(R.id.password)?.text.toString()
-                authenticationInputValidationService = AuthenticationInputValidationService(this.requireContext())
-                if (authenticationInputValidationService.inputValidation(email, password)){
-                        authenticateUser(email,password)
+                inputValidationService = InputValidationService(this.requireContext())
+                if (inputValidationService.loginInputValidation(email, password)){
+                    authenticateUser(email,hashService.getHash(password, "SHA-256"))
                 }
             }
         }
@@ -61,20 +67,16 @@ class LoginFragment() : Fragment() {
     }
 
     private fun authenticateUser(email : String, password : String) {
-            mUserViewModel.authenticateUser(email, password).observe(viewLifecycleOwner, Observer { currentUser ->
-                lifecycleScope.launch(Main){
-                    userObserver.setData(currentUser)
-                    if(userObserver.user == null ){
-                        Toast.makeText(activity, "Wrong email or password", Toast.LENGTH_LONG).show()
-                    }
-                    else{
-                        sharedPreferencesService.saveCurrentUserData(userObserver.user)
-                        Toast.makeText(activity, "Successful", Toast.LENGTH_LONG).show()
-                        findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
-                    }
+        mUserViewModel.authenticateUser(email, password).observe(viewLifecycleOwner, Observer { currentUser ->
+            lifecycleScope.launch(Main){
+                if(currentUser == null){
+                    Toast.makeText(requireContext(), "Wrong email or password", Toast.LENGTH_LONG).show()
                 }
-
-            })
-
-        }
+                else{
+                    authorizedUserSharedPreferencesService.saveCurrentUserData(UserModel(currentUser.id,currentUser.firstName,currentUser.lastName,currentUser.email))
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                }
+            }
+        })
+    }
 }
