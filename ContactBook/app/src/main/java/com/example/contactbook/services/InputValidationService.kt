@@ -5,83 +5,62 @@ import android.text.TextUtils
 import android.widget.Toast
 
 import com.example.contactbook.services.abstractions.IInputValidationService
+import com.google.android.material.textfield.TextInputEditText
 
 
 class InputValidationService(private var currentContext: Context) : IInputValidationService {
 
     override fun loginInputValidation(
         email: String, password: String,
-    ): Boolean {
-        if(!email.contains("@", false)){
-            Toast.makeText(currentContext, "Fill correct email", Toast.LENGTH_LONG).show()
-            return false
-        }
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(currentContext, "Fill email field", Toast.LENGTH_LONG).show()
-            return false
-        }
-        if (TextUtils.isEmpty(password)) {
-            Toast.makeText(currentContext, "Fill password field", Toast.LENGTH_LONG).show()
-            return false
-        }
-        return true
+    ): Array<Boolean> {
+        var flags : Array<Boolean> = arrayOf(true, true)
+        flags[0] = !(!email.contains("@", false) || TextUtils.isEmpty(email))
+        flags[1] = !TextUtils.isEmpty(password)
+        return flags
     }
 
     override fun addContactInputValidation(
         name : String, instagram : String, phoneNumber : String
-    ): Boolean {
+    ): Array<Boolean> {
+        var flags : Array<Boolean> = arrayOf(true, true, true)
         if (TextUtils.isEmpty(name)){
-            Toast.makeText(currentContext,"Fill firstName field",Toast.LENGTH_LONG).show()
-            return false
+            flags[0] = false
+        }
+        if (TextUtils.isEmpty(instagram)){
+            flags[1] = false
         }
         if (TextUtils.isEmpty(phoneNumber)){
-            Toast.makeText(currentContext,"Fill phone field",Toast.LENGTH_LONG).show()
-            return false
+            flags[2] = false
         }
-
-        return true
+        return flags
     }
 
     override fun registerInputValidation(
         name: String, lastName: String,
         email: String, password: String,
         confirmedPassword : String
-    ): Boolean {
-        if (TextUtils.isEmpty(name)) {
-            Toast.makeText(currentContext, "Fill firstName field",Toast.LENGTH_LONG).show()
-            return false
+    ): Array<Boolean> {
+        var flags = Array(5) { true}
+        if (TextUtils.isEmpty(name) || !(name.length in 2..21)) {
+            flags[0] = false
         }
-        if (TextUtils.isEmpty(lastName)) {
-            Toast.makeText(currentContext, "Fill lastName field",Toast.LENGTH_LONG).show()
-            return false
-        }
-
-        if (!((name.length in 2..21) || (lastName.length in 2..21))){
-            Toast.makeText(currentContext, "Name and LastName should be shorter than 20 symbs and longer than 2",Toast.LENGTH_LONG).show()
-            return false
+        if (TextUtils.isEmpty(lastName) || !(lastName.length in 2..21)) {
+            flags[1] = false
         }
 
-        if(!email.contains("@", false)){
-            Toast.makeText(currentContext, "Fill correct email",Toast.LENGTH_LONG).show()
-            return false
+        if(!email.contains("@", false) || TextUtils.isEmpty(email)){
+            flags[2] = false
         }
 
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(currentContext, "Fill email field",Toast.LENGTH_LONG).show()
-            return false
-        }
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(currentContext, "Fill password field",Toast.LENGTH_LONG).show()
-            return false
+            flags[3] = false
         }
         if (TextUtils.isEmpty(confirmedPassword)) {
-            Toast.makeText(currentContext, "Fill confirmedPassword field",Toast.LENGTH_LONG).show()
-            return false
+            flags[4] = false
         }
         if (confirmedPassword != password) {
-            Toast.makeText(currentContext, "Please confirm the password",Toast.LENGTH_LONG).show()
-            return false
+            flags[4] = false
         }
-        return true
+        return flags
     }
 }

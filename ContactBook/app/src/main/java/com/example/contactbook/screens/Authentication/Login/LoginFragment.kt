@@ -19,15 +19,21 @@ import com.example.contactbook.data.Model.UserModel
 import com.example.contactbook.data.services.InputValidationService
 import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
+import com.example.contactbook.databinding.FragmentLoginBinding
+import com.example.contactbook.databinding.FragmentUserprofileBinding
 import com.example.contactbook.services.HashService
 import com.example.contactbook.services.abstractions.IAuthorizedUserSharedPreferencesService
 import com.example.contactbook.services.abstractions.IHashService
 import com.example.contactbook.services.abstractions.IInputValidationService
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 
 class LoginFragment() : Fragment() {
+
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var mUserViewModel : UserViewModel
     private lateinit var authorizedUserSharedPreferencesService : IAuthorizedUserSharedPreferencesService
@@ -35,15 +41,21 @@ class LoginFragment() : Fragment() {
     private lateinit var hashService : IHashService
     private lateinit var userModel : UserModel
 
+    private lateinit var email : TextInputEditText
+    private lateinit var password : TextInputEditText
+    private lateinit var emailError : TextInputLayout
+    private lateinit var passwordError : TextInputLayout
+
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
         mUserViewModel = ViewModelProvider(this).get(com.example.contactbook.data.viewModels.UserViewModel::class.java)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ) : View? {
-        val view = inflater.inflate(R.layout.fragment_login,container,false)
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
         authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity())
         hashService = HashService()
 
@@ -51,19 +63,26 @@ class LoginFragment() : Fragment() {
             startActivity(Intent(requireActivity(), MainActivity::class.java))
         }
         else{
-            view.findViewById<Button>(R.id.register_fragment_button).setOnClickListener{
+            email = binding.email
+            password = binding.password
+            emailError = binding.emailError
+            passwordError = binding.passwordError
+
+            inputValidationService = InputValidationService(this.requireContext())
+            var inputValidationFlags = inputValidationService.loginInputValidation(email.text.toString(), password.text.toString())
+
+
+            binding.registerFragmentButton.setOnClickListener{
                 findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             }
-            view.findViewById<Button>(R.id.login).setOnClickListener{
-                val email = view?.findViewById<TextInputEditText>(R.id.email)?.text.toString()
-                val password = view?.findViewById<TextInputEditText>(R.id.password)?.text.toString()
-                inputValidationService = InputValidationService(this.requireContext())
-                if (inputValidationService.loginInputValidation(email, password)){
-                    authenticateUser(email,hashService.getHash(password, "SHA-256"))
+            binding.login.setOnClickListener{
+                if (!inputValidationFlags.contains(false)) {
+                    authenticateUser(email.text.toString(),hashService.getHash(password.text.toString(), "SHA-256"))
                 }
             }
+            changeLayoutValidity(inputValidationFlags)
         }
-        return view;
+        return binding.root
     }
 
     private fun authenticateUser(email : String, password : String) {
@@ -78,5 +97,22 @@ class LoginFragment() : Fragment() {
                 }
             }
         })
+    }
+
+    private fun changeLayoutValidity(inputValidationFlags : Array<Boolean>){
+        if(!inputValidationFlags[0]){
+            emailError.isErrorEnabled = true
+            emailError.error = "Enter correct email"
+        } else {
+            emailError.isErrorEnabled = false
+            emailError.error = null
+        }
+        if (!inputValidationFlags[1]) {
+            passwordError.isErrorEnabled = true
+            passwordError.error = "Fill password field"
+        } else {
+            passwordError.isErrorEnabled = false
+            passwordError.error = null
+        }
     }
 }
