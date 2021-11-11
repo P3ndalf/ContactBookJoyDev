@@ -3,6 +3,7 @@ package com.example.contactbook.screens.Authentication.Login
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,7 @@ class LoginFragment() : Fragment() {
     private lateinit var emailError : TextInputLayout
     private lateinit var passwordError : TextInputLayout
 
+    private var inputValidationFlags : Array<Boolean>  = Array(2) {true}
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
         mUserViewModel = ViewModelProvider(this).get(com.example.contactbook.data.viewModels.UserViewModel::class.java)
@@ -69,18 +71,19 @@ class LoginFragment() : Fragment() {
             passwordError = binding.passwordError
 
             inputValidationService = InputValidationService(this.requireContext())
-            var inputValidationFlags = inputValidationService.loginInputValidation(email.text.toString(), password.text.toString())
 
 
             binding.registerFragmentButton.setOnClickListener{
                 findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             }
             binding.login.setOnClickListener{
+                inputValidationFlags = inputValidationService.loginInputValidation(email.text.toString(), password.text.toString())
                 if (!inputValidationFlags.contains(false)) {
                     authenticateUser(email.text.toString(),hashService.getHash(password.text.toString(), "SHA-256"))
                 }
+                changeLayoutValidity()
             }
-            changeLayoutValidity(inputValidationFlags)
+
         }
         return binding.root
     }
@@ -99,10 +102,11 @@ class LoginFragment() : Fragment() {
         })
     }
 
-    private fun changeLayoutValidity(inputValidationFlags : Array<Boolean>){
+    private fun changeLayoutValidity(){
         if(!inputValidationFlags[0]){
             emailError.isErrorEnabled = true
             emailError.error = "Enter correct email"
+
         } else {
             emailError.isErrorEnabled = false
             emailError.error = null
@@ -110,6 +114,7 @@ class LoginFragment() : Fragment() {
         if (!inputValidationFlags[1]) {
             passwordError.isErrorEnabled = true
             passwordError.error = "Fill password field"
+
         } else {
             passwordError.isErrorEnabled = false
             passwordError.error = null

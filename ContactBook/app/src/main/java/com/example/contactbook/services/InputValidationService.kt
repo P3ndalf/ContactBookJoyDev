@@ -41,21 +41,21 @@ class InputValidationService(private var currentContext: Context) : IInputValida
         confirmedPassword : String
     ): Array<Boolean> {
         var flags = Array(5) { true}
-        if (TextUtils.isEmpty(name) || !(name.length in 2..21)) {
+        if (name.isBlank() || !(name.length in 2..21)) {
             flags[0] = false
         }
-        if (TextUtils.isEmpty(lastName) || !(lastName.length in 2..21)) {
+        if (lastName.isBlank() || !(lastName.length in 2..21)) {
             flags[1] = false
         }
 
-        if(!email.contains("@", false) || TextUtils.isEmpty(email)){
+        if(!email.contains("@", false) || email.isBlank()){
             flags[2] = false
         }
 
-        if (TextUtils.isEmpty(password)) {
+        if (password.isBlank()) {
             flags[3] = false
         }
-        if (TextUtils.isEmpty(confirmedPassword)) {
+        if (confirmedPassword.isBlank()) {
             flags[4] = false
         }
         if (confirmedPassword != password) {
