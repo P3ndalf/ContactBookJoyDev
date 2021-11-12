@@ -44,6 +44,7 @@ class RegisterFragment : Fragment() {
     private lateinit var passwordConfirmError : TextInputLayout
     private lateinit var passwordError : TextInputLayout
 
+
     private var inputValidationFlags : Array<Boolean> = Array(5) { true}
 
     override fun onCreateView(

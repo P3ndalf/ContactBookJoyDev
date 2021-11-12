@@ -113,7 +113,7 @@
                 app:counterTextColor="@color/grey"
 
                 app:errorEnabled="true"
-                app:helperText="what is you name"
+                app:helperText="@string/register_name_helper_text"
                 app:helperTextTextColor="@color/grey"
                 app:layout_constraintBottom_toTopOf="@+id/lastnameError"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -150,7 +150,7 @@
                 app:counterTextColor="@color/grey"
                 app:errorEnabled="true"
 
-                app:helperText="what is you last name"
+                app:helperText="@string/register_lastname_helper_text"
                 app:helperTextTextColor="@color/grey"
                 app:layout_constraintBottom_toTopOf="@+id/emailError"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -189,7 +189,7 @@
                 app:counterTextColor="@color/grey"
                 app:errorEnabled="true"
 
-                app:helperText="share us with your email"
+                app:helperText="@string/register_email_helper_text"
                 app:helperTextTextColor="@color/grey"
                 app:layout_constraintBottom_toTopOf="@+id/passwordError"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -227,7 +227,7 @@
                 app:boxStrokeWidth="2dp"
                 app:counterTextColor="@color/grey"
 
-                app:helperText="your secret word"
+                app:helperText="@string/register_password_helper_text"
                 app:helperTextTextColor="@color/grey"
                 app:layout_constraintBottom_toTopOf="@+id/confirmPasswordError"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -266,7 +266,7 @@
                 app:boxStrokeWidth="2dp"
                 app:counterTextColor="@color/grey"
 
-                app:helperText="should be the same as you password"
+                app:helperText="@string/register_confirm_password_helper_text"
                 app:helperTextTextColor="@color/grey"
                 app:layout_constraintBottom_toTopOf="@+id/register"
                 app:layout_constraintEnd_toEndOf="parent"

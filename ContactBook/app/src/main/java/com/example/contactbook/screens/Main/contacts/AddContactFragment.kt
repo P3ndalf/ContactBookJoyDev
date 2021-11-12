@@ -15,6 +15,8 @@ import com.example.contactbook.databinding.FragmentAddContactBinding
 import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
 import com.example.contactbook.services.abstractions.IAuthorizedUserSharedPreferencesService
 import com.example.contactbook.services.abstractions.IInputValidationService
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 class AddContactFragment : Fragment() {
@@ -25,20 +27,25 @@ class AddContactFragment : Fragment() {
     private lateinit var mContactViewModel : ContactViewModel
 
 
-    private var nameET = binding.nameET
-    private var nameError = binding.nameError
-    private var phoneET = binding.phoneNumberTV
-    private var phoneError = binding.phoneNumberError
-    private var birthday = Calendar.getInstance().timeInMillis
-    private var gender = true
-    private var instagramET = binding.instagramET
-    private var instagramError = binding.instagramError
+    private lateinit var nameET : TextInputEditText
+    private lateinit var nameError  : TextInputLayout
+    private lateinit var phoneET : TextInputEditText
+    private lateinit var phoneError : TextInputLayout
+    private lateinit var instagramET : TextInputEditText
+    private lateinit var instagramError : TextInputLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAddContactBinding.inflate(inflater, container, false)
+
+        nameET = binding.nameET
+        nameError = binding.nameError
+        phoneET = binding.phoneNumberTV
+        phoneError = binding.phoneNumberError
+        instagramET = binding.instagramET
+        instagramError = binding.instagramError
 
         binding.cancelBtn.setOnClickListener{
             findNavController().navigate(R.id.action_addContactFragment_to_contactsFragment)
@@ -58,7 +65,8 @@ class AddContactFragment : Fragment() {
     private fun addContact() {
         var id = UUID.randomUUID().toString()
         var ownerId = authorizedUserSharedPreferencesService.loadCurrentUser().id
-
+        var birthday = Calendar.getInstance().timeInMillis
+        var gender = true
         var inputValidationFlags = inputValidationService.addContactInputValidation(nameET.text.toString()
                                     , instagramET.text.toString()
                                     , phoneET.text.toString())

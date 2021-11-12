@@ -2,6 +2,7 @@ package com.example.contactbook.screens.Authentication.Login
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -105,8 +106,7 @@ class LoginFragment() : Fragment() {
     private fun changeLayoutValidity(){
         if(!inputValidationFlags[0]){
             emailError.isErrorEnabled = true
-            emailError.error = "Enter correct email"
-
+            emailError.error = "Fill password field"
         } else {
             emailError.isErrorEnabled = false
             emailError.error = null

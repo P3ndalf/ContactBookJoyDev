@@ -55,7 +55,7 @@
                 app:boxStrokeWidth="2dp"
                 app:counterTextColor="@color/grey"
 
-                app:helperText="your secret word"
+                app:helperText="@string/register_password_helper_text"
                 app:helperTextTextColor="@color/grey"
                 app:layout_constraintBottom_toTopOf="@+id/login"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +96,7 @@
                 app:counterTextColor="@color/grey"
                 app:errorEnabled="true"
 
-                app:helperText="share us with your email"
+                app:helperText="@string/register_email_helper_text"
                 app:helperTextTextColor="@color/grey"
                 app:layout_constraintBottom_toTopOf="@+id/passwordError"
                 app:layout_constraintEnd_toEndOf="parent"

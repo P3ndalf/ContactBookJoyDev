@@ -3,11 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Education/Projects/ContactBookJoyDev/ContactBook/app/src/main/res/layout/activity_main.xml" value="0.16614583333333333" />
         <entry key="..\:/Education/Projects/ContactBookJoyDev/ContactBook/app/src/main/res/layout/fragment_add_contact.xml" value="0.20833333333333334" />
         <entry key="..\:/Education/Projects/ContactBookJoyDev/ContactBook/app/src/main/res/layout/fragment_contact_detail.xml" value="0.20833333333333334" />
         <entry key="..\:/Education/Projects/ContactBookJoyDev/ContactBook/app/src/main/res/layout/fragment_contacts.xml" value="0.20833333333333334" />
         <entry key="..\:/Education/Projects/ContactBookJoyDev/ContactBook/app/src/main/res/layout/fragment_login.xml" value="0.33" />
-        <entry key="..\:/Education/Projects/ContactBookJoyDev/ContactBook/app/src/main/res/layout/fragment_register.xml" value="0.5" />
+        <entry key="..\:/Education/Projects/ContactBookJoyDev/ContactBook/app/src/main/res/layout/fragment_register.xml" value="0.33" />
         <entry key="..\:/Education/Projects/ContactBookJoyDev/ContactBook/app/src/main/res/layout/fragment_settings.xml" value="0.23125" />
         <entry key="..\:/University/AndroidApplications/ContactBookProject/ContactBook/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22604166666666667" />
         <entry key="..\:/University/AndroidApplications/ContactBookProject/ContactBook/app/src/main/res/drawable/active_radio_button.xml" value="0.403125" />
