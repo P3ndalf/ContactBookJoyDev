@@ -129,7 +129,7 @@
                 app:startIconTint="@color/grey">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phoneNumberTV"
+                    android:id="@+id/phoneNumberET"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/phoneNumber"

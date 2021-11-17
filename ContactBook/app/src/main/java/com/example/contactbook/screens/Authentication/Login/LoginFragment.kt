@@ -34,90 +34,98 @@ import kotlinx.coroutines.Dispatchers.Main
 
 class LoginFragment() : Fragment() {
 
-    private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding :  FragmentLoginBinding
 
-    private lateinit var mUserViewModel : UserViewModel
-    private lateinit var authorizedUserSharedPreferencesService : IAuthorizedUserSharedPreferencesService
+    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var authorizedUserSharedPreferencesService: IAuthorizedUserSharedPreferencesService
     private lateinit var inputValidationService: IInputValidationService
-    private lateinit var hashService : IHashService
-    private lateinit var userModel : UserModel
+    private lateinit var hashService: IHashService
 
-    private lateinit var email : TextInputEditText
-    private lateinit var password : TextInputEditText
-    private lateinit var emailError : TextInputLayout
-    private lateinit var passwordError : TextInputLayout
-
-    private var inputValidationFlags : Array<Boolean>  = Array(2) {true}
+    private var inputValidationFlags: Array<Boolean> = Array(2) { true }
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
-        mUserViewModel = ViewModelProvider(this).get(com.example.contactbook.data.viewModels.UserViewModel::class.java)
+        mUserViewModel =
+            ViewModelProvider(this).get(com.example.contactbook.data.viewModels.UserViewModel::class.java)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity())
+    ): View {
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        authorizedUserSharedPreferencesService =
+            AuthorizedUserSharedPreferencesService(this.requireActivity())
         hashService = HashService()
 
         if (authorizedUserSharedPreferencesService.isAuthorized()) {
             startActivity(Intent(requireActivity(), MainActivity::class.java))
-        }
-        else{
-            email = binding.email
-            password = binding.password
-            emailError = binding.emailError
-            passwordError = binding.passwordError
-
+        } else {
             inputValidationService = InputValidationService(this.requireContext())
-
-
-            binding.registerFragmentButton.setOnClickListener{
-                findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
-            }
-            binding.login.setOnClickListener{
-                inputValidationFlags = inputValidationService.loginInputValidation(email.text.toString(), password.text.toString())
-                if (!inputValidationFlags.contains(false)) {
-                    authenticateUser(email.text.toString(),hashService.getHash(password.text.toString(), "SHA-256"))
+            with(binding) {
+                binding.registerFragmentButton.setOnClickListener {
+                    findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
                 }
-                changeLayoutValidity()
+                binding.login.setOnClickListener {
+                    inputValidationFlags = inputValidationService.loginInputValidation(
+                        email.text.toString(),
+                        password.text.toString()
+                    )
+                    if (!inputValidationFlags.contains(false)) {
+                        authenticateUser(
+                            email.text.toString(),
+                            hashService.getHash(password.text.toString(), "SHA-256")
+                        )
+                    }
+                    changeLayoutValidity()
+                }
             }
 
         }
         return binding.root
     }
 
-    private fun authenticateUser(email : String, password : String) {
-        mUserViewModel.authenticateUser(email, password).observe(viewLifecycleOwner, Observer { currentUser ->
-            lifecycleScope.launch(Main){
-                if(currentUser == null){
-                    Toast.makeText(requireContext(), "Wrong email or password", Toast.LENGTH_LONG).show()
+    private fun authenticateUser(email: String, password: String) {
+        mUserViewModel.authenticateUser(email, password)
+            .observe(viewLifecycleOwner, Observer { currentUser ->
+                lifecycleScope.launch(Main) {
+                    if (currentUser == null) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Wrong email or password",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        authorizedUserSharedPreferencesService.saveCurrentUserData(
+                            UserModel(
+                                currentUser.id,
+                                currentUser.firstName,
+                                currentUser.lastName,
+                                currentUser.email
+                            )
+                        )
+                        startActivity(Intent(requireContext(), MainActivity::class.java))
+                    }
                 }
-                else{
-                    authorizedUserSharedPreferencesService.saveCurrentUserData(UserModel(currentUser.id,currentUser.firstName,currentUser.lastName,currentUser.email))
-                    startActivity(Intent(requireContext(), MainActivity::class.java))
-                }
-            }
-        })
+            })
     }
 
-    private fun changeLayoutValidity(){
-        if(!inputValidationFlags[0]){
-            emailError.isErrorEnabled = true
-            emailError.error = "Fill password field"
-        } else {
-            emailError.isErrorEnabled = false
-            emailError.error = null
-        }
-        if (!inputValidationFlags[1]) {
-            passwordError.isErrorEnabled = true
-            passwordError.error = "Fill password field"
+    private fun changeLayoutValidity() {
+        with(binding) {
+            if (!inputValidationFlags[0]) {
+                emailError.isErrorEnabled = true
+                emailError.error = "Fill password field"
+            } else {
+                emailError.isErrorEnabled = false
+                emailError.error = null
+            }
+            if (!inputValidationFlags[1]) {
+                passwordError.isErrorEnabled = true
+                passwordError.error = "Fill password field"
 
-        } else {
-            passwordError.isErrorEnabled = false
-            passwordError.error = null
+            } else {
+                passwordError.isErrorEnabled = false
+                passwordError.error = null
+            }
         }
     }
 }

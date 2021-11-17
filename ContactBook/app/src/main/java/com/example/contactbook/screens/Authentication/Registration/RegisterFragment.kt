@@ -26,82 +26,69 @@ import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 class RegisterFragment : Fragment() {
-    private lateinit var mUserViewModel : UserViewModel
-    private lateinit var authorizedUserSharedPreferencesService : IAuthorizedUserSharedPreferencesService
-    private lateinit var hashService : IHashService
+    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var authorizedUserSharedPreferencesService: IAuthorizedUserSharedPreferencesService
+    private lateinit var hashService: IHashService
 
-    private var _binding: FragmentRegisterBinding? = null
-    private val binding get() = _binding!!
-
-    private lateinit var name : TextInputEditText
-    private lateinit var lastName : TextInputEditText
-    private lateinit var email :TextInputEditText
-    private lateinit var password : TextInputEditText
-    private lateinit var passwordConfirm : TextInputEditText
-    private lateinit var nameError : TextInputLayout
-    private lateinit var lastNameError : TextInputLayout
-    private lateinit var emailError : TextInputLayout
-    private lateinit var passwordConfirmError : TextInputLayout
-    private lateinit var passwordError : TextInputLayout
+    private lateinit var binding: FragmentRegisterBinding
 
 
-    private var inputValidationFlags : Array<Boolean> = Array(5) { true}
+    private var inputValidationFlags: Array<Boolean> = Array(5) { true }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         hashService = HashService()
 
-        name = binding.name
-        lastName = binding.lastname
-        email = binding.email
-        password = binding.password
-        passwordConfirm = binding.confirmPassword
-        nameError = binding.nameError
-        lastNameError = binding.lastnameError
-        emailError = binding.emailError
-        passwordConfirmError = binding.confirmPasswordError
-        passwordError = binding.passwordError
-
-        val inputValidationService : InputValidationService = InputValidationService(
+        val inputValidationService: InputValidationService = InputValidationService(
             this.requireContext()
         )
 
-        binding.loginFragmentButton.setOnClickListener{
+        binding.loginFragmentButton.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
-
-        binding.register.setOnClickListener{
-            inputValidationFlags = inputValidationService.registerInputValidation(name.text.toString()
-                , lastName.text.toString(), email.text.toString()
-                , password.text.toString(), passwordConfirm.text.toString()
-            )
-            if(!inputValidationFlags.contains(false)) {
-                insertDataToDataBase()
+        with(binding){
+            binding.register.setOnClickListener {
+                inputValidationFlags = inputValidationService.registerInputValidation(
+                    name.text.toString(),
+                    lastname.text.toString(),
+                    email.text.toString(),
+                    password.text.toString(),
+                    confirmPassword.text.toString()
+                )
+                if (!inputValidationFlags.contains(false)) {
+                    insertDataToDataBase()
+                }
+                changeLayoutValidity()
             }
-            changeLayoutValidity()
         }
+
         return binding.root
     }
 
-    private fun insertDataToDataBase(){
+    private fun insertDataToDataBase() {
         val userId = UUID.randomUUID().toString()
-        val user = User(userId, name.text.toString()
-            , lastName.text.toString(), email.text.toString()
-            , hashService.getHash(password.text.toString(),"SHA-256")
-        )
-
-        authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity())
-
-        authorizedUserSharedPreferencesService.saveCurrentUserData(
-            UserModel(userId, name.text.toString()
-                ,lastName.text.toString(), email.text.toString()
+        val user : User
+        authorizedUserSharedPreferencesService =
+            AuthorizedUserSharedPreferencesService(this.requireActivity())
+        with(binding){
+            user = User(
+                userId,
+                name.text.toString(),
+                lastname.text.toString(),
+                email.text.toString(),
+                hashService.getHash(password.text.toString(), "SHA-256")
             )
-        )
+            authorizedUserSharedPreferencesService.saveCurrentUserData(
+                UserModel(
+                    userId, name.text.toString(), lastname.text.toString(), email.text.toString()
+                )
+            )
+        }
 
         mUserViewModel.addUser(user)
 
@@ -109,40 +96,42 @@ class RegisterFragment : Fragment() {
     }
 
     private fun changeLayoutValidity() {
-        if (!inputValidationFlags[0]){
-            nameError.isErrorEnabled = true
-            nameError.error = "Enter correct name"
-        } else {
-            nameError.isErrorEnabled = false
-            nameError.error = null
-        }
-        if (!inputValidationFlags[1]){
-            lastNameError.isErrorEnabled = true
-            lastNameError.error = "Enter correct last name"
-        } else {
-            lastNameError.isErrorEnabled = false
-            lastNameError.error = null
-        }
-        if(!inputValidationFlags[2]){
-            emailError.isErrorEnabled = true
-            emailError.error = "Enter correct email"
-        } else {
-            emailError.isErrorEnabled = false
-            emailError.error = null
-        }
-        if(!inputValidationFlags[3]){
-            passwordError.isErrorEnabled = true
-            passwordError.error = "Fill password field"
-        } else {
-            passwordError.isErrorEnabled = false
-            passwordError.error = null
-        }
-        if (!inputValidationFlags[4]){
-            passwordConfirmError.isErrorEnabled = true
-            passwordConfirmError.error = "Repeat your password"
-        } else {
-            passwordConfirmError.isErrorEnabled = false
-            passwordConfirmError.error = null
+        with(binding){
+            if (!inputValidationFlags[0]) {
+                nameError.isErrorEnabled = true
+                nameError.error = "Enter correct name"
+            } else {
+                nameError.isErrorEnabled = false
+                nameError.error = null
+            }
+            if (!inputValidationFlags[1]) {
+                lastnameError.isErrorEnabled = true
+                lastnameError.error = "Enter correct last name"
+            } else {
+                lastnameError.isErrorEnabled = false
+                lastnameError.error = null
+            }
+            if (!inputValidationFlags[2]) {
+                emailError.isErrorEnabled = true
+                emailError.error = "Enter correct email"
+            } else {
+                emailError.isErrorEnabled = false
+                emailError.error = null
+            }
+            if (!inputValidationFlags[3]) {
+                passwordError.isErrorEnabled = true
+                passwordError.error = "Fill password field"
+            } else {
+                passwordError.isErrorEnabled = false
+                passwordError.error = null
+            }
+            if (!inputValidationFlags[4]) {
+                confirmPasswordError.isErrorEnabled = true
+                confirmPasswordError.error = "Repeat your password"
+            } else {
+                confirmPasswordError.isErrorEnabled = false
+                confirmPasswordError.error = null
+            }
         }
     }
 }
