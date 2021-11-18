@@ -16,57 +16,122 @@ import com.example.contactbook.data.entities.User
 import com.example.contactbook.data.services.InputValidationService
 import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
+import com.example.contactbook.databinding.FragmentLoginBinding
+import com.example.contactbook.databinding.FragmentRegisterBinding
 import com.example.contactbook.services.HashService
 import com.example.contactbook.services.abstractions.IAuthorizedUserSharedPreferencesService
 import com.example.contactbook.services.abstractions.IHashService
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 class RegisterFragment : Fragment() {
-    private lateinit var mUserViewModel : UserViewModel
-    private lateinit var authorizedUserSharedPreferencesService : IAuthorizedUserSharedPreferencesService
-    private lateinit var hashService : IHashService
+    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var authorizedUserSharedPreferencesService: IAuthorizedUserSharedPreferencesService
+    private lateinit var hashService: IHashService
+
+    private lateinit var binding: FragmentRegisterBinding
+
+
+    private var inputValidationFlags: Array<Boolean> = Array(5) { true }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-
-        val view = inflater.inflate(R.layout.fragment_register,container,false)
+        binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         hashService = HashService()
 
-        view.findViewById<Button>(R.id.login_fragment_button).setOnClickListener{
+        val inputValidationService: InputValidationService = InputValidationService(
+            this.requireContext()
+        )
+
+        binding.loginFragmentButton.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
-
-        view.findViewById<Button>(R.id.register).setOnClickListener{
-            insertDataToDataBase()
+        with(binding){
+            binding.register.setOnClickListener {
+                inputValidationFlags = inputValidationService.registerInputValidation(
+                    name.text.toString(),
+                    lastname.text.toString(),
+                    email.text.toString(),
+                    password.text.toString(),
+                    confirmPassword.text.toString()
+                )
+                if (!inputValidationFlags.contains(false)) {
+                    insertDataToDataBase()
+                }
+                changeLayoutValidity()
+            }
         }
 
-        return view
+        return binding.root
     }
 
-    private fun insertDataToDataBase(){
+    private fun insertDataToDataBase() {
         val userId = UUID.randomUUID().toString()
-        val name = view?.findViewById<TextInputEditText>(R.id.name)?.text.toString()
-        val lastName = view?.findViewById<TextInputEditText>(R.id.lastname)?.text.toString()
-        val email = view?.findViewById<TextInputEditText>(R.id.email)?.text.toString()
-        val password = view?.findViewById<TextInputEditText>(R.id.password)?.text.toString()
-        val confirmedPassword = view?.findViewById<TextInputEditText>(R.id.confirmPassword)?.text.toString()
+        val user : User
+        authorizedUserSharedPreferencesService =
+            AuthorizedUserSharedPreferencesService(this.requireActivity())
+        with(binding){
+            user = User(
+                userId,
+                name.text.toString(),
+                lastname.text.toString(),
+                email.text.toString(),
+                hashService.getHash(password.text.toString(), "SHA-256")
+            )
+            authorizedUserSharedPreferencesService.saveCurrentUserData(
+                UserModel(
+                    userId, name.text.toString(), lastname.text.toString(), email.text.toString()
+                )
+            )
+        }
 
-        val inputValidationService : InputValidationService = InputValidationService(
-                                                                                            this.requireContext()
-                                                                                          )
+        mUserViewModel.addUser(user)
 
-        if(inputValidationService.registerInputValidation(name, lastName, email, password, confirmedPassword)){
-            val user = User(userId, name, lastName, email, hashService.getHash(password,"SHA-256"))
-            authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity())
-            authorizedUserSharedPreferencesService.saveCurrentUserData(UserModel(userId, name, lastName,email))
+        startActivity(Intent(requireActivity(), MainActivity::class.java))
+    }
 
-            mUserViewModel.addUser(user)
-
-            startActivity(Intent(requireActivity(), MainActivity::class.java))
+    private fun changeLayoutValidity() {
+        with(binding){
+            if (!inputValidationFlags[0]) {
+                nameError.isErrorEnabled = true
+                nameError.error = "Enter correct name"
+            } else {
+                nameError.isErrorEnabled = false
+                nameError.error = null
+            }
+            if (!inputValidationFlags[1]) {
+                lastnameError.isErrorEnabled = true
+                lastnameError.error = "Enter correct last name"
+            } else {
+                lastnameError.isErrorEnabled = false
+                lastnameError.error = null
+            }
+            if (!inputValidationFlags[2]) {
+                emailError.isErrorEnabled = true
+                emailError.error = "Enter correct email"
+            } else {
+                emailError.isErrorEnabled = false
+                emailError.error = null
+            }
+            if (!inputValidationFlags[3]) {
+                passwordError.isErrorEnabled = true
+                passwordError.error = "Fill password field"
+            } else {
+                passwordError.isErrorEnabled = false
+                passwordError.error = null
+            }
+            if (!inputValidationFlags[4]) {
+                confirmPasswordError.isErrorEnabled = true
+                confirmPasswordError.error = "Repeat your password"
+            } else {
+                confirmPasswordError.isErrorEnabled = false
+                confirmPasswordError.error = null
+            }
         }
     }
 }
