@@ -1,25 +1,25 @@
 package com.example.contactbook.data.repositories
 
-import android.app.Application
-import androidx.lifecycle.LiveData
-import com.example.contactbook.data.ApplicationDatabase
+import com.example.contactbook.data.daos.UserDao
 import com.example.contactbook.data.entities.User
+import java.util.*
 
-class UserRepository(private val application: Application) {
+class UserRepository(private val userDao: UserDao) {
 
-    private  val userDao = ApplicationDatabase.getDatabase(application).userDao()
-
-    suspend fun addUser(user : User){
+    suspend fun addUser(
+        firstName: String, lastName: String, email: String, password: String
+    ) {
+        val id = UUID.randomUUID().toString()
+        val passwordHash = password
+        val user = User(id,  firstName, lastName, email, passwordHash)
         userDao.addUser(user)
     }
 
-    fun  authenticateUser(email : String, password : String) : LiveData<User>{
-        return userDao.authenticateUser(email, password)
+    suspend fun getUserByEmail(email: String): User? {
+        return userDao.getUserByEmail(email)
     }
 
-    fun getUserById(id : String) : LiveData<User> {
-        return userDao.getUserById(id)
+    suspend fun isUserExists(email: String): Boolean {
+        return userDao.isUserExists(email)
     }
-
-    val users : LiveData<List<User>> = userDao.getUsers()
 }

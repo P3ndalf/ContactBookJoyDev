@@ -4,16 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.contactbook.data.daos.IContactDao
-import com.example.contactbook.data.daos.IUserDao
+import com.example.contactbook.data.daos.ContactDao
+import com.example.contactbook.data.daos.UserDao
 import com.example.contactbook.data.entities.Contact
 import com.example.contactbook.data.entities.User
 
 @Database(entities = [User::class, Contact::class], version = 1, exportSchema = false)
 abstract class ApplicationDatabase: RoomDatabase() {
 
-    abstract fun userDao() : IUserDao
-    abstract fun contactDao() : IContactDao
+    abstract fun userDao() : UserDao
+    abstract fun contactDao() : ContactDao
     companion object{
         @Volatile
         private var INSTANCE: com.example.contactbook.data.ApplicationDatabase? = null
