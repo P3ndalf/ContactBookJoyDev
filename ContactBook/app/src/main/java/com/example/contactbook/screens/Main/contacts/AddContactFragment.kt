@@ -38,7 +38,7 @@ class AddContactFragment : Fragment() {
         }
 
         mContactViewModel = ViewModelProvider(this).get(ContactViewModel::class.java)
-        inputValidationService = InputValidationService(this.requireContext())
+        inputValidationService = InputValidationService()
         authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(this.requireActivity())
 
         binding.addBtn.setOnClickListener{

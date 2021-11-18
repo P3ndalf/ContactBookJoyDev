@@ -8,7 +8,7 @@ import com.example.contactbook.services.abstractions.IInputValidationService
 import com.google.android.material.textfield.TextInputEditText
 
 
-class InputValidationService(private var currentContext: Context) : IInputValidationService {
+class InputValidationService() : IInputValidationService {
 
     override fun loginInputValidation(
         email: String, password: String,

@@ -25,5 +25,5 @@ class ContactViewModel(application : Application) : AndroidViewModel(application
 
     fun getContacts(ownerId : String) : LiveData<List<Contact>> {
             return repository.getContacts(ownerId)
-        }
+    }
 }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -16,13 +15,10 @@ import com.example.contactbook.data.entities.User
 import com.example.contactbook.data.services.InputValidationService
 import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
-import com.example.contactbook.databinding.FragmentLoginBinding
 import com.example.contactbook.databinding.FragmentRegisterBinding
 import com.example.contactbook.services.HashService
 import com.example.contactbook.services.abstractions.IAuthorizedUserSharedPreferencesService
 import com.example.contactbook.services.abstractions.IHashService
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 class RegisterFragment : Fragment() {
@@ -44,9 +40,7 @@ class RegisterFragment : Fragment() {
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         hashService = HashService()
 
-        val inputValidationService: InputValidationService = InputValidationService(
-            this.requireContext()
-        )
+        val inputValidationService: InputValidationService = InputValidationService()
 
         binding.loginFragmentButton.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)

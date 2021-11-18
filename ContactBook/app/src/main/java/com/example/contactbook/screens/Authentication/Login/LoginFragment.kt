@@ -2,13 +2,10 @@ package com.example.contactbook.screens.Authentication.Login
 
 import android.app.Activity
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -22,13 +19,10 @@ import com.example.contactbook.data.services.InputValidationService
 import com.example.contactbook.services.AuthorizedUserSharedPreferencesService
 import com.example.contactbook.data.viewModels.UserViewModel
 import com.example.contactbook.databinding.FragmentLoginBinding
-import com.example.contactbook.databinding.FragmentUserprofileBinding
 import com.example.contactbook.services.HashService
 import com.example.contactbook.services.abstractions.IAuthorizedUserSharedPreferencesService
 import com.example.contactbook.services.abstractions.IHashService
 import com.example.contactbook.services.abstractions.IInputValidationService
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 
@@ -45,7 +39,7 @@ class LoginFragment() : Fragment() {
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
         mUserViewModel =
-            ViewModelProvider(this).get(com.example.contactbook.data.viewModels.UserViewModel::class.java)
+            ViewModelProvider(this).get(UserViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -60,7 +54,7 @@ class LoginFragment() : Fragment() {
         if (authorizedUserSharedPreferencesService.isAuthorized()) {
             startActivity(Intent(requireActivity(), MainActivity::class.java))
         } else {
-            inputValidationService = InputValidationService(this.requireContext())
+            inputValidationService = InputValidationService()
             with(binding) {
                 binding.registerFragmentButton.setOnClickListener {
                     findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
@@ -79,7 +73,6 @@ class LoginFragment() : Fragment() {
                     changeLayoutValidity()
                 }
             }
-
         }
         return binding.root
     }
