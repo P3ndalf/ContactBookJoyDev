@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.contactbook.screens.Authentication.Login.LoginFragment"
+        android:name="com.example.contactbook.ui.views.Authentication.Login.LoginFragment"
         android:label="Login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.contactbook.screens.Authentication.Registration.RegisterFragment"
+        android:name="com.example.contactbook.ui.views.Authentication.Registration.RegisterFragment"
         android:label="Register" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
@@ -23,6 +23,6 @@
     </fragment>
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.example.contactbook.screens.List.ListFragment"
+        android:name="com.example.contactbook.ui.views.List.ListFragment"
         android:label="ListFragment" />
 </navigation>

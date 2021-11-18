@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/contactsFragment"
-        android:name="com.example.contactbook.screens.Main.contacts.ContactsFragment"
+        android:name="com.example.contactbook.ui.views.Main.contacts.ContactsFragment"
         android:label="Contacts" >
         <action
             android:id="@+id/action_contactsFragment_to_addContactFragment"
@@ -14,11 +14,11 @@
     </fragment>
     <fragment
         android:id="@+id/userProfileFragment"
-        android:name="com.example.contactbook.screens.Main.UserProfileFragment"
+        android:name="com.example.contactbook.ui.views.Main.UserProfileFragment"
         android:label="User Profile" />
     <fragment
         android:id="@+id/addContactFragment"
-        android:name="com.example.contactbook.screens.Main.contacts.AddContactFragment"
+        android:name="com.example.contactbook.ui.views.Main.contacts.AddContactFragment"
         android:label="AddContactFragment" >
         <action
             android:id="@+id/action_addContactFragment_to_contactsFragment"
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/editContactFragment"
-        android:name="com.example.contactbook.screens.Main.contacts.EditContactFragment"
+        android:name="com.example.contactbook.ui.views.Main.contacts.EditContactFragment"
         android:label="EditContactFragment" >
         <action
             android:id="@+id/action_editContactFragment_to_contactDetailFragment"
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/contactDetailFragment"
-        android:name="com.example.contactbook.screens.Main.contacts.ContactDetailFragment"
+        android:name="com.example.contactbook.ui.views.Main.contacts.ContactDetailFragment"
         android:label="ContactDetailFragment" >
         <action
             android:id="@+id/action_contactDetailFragment_to_editContactFragment"
@@ -42,6 +42,6 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.contactbook.screens.Main.settings.SettingsFragment"
+        android:name="com.example.contactbook.ui.views.Main.settings.SettingsFragment"
         android:label="Settings" />
 </navigation>
