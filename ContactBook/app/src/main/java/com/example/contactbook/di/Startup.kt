@@ -3,8 +3,10 @@ package com.example.contactbook.di
 import android.content.Context
 import androidx.room.Room
 import com.example.contactbook.data.ApplicationDatabase
+import com.example.contactbook.data.daos.ContactDao
 import com.example.contactbook.data.daos.UserDao
-import com.example.contactbook.data.repositories.UserRepository
+import com.example.contactbook.data.repositories.implementations.ContactRepository
+import com.example.contactbook.data.repositories.implementations.UserRepository
 import com.example.contactbook.data.services.HashService
 import dagger.Module
 import dagger.Provides
@@ -37,4 +39,8 @@ class Startup {
     @Singleton
     fun provideUserRepository(userDao: UserDao, hashService : HashService) =
         UserRepository(userDao, hashService)
+
+    @Provides
+    @Singleton
+    fun provideContactRepository(contactDao: ContactDao) = ContactRepository(contactDao)
 }

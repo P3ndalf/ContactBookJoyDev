@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.contactbook.databinding.FragmentContactDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ContactDetailFragment : Fragment() {
     private var _binding: FragmentContactDetailBinding? = null
     private val binding get() = _binding!!

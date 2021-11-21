@@ -13,7 +13,7 @@ class InputValidationService @Inject constructor(): IInputValidationService {
     ): Array<Boolean> {
         var flags : Array<Boolean> = arrayOf(true, true)
         flags[0] = !(!email.contains("@", false) || TextUtils.isEmpty(email))
-        flags[1] = !TextUtils.isEmpty(password)
+        flags[1] = !password.isBlank()
         return flags
     }
 
@@ -21,13 +21,13 @@ class InputValidationService @Inject constructor(): IInputValidationService {
         name : String, instagram : String, phoneNumber : String
     ): Array<Boolean> {
         var flags : Array<Boolean> = arrayOf(true, true, true)
-        if (TextUtils.isEmpty(name)){
+        if (name.isBlank()){
             flags[0] = false
         }
-        if (TextUtils.isEmpty(instagram)){
+        if (instagram.isBlank()){
             flags[1] = false
         }
-        if (TextUtils.isEmpty(phoneNumber)){
+        if (phoneNumber.isBlank()){
             flags[2] = false
         }
         return flags

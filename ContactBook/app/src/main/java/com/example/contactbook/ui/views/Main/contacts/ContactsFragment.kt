@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -16,24 +17,24 @@ import com.example.contactbook.ui.viewModels.ContactViewModel
 import com.example.contactbook.databinding.FragmentContactsBinding
 import com.example.contactbook.data.services.AuthorisedSharedPreferencesService
 import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPreferencesService
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ContactsFragment : Fragment() {
-    private var _binding: FragmentContactsBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding : FragmentContactsBinding
     private lateinit var authorisedSharedPreferencesService: IAuthorisedSharedPreferencesService
 
+    private val mContactViewModel : ContactViewModel  by viewModels()
 
-    private lateinit var mContactViewModel : ContactViewModel
     private lateinit var adapter: ContactsAdapter
     private lateinit var contactsRecyclerView : RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentContactsBinding.inflate(inflater, container, false)
+    ): View {
+        binding = FragmentContactsBinding.inflate(inflater, container, false)
 
-        mContactViewModel = ViewModelProvider(this).get(ContactViewModel::class.java)
         contactsRecyclerView = binding.contactListRecyclerView
         adapter = ContactsAdapter()
 
@@ -51,9 +52,10 @@ class ContactsFragment : Fragment() {
         }
 
         mContactViewModel.getContacts(authorisedSharedPreferencesService.loadCurrentUser().id).
-            observe(viewLifecycleOwner, Observer{ contacts ->
-                adapter.setData(contacts)
-            })
+        observe(viewLifecycleOwner, { contacts ->
+            adapter.setData(contacts)
+        })
+
         return binding.root
     }
 

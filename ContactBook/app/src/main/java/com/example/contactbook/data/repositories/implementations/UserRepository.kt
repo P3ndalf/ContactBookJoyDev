@@ -1,4 +1,4 @@
-package com.example.contactbook.data.repositories
+package com.example.contactbook.data.repositories.implementations
 
 import com.example.contactbook.data.daos.UserDao
 import com.example.contactbook.data.entities.User

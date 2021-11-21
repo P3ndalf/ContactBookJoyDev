@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactbook.R
 import com.example.contactbook.data.entities.Contact
+import dagger.hilt.android.AndroidEntryPoint
 
 class ContactsAdapter : RecyclerView.Adapter<ContactsAdapter.MyViewHolder>() {
 

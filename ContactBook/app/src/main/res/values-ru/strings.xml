@@ -22,5 +22,8 @@
     <string name="instagram">инстаграм</string>
     <string name="phoneNumber">номер телефона</string>
     <string name="birthday">день рождения</string>
-    <string name="gender">пол</string>
+    <string name="gender">Пол</string>
+    <string name="male">Мужчина</string>
+    <string name="female">Женщина</string>
+    <string name="others">Монке</string>
 </resources>

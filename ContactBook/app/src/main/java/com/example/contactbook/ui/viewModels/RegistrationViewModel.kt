@@ -2,7 +2,7 @@ package com.example.contactbook.ui.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.contactbook.data.repositories.UserRepository
+import com.example.contactbook.data.repositories.implementations.UserRepository
 import com.example.contactbook.data.services.InputValidationService
 import com.example.contactbook.data.services.abstractions.IInputValidationService
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +24,7 @@ class RegistrationViewModel @Inject constructor(
     }
 
     suspend fun addUser(
-        firstName: String, lastName: String, email: String,  password: String
+        firstName: String, lastName: String, email: String, password: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             userRepository.addUser(firstName, lastName, email, password)
