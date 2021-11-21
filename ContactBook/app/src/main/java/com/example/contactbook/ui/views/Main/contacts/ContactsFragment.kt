@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.contactbook.R
 import com.example.contactbook.ui.viewModels.ContactViewModel
 import com.example.contactbook.databinding.FragmentContactsBinding
-import com.example.contactbook.data.services.AuthorizedUserSharedPreferencesService
-import com.example.contactbook.data.services.abstractions.IAuthorizedUserSharedPreferencesService
+import com.example.contactbook.data.services.AuthorisedSharedPreferencesService
+import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPreferencesService
 
 class ContactsFragment : Fragment() {
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var authorizedUserSharedPreferencesService: IAuthorizedUserSharedPreferencesService
+    private lateinit var authorisedSharedPreferencesService: IAuthorisedSharedPreferencesService
 
 
     private lateinit var mContactViewModel : ContactViewModel
@@ -39,7 +39,7 @@ class ContactsFragment : Fragment() {
 
         contactsRecyclerView.adapter = adapter
         contactsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(
+        authorisedSharedPreferencesService = AuthorisedSharedPreferencesService(
             requireActivity().getSharedPreferences(
                 "AuthorizedUser",
                 Context.MODE_PRIVATE
@@ -50,7 +50,7 @@ class ContactsFragment : Fragment() {
             findNavController().navigate(R.id.action_contactsFragment_to_addContactFragment)
         }
 
-        mContactViewModel.getContacts(authorizedUserSharedPreferencesService.loadCurrentUser().id).
+        mContactViewModel.getContacts(authorisedSharedPreferencesService.loadCurrentUser().id).
             observe(viewLifecycleOwner, Observer{ contacts ->
                 adapter.setData(contacts)
             })

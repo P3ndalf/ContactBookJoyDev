@@ -2,7 +2,7 @@ package com.example.contactbook.data.services.abstractions
 
 import com.example.contactbook.data.entities.User
 
-interface IAuthorizedUserSharedPreferencesService {
+interface IAuthorisedSharedPreferencesService {
     fun saveCurrentUserData(user: User)
 
     fun deleteCurrentUserData()

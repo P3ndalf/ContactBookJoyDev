@@ -12,15 +12,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.contactbook.R
 import com.example.contactbook.data.entities.User
-import com.example.contactbook.data.services.AuthorizedUserSharedPreferencesService
-import com.example.contactbook.data.services.abstractions.IAuthorizedUserSharedPreferencesService
+import com.example.contactbook.data.services.AuthorisedSharedPreferencesService
+import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPreferencesService
 import com.example.contactbook.databinding.FragmentRegisterBinding
 import com.example.contactbook.ui.activities.MainActivity
 import com.example.contactbook.ui.viewModels.RegistrationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -28,7 +27,7 @@ class RegisterFragment : Fragment() {
 
     private val mRegistrationViewModel: RegistrationViewModel by viewModels()
 
-    lateinit var authorizedUserSharedPreferencesService: IAuthorizedUserSharedPreferencesService
+    lateinit var authorizedUserSharedPreferencesService: IAuthorisedSharedPreferencesService
 
     var inputValidationFlags: Array<Boolean> = Array(5) { true }
 
@@ -38,14 +37,14 @@ class RegisterFragment : Fragment() {
     ): View {
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
-        authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(
+        authorizedUserSharedPreferencesService = AuthorisedSharedPreferencesService(
             requireActivity().getSharedPreferences(
                 "AuthorizedUser",
                 Context.MODE_PRIVATE
             )
         )
 
-        binding.loginFragmentButton.setOnClickListener{
+        binding.loginFragmentButton.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 
@@ -127,5 +126,4 @@ class RegisterFragment : Fragment() {
             }
         }
     }
-
 }

@@ -18,4 +18,7 @@ interface UserDao {
 
     @Query("Select 1 FROM userTable WHERE EXISTS (SELECT * FROM userTable WHERE email = :email )")
     suspend fun isUserExists(email: String): Boolean
+
+    @Query("Select * FROM userTable WHERE email = :email AND passwordHash = :passwordHash")
+    fun authenticateUser(email:String, passwordHash: String) : User?
 }

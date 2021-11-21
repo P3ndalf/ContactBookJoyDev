@@ -2,10 +2,10 @@ package com.example.contactbook.data.services
 
 import android.content.SharedPreferences
 import com.example.contactbook.data.entities.User
-import com.example.contactbook.data.services.abstractions.IAuthorizedUserSharedPreferencesService
+import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPreferencesService
 
-class AuthorizedUserSharedPreferencesService(private var sharedPreferences: SharedPreferences) :
-    IAuthorizedUserSharedPreferencesService {
+class AuthorisedSharedPreferencesService(private var sharedPreferences: SharedPreferences) :
+    IAuthorisedSharedPreferencesService {
 
 
     override fun saveCurrentUserData(user: User) {

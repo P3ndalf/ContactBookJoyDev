@@ -13,14 +13,14 @@ import com.example.contactbook.data.entities.Contact
 import com.example.contactbook.data.services.InputValidationService
 import com.example.contactbook.ui.viewModels.ContactViewModel
 import com.example.contactbook.databinding.FragmentAddContactBinding
-import com.example.contactbook.data.services.AuthorizedUserSharedPreferencesService
-import com.example.contactbook.data.services.abstractions.IAuthorizedUserSharedPreferencesService
+import com.example.contactbook.data.services.AuthorisedSharedPreferencesService
+import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPreferencesService
 import com.example.contactbook.data.services.abstractions.IInputValidationService
 import java.util.*
 
 class AddContactFragment : Fragment() {
     private lateinit var binding: FragmentAddContactBinding
-    private lateinit var authorizedUserSharedPreferencesService: IAuthorizedUserSharedPreferencesService
+    private lateinit var authorisedSharedPreferencesService: IAuthorisedSharedPreferencesService
     private lateinit var inputValidationService: IInputValidationService
     private lateinit var mContactViewModel: ContactViewModel
 
@@ -38,7 +38,7 @@ class AddContactFragment : Fragment() {
 
         mContactViewModel = ViewModelProvider(this).get(ContactViewModel::class.java)
         inputValidationService = InputValidationService()
-        authorizedUserSharedPreferencesService = AuthorizedUserSharedPreferencesService(
+        authorisedSharedPreferencesService = AuthorisedSharedPreferencesService(
             requireActivity().getSharedPreferences(
                 "AuthorizedUser",
                 Context.MODE_PRIVATE
@@ -54,7 +54,7 @@ class AddContactFragment : Fragment() {
 
     private fun addContact() {
         var id = UUID.randomUUID().toString()
-        var ownerId = authorizedUserSharedPreferencesService.loadCurrentUser().id
+        var ownerId = authorisedSharedPreferencesService.loadCurrentUser().id
         var birthday = Calendar.getInstance().timeInMillis
         var gender = true
         with(binding) {

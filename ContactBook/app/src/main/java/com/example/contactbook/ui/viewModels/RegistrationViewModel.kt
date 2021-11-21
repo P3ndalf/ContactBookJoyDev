@@ -14,20 +14,20 @@ import javax.inject.Inject
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
     private val userRepository: UserRepository,
+    private val inputValidationService: InputValidationService
 ) :
     ViewModel() {
 
-    private val inputValidationService: IInputValidationService = InputValidationService()
 
     suspend fun isUserExists(email: String): Boolean = withContext(Dispatchers.IO) {
         return@withContext userRepository.isUserExists(email)
     }
 
     suspend fun addUser(
-        firstName: String, lastName: String, email: String, password: String
+        firstName: String, lastName: String, email: String,  password: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            userRepository.addUser(firstName, email, lastName, password)
+            userRepository.addUser(firstName, lastName, email, password)
         }
     }
 

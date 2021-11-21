@@ -2,8 +2,9 @@ package com.example.contactbook.data.services
 
 import com.example.contactbook.data.services.abstractions.IHashService
 import java.security.MessageDigest
+import javax.inject.Inject
 
-class HashService : IHashService {
+class HashService @Inject constructor() : IHashService {
 
     override fun getHash(inputString : String, algorithm : String): String{
         val bytes = MessageDigest.getInstance(algorithm).digest(inputString.toByteArray())

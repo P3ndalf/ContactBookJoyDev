@@ -3,9 +3,10 @@ package com.example.contactbook.data.services
 import android.text.TextUtils
 
 import com.example.contactbook.data.services.abstractions.IInputValidationService
+import javax.inject.Inject
 
 
-class InputValidationService() : IInputValidationService {
+class InputValidationService @Inject constructor(): IInputValidationService {
 
     override fun loginInputValidation(
         email: String, password: String,

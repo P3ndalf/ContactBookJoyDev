@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.contactbook.data.ApplicationDatabase
 import com.example.contactbook.data.daos.UserDao
 import com.example.contactbook.data.repositories.UserRepository
+import com.example.contactbook.data.services.HashService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,5 +35,6 @@ class Startup {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userDao: UserDao) = UserRepository(userDao)
+    fun provideUserRepository(userDao: UserDao, hashService : HashService) =
+        UserRepository(userDao, hashService)
 }

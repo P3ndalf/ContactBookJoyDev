@@ -1,5 +1,6 @@
 package com.example.contactbook.ui.views.Authentication.Login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +11,24 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.contactbook.R
+import com.example.contactbook.data.services.AuthorisedSharedPreferencesService
+import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPreferencesService
 import com.example.contactbook.databinding.FragmentLoginBinding
-import com.example.contactbook.ui.activities.AuthenticationActivity
+import com.example.contactbook.ui.activities.MainActivity
 import com.example.contactbook.ui.viewModels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginFragment() : Fragment() {
-
+class LoginFragment : Fragment(){
     private lateinit var binding: FragmentLoginBinding
 
     private val mLoginViewModel: LoginViewModel by viewModels()
 
+    lateinit var authorizedUserSharedPreferencesService: IAuthorisedSharedPreferencesService
+
+    var inputValidationFlags: Array<Boolean> = Array(2) { true }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,24 +36,54 @@ class LoginFragment() : Fragment() {
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
+        authorizedUserSharedPreferencesService = AuthorisedSharedPreferencesService(
+            requireActivity().getSharedPreferences(
+                "AuthorizedUser",
+                Context.MODE_PRIVATE
+            )
+        )
+
+        if (authorizedUserSharedPreferencesService.isAuthorized()) {
+            startActivity(
+                Intent(
+                    requireContext(),
+                    MainActivity::class.java
+                )
+            )
+        }
 
         with(binding) {
             registerFragmentButton.setOnClickListener {
                 findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             }
             login.setOnClickListener {
-
-                lifecycleScope.launch(Main) {
-                    val user = mLoginViewModel.getUserByEmail(email.text.toString())
-
-                    if (user?.passwordHash == password.text.toString()) {
-
-                        startActivity(Intent(requireContext(), AuthenticationActivity::class.java))
-                    } else {
-                        setValidityWrongPassword()
+                inputValidationFlags = mLoginViewModel.checkInputValidation(
+                    email.text.toString(),
+                    password.text.toString()
+                )
+                if (!inputValidationFlags.contains(false)) {
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        var user = mLoginViewModel.authenticateUser(
+                            email.text.toString(),
+                            password.text.toString()
+                        )
+                        if (user != null) {
+                            authorizedUserSharedPreferencesService.saveCurrentUserData(
+                                user
+                            )
+                            startActivity(
+                                Intent(
+                                    requireContext(),
+                                    MainActivity::class.java
+                                )
+                            )
+                        } else {
+                            setValidityWrongPassword()
+                        }
                     }
+                } else {
+                    changeLayoutValidity()
                 }
-
             }
         }
         return binding.root
@@ -56,7 +91,20 @@ class LoginFragment() : Fragment() {
 
     private fun changeLayoutValidity() {
         with(binding) {
-
+            if (!inputValidationFlags[0]) {
+                emailError.isErrorEnabled = true
+                emailError.error = "Enter correct email"
+            } else {
+                emailError.isErrorEnabled = false
+                emailError.error = null
+            }
+            if (!inputValidationFlags[1]) {
+                passwordError.isErrorEnabled = true
+                passwordError.error = "Fill password field"
+            } else {
+                passwordError.isErrorEnabled = false
+                passwordError.error = null
+            }
         }
     }
 
@@ -68,5 +116,4 @@ class LoginFragment() : Fragment() {
             passwordError.error = "Incorrect password or email"
         }
     }
-
 }
