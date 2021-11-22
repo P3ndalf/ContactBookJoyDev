@@ -36,11 +36,9 @@ class Startup {
     fun provideContactDao(database: ApplicationDatabase) = database.contactDao()
 
     @Provides
-    @Singleton
     fun provideUserRepository(userDao: UserDao, hashService : HashService) =
         UserRepository(userDao, hashService)
 
     @Provides
-    @Singleton
     fun provideContactRepository(contactDao: ContactDao) = ContactRepository(contactDao)
 }
