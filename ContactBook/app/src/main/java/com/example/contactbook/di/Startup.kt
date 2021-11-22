@@ -28,11 +28,9 @@ class Startup {
     ).build()
 
     @Provides
-    @Singleton
     fun provideUserDao(database: ApplicationDatabase) = database.userDao()
 
     @Provides
-    @Singleton
     fun provideContactDao(database: ApplicationDatabase) = database.contactDao()
 
     @Provides
