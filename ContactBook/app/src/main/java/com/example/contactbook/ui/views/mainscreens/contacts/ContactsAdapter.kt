@@ -1,16 +1,14 @@
-package com.example.contactbook.ui.views.Main.contacts
+package com.example.contactbook.ui.views.mainscreens.contacts
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactbook.R
 import com.example.contactbook.data.entities.Contact
-import dagger.hilt.android.AndroidEntryPoint
 
-class ContactsAdapter : RecyclerView.Adapter<ContactsAdapter.MyViewHolder>() {
+class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.MyViewHolder>() {
 
     private var contactsList = emptyList<Contact>()
 

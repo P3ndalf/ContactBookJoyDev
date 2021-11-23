@@ -1,4 +1,4 @@
-package com.example.contactbook.ui.views.Main
+package com.example.contactbook.ui.views.mainscreens
 
 import android.content.Context
 import android.content.Intent
@@ -14,9 +14,8 @@ import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPrefe
 import com.example.contactbook.databinding.FragmentUserprofileBinding
 import com.example.contactbook.ui.activities.AuthenticationActivity
 import com.example.contactbook.ui.viewModels.UserProfileModel
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+
 class UserProfileFragment : Fragment() {
     private lateinit var binding: FragmentUserprofileBinding
     private val mUserProfileModel: UserProfileModel by viewModels()
