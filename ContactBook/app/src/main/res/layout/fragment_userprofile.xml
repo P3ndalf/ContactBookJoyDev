@@ -28,6 +28,7 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/main"
         app:cardCornerRadius="10dp"
+        app:cardElevation="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -35,7 +36,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:ignore="SpUsage,RtlSymmetry">
+            tools:ignore="SpUsage,RtlSymmetry,RtlCompat">
 
             <ImageView
                 android:id="@+id/accountAvatar"
@@ -53,66 +54,83 @@
 
             <TextView
                 android:id="@+id/userLastNameTV"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/accountAvatar"
-
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="4dp"
+
                 android:layout_marginEnd="5dp"
-
                 android:background="@drawable/bg_rounded_tv"
+                android:fontFamily="serif"
+
+                android:gravity="center"
+                android:minWidth="150dp"
+
+                android:minHeight="30dp"
+
                 android:paddingStart="5dp"
-                android:textSize="18dp"
-                android:textColor="@color/black"
-
                 android:text="lastname"
-
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/accountAvatar"
-                app:layout_constraintTop_toBottomOf="@+id/userNameTV"
+                app:layout_constraintTop_toBottomOf="@+id/userNameTV" />
+
+            <TextView
+                android:id="@+id/userNameTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/accountAvatar"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/bg_rounded_tv"
+                android:fontFamily="serif"
+
+                android:gravity="center"
+                android:minWidth="150dp"
+
+                android:minHeight="30dp"
+                android:paddingStart="5dp"
+                android:text="name"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/accountAvatar"
+                app:layout_constraintTop_toTopOf="parent"
                  />
 
             <TextView
                 android:id="@+id/emailTV"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/userNameTV"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
+
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="5dp"
-                android:text="@string/register_email_hint"
-
                 android:background="@drawable/bg_rounded_tv"
-                android:paddingStart="5dp"
-                android:textSize="18dp"
-                android:textColor="@color/black"
+                android:fontFamily="serif"
 
+                android:gravity="center|start"
+
+                android:minWidth="150dp"
+                android:minHeight="30dp"
+                android:paddingStart="5dp"
+                android:text="@string/register_email_hint"
+                android:textColor="@color/black"
+                android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/accountAvatar"
                 app:layout_constraintTop_toBottomOf="@+id/userLastNameTV" />
 
-            <TextView
-                android:id="@+id/userNameTV"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/accountAvatar"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="5dp"
-
-                android:background="@drawable/bg_rounded_tv"
-                android:paddingStart="5dp"
-                android:textSize="18dp"
-                android:textColor="@color/black"
-
-                android:text="name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/accountAvatar"
-                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

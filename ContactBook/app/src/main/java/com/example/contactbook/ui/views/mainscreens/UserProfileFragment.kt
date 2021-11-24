@@ -14,8 +14,9 @@ import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPrefe
 import com.example.contactbook.databinding.FragmentUserprofileBinding
 import com.example.contactbook.ui.activities.AuthenticationActivity
 import com.example.contactbook.ui.viewModels.UserProfileModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class UserProfileFragment : Fragment() {
     private lateinit var binding: FragmentUserprofileBinding
     private val mUserProfileModel: UserProfileModel by viewModels()
@@ -45,9 +46,11 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun fillUserFields(user : User) {
-        binding.userNameTV.text = user.firstName
-        binding.userLastNameTV.text = user.lastName
-        binding.emailTV.text = user.email
+        with(binding){
+            userNameTV.text = user.firstName
+            userLastNameTV.text = user.lastName
+            emailTV.text = user.email
+        }
     }
 
     private fun logOut(){
