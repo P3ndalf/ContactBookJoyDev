@@ -27,7 +27,7 @@ data class Contact (
 
     var birthday : Long,
 
-    var gender : Boolean,
+    var gender : String,
 
     var instagram : String,
 
