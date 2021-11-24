@@ -11,11 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactbook.R
-import com.example.contactbook.ui.viewModels.ContactViewModel
-import com.example.contactbook.databinding.FragmentContactsBinding
 import com.example.contactbook.data.services.AuthorisedSharedPreferencesService
 import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPreferencesService
-import com.example.contactbook.ui.views.mainscreens.contacts.ContactsAdapter
+import com.example.contactbook.databinding.FragmentContactsBinding
+import com.example.contactbook.ui.viewModels.ContactViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +34,14 @@ class ContactsFragment : Fragment() {
 
         contactsRecyclerView = binding.contactListRecyclerView
 
-        val adapter = ContactsAdapter()
+        val adapter = ContactsAdapter {
+            contact ->
+            run {
+                val action = ContactsFragmentDirections.actionContactsFragmentToContactDetailFragment(contact.id)
+                findNavController().navigate(action)
+            }
+
+        }
 
         contactsRecyclerView.adapter = adapter
         contactsRecyclerView.layoutManager = LinearLayoutManager(requireContext())

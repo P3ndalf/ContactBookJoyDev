@@ -8,9 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.contactbook.R
 import com.example.contactbook.data.entities.Contact
 
-class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.MyViewHolder>() {
+class ContactsAdapter (private val onItemClicked: (Contact) -> Unit): RecyclerView.Adapter<ContactsAdapter.MyViewHolder>() {
 
     private var contactsList = emptyList<Contact>()
+
+    interface OnItemClickListener{
+        fun onClickListener(contact: Contact)
+    }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -28,8 +32,13 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = contactsList[position]
-        holder.itemView.findViewById<TextView>(R.id.nameTV).text = currentItem.contactName
-        holder.itemView.findViewById<TextView>(R.id.phoneNumberTV).text = currentItem.phoneNumber
+        with(holder){
+            itemView.findViewById<TextView>(R.id.nameTV).text = currentItem.contactName
+            itemView.findViewById<TextView>(R.id.phoneNumberTV).text = currentItem.phoneNumber
+            itemView.setOnClickListener{
+                onItemClicked(currentItem)
+            }
+        }
     }
 
     fun setData(contacts: List<Contact>) {

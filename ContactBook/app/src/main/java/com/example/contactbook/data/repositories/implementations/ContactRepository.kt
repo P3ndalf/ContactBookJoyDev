@@ -25,4 +25,8 @@ class ContactRepository(private val contactDao: ContactDao) {
     fun getContacts(ownerId: String): LiveData<List<Contact>> {
         return contactDao.getContacts(ownerId)
     }
+
+    suspend fun getContact(id: String): Contact {
+        return contactDao.getContact(id)
+    }
 }

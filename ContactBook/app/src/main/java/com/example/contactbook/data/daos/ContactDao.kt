@@ -15,4 +15,7 @@ interface ContactDao {
 
     @Query("SELECT * FROM contactsTable WHERE ownerId = :ownerId")
     fun getContacts(ownerId : String) : LiveData<List<Contact>>
+
+    @Query("SELECT * FROM contactsTable WHERE id = :id")
+    fun getContact(id : String) : Contact
 }
