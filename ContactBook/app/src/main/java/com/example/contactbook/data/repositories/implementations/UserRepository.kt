@@ -8,9 +8,8 @@ import java.util.*
 class UserRepository(private val userDao: UserDao, private val hashService: IHashService) {
 
     suspend fun addUser(
-        firstName: String, lastName: String, email: String, password: String
+        id : String, firstName: String, lastName: String, email: String, password: String
     ) {
-        val id = UUID.randomUUID().toString()
         val passwordHash = hashService.getHash(password,"SHA-256")
         val user = User(id, firstName, lastName, email, passwordHash)
         userDao.addUser(user)

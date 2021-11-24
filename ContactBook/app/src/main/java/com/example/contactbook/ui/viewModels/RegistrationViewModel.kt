@@ -24,10 +24,10 @@ class RegistrationViewModel @Inject constructor(
     }
 
     suspend fun addUser(
-        firstName: String, lastName: String, email: String, password: String
+        userId: String, firstName: String, lastName: String, email: String, password: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            userRepository.addUser(firstName, lastName, email, password)
+            userRepository.addUser(userId, firstName, lastName, email, password)
         }
     }
 

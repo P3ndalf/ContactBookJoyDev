@@ -20,6 +20,7 @@ import com.example.contactbook.ui.viewModels.RegistrationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -61,8 +62,10 @@ class RegisterFragment : Fragment() {
                 if (!inputValidationFlags.contains(false)
                 ) {
                     lifecycleScope.launch(Dispatchers.Main) {
+                        var userId = UUID.randomUUID().toString()
 
                         mRegistrationViewModel.addUser(
+                            userId,
                             name.text.toString(),
                             lastname.text.toString(),
                             email.text.toString(),
@@ -70,7 +73,7 @@ class RegisterFragment : Fragment() {
                         )
                         authorizedUserSharedPreferencesService.saveCurrentUserData(
                             User(
-                                "",
+                                userId,
                                 name.text.toString(),
                                 lastname.text.toString(),
                                 email.text.toString(),
