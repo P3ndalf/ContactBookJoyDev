@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
     <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
-        android:title="Settings"
+        android:title="@string/settings"
         android:iconTint="@color/main"
+
         />
 
     <item
         android:id="@+id/contactsFragment"
         android:icon="@drawable/ic_contact_phone"
-        android:title="Contacts"
+        android:title="@string/contacts"
         android:iconTint="@color/main"/>
 
     <item
         android:id="@+id/userProfileFragment"
         android:icon="@drawable/ic_account_circle"
-        android:title="Profile"
+        android:title="@string/profile"
         android:iconTint="@color/main"/>
 </menu>
