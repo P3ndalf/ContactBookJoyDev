@@ -27,4 +27,7 @@
     <string name="female">Женщина</string>
     <string name="others">Монке</string>
     <string name="add_contact">Добавить контакт</string>
+    <string name="settings">Настройки</string>
+    <string name="contacts">Контакты</string>
+    <string name="profile">Профиль</string>
 </resources>

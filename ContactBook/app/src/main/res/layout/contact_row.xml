@@ -3,18 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingStart="25dp"
-    android:paddingEnd="25dp"
-    android:paddingBottom="10dp">
+    android:layout_height="wrap_content">
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="top|center_horizontal"
-        android:backgroundTint="@color/main"
-        app:cardCornerRadius="15dp"
+        android:elevation="40dp"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="8dp"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +27,6 @@
 
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="1dp"
                 android:text="Name"
                 android:textColor="@color/black"
                 android:textSize="30dp"
@@ -48,7 +45,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="Phone"
                 android:textColor="@color/black"
-                android:textSize="14dp"
+                android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="@+id/nameTV"
                 app:layout_constraintEnd_toStartOf="@+id/nameTV"
                 app:layout_constraintStart_toStartOf="parent"
