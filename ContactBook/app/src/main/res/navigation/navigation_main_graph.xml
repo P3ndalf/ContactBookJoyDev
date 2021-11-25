@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_userprofile"/>
     <fragment
         android:id="@+id/addContactFragment"
-        android:name="com.example.contactbook.ui.views.mainscreens.contacts.AddContactFragment"
+        android:name="com.example.contactbook.ui.views.mainscreens.contacts.add.AddContactFragment"
         android:label="AddContactFragment"
         tools:layout="@layout/fragment_add_contact">
         <action
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/editContactFragment"
-        android:name="com.example.contactbook.ui.views.mainscreens.contacts.EditContactFragment"
+        android:name="com.example.contactbook.ui.views.mainscreens.contacts.edit.EditContactFragment"
         android:label="EditContactFragment"
         tools:layout="@layout/fragment_edit_contact">
         <action
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/contactDetailFragment"
-        android:name="com.example.contactbook.ui.views.mainscreens.contacts.ContactDetailFragment"
+        android:name="com.example.contactbook.ui.views.mainscreens.contacts.detail.ContactDetailFragment"
         android:label="ContactDetailFragment"
         tools:layout="@layout/fragment_contact_detail">
         <action

@@ -1,4 +1,4 @@
-package com.example.contactbook.ui.views.mainscreens.contacts
+package com.example.contactbook.ui.views.mainscreens.contacts.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.example.contactbook.data.entities.Contact
 import com.example.contactbook.databinding.FragmentContactDetailBinding
 import com.example.contactbook.ui.viewModels.ContactDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint

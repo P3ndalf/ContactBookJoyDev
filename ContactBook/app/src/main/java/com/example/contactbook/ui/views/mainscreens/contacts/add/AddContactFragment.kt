@@ -1,4 +1,4 @@
-package com.example.contactbook.ui.views.mainscreens.contacts
+package com.example.contactbook.ui.views.mainscreens.contacts.add
 
 import android.content.Context
 import android.os.Bundle
@@ -60,7 +60,7 @@ class AddContactFragment : Fragment() {
                 nameET.text.toString(), instagramET.text.toString(), phoneNumberET.text.toString()
             )
             var gender = "Others"
-            when(genderRG.checkedRadioButtonId){
+            when (genderRG.checkedRadioButtonId) {
                 maleRB.id -> {
                     gender = "Male"
                 }

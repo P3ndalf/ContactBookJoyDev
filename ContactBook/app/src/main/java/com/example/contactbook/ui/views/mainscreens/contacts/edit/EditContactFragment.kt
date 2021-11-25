@@ -1,4 +1,4 @@
-package com.example.contactbook.ui.views.mainscreens.contacts
+package com.example.contactbook.ui.views.mainscreens.contacts.edit
 
 import android.os.Bundle
 import android.view.LayoutInflater
