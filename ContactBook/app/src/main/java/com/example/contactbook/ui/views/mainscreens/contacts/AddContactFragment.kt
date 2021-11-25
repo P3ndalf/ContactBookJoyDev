@@ -59,16 +59,13 @@ class AddContactFragment : Fragment() {
             inputValidationFlags = mContactViewModel.checkInputValidation(
                 nameET.text.toString(), instagramET.text.toString(), phoneNumberET.text.toString()
             )
-            var gender = "other"
-            genderRG.setOnCheckedChangeListener { radioGroup, checkedId ->
-                maleRB.apply {
-                    gender = text.toString()
+            var gender = "Others"
+            when(genderRG.checkedRadioButtonId){
+                maleRB.id -> {
+                    gender = "Male"
                 }
-                femaleRB.apply {
-                    gender = text.toString()
-                }
-                othersRB.apply {
-                    gender = text.toString()
+                femaleRB.id -> {
+                    gender = "Female"
                 }
             }
             if (!inputValidationFlags.contains(false)) {
