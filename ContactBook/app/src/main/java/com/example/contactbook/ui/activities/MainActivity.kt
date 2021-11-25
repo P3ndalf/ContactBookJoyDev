@@ -14,12 +14,15 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var fragmentContainerView : NavHostFragment
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val bottomNavigationBarView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        val fragmentContainerView = supportFragmentManager.findFragmentById(R.id.fragmentMainContainerView) as NavHostFragment
+        fragmentContainerView = supportFragmentManager.findFragmentById(R.id.fragmentMainContainerView) as NavHostFragment
         val navigationController = fragmentContainerView.navController
         val appBarConfig = AppBarConfiguration(setOf(
             R.id.settingsFragment,
@@ -29,4 +32,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navigationController,appBarConfig)
         bottomNavigationBarView.setupWithNavController(navigationController)
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return fragmentContainerView.navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
 }
