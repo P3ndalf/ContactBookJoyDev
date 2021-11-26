@@ -30,4 +30,6 @@
     <string name="settings">Настройки</string>
     <string name="contacts">Контакты</string>
     <string name="profile">Профиль</string>
+    <string name="more">Больше</string>
+    <string name="delete">Удалить</string>
 </resources>

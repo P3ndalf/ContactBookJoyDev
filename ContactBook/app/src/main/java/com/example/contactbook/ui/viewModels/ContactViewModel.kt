@@ -38,4 +38,10 @@ class ContactViewModel @Inject constructor(
     fun checkInputValidation(name: String, instagram: String, phone: String): Array<Boolean> {
         return inputValidationService.addContactInputValidation(name, instagram, phone)
     }
+    
+    fun deleteContacts(ownerId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            contactRepository.deleteContacts(ownerId)
+        }
+    }
 }

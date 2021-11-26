@@ -26,7 +26,15 @@ class ContactRepository(private val contactDao: ContactDao) {
         return contactDao.getContacts(ownerId)
     }
 
-    suspend fun getContact(id: String): Contact {
+    fun getContact(id: String): Contact {
         return contactDao.getContact(id)
+    }
+
+    suspend fun deleteContacts(ownerId : String){
+        contactDao.deleteContacts(ownerId)
+    }
+
+    suspend fun deleteContact(id: String){
+        contactDao.deleteContact(id)
     }
 }
