@@ -15,4 +15,19 @@ interface ContactDao {
 
     @Query("SELECT * FROM contactsTable WHERE ownerId = :ownerId")
     fun getContacts(ownerId : String) : LiveData<List<Contact>>
+<<<<<<< Updated upstream
+=======
+
+    @Query("SELECT * FROM contactsTable WHERE id = :id")
+    fun getContact(id : String) : Contact
+
+    @Query("DELETE FROM contactsTable WHERE ownerId = :ownerId")
+    fun deleteContacts(ownerId : String)
+
+    @Query("DELETE FROM contactsTable WHERE id = :id")
+    fun deleteContact(id : String)
+
+    @Update
+    suspend fun editContact(contact: Contact)
+>>>>>>> Stashed changes
 }

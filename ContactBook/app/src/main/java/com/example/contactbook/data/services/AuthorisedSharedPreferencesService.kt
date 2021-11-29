@@ -7,7 +7,6 @@ import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPrefe
 class AuthorisedSharedPreferencesService(private var sharedPreferences: SharedPreferences) :
     IAuthorisedSharedPreferencesService {
 
-
     override fun saveCurrentUserData(user: User) {
         var editor = sharedPreferences.edit()
 

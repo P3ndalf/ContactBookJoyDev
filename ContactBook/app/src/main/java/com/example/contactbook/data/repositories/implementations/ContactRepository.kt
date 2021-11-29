@@ -17,12 +17,30 @@ class ContactRepository(private val contactDao: ContactDao) {
         instagram: String,
         ownerId: String
     ) {
-        var id = UUID.randomUUID().toString()
-
+        val id = UUID.randomUUID().toString()
         contactDao.addContact(Contact(id, name, phoneNumber, birthday, gender, instagram, ownerId))
     }
 
     fun getContacts(ownerId: String): LiveData<List<Contact>> {
         return contactDao.getContacts(ownerId)
     }
+<<<<<<< Updated upstream
+=======
+
+    fun getContact(id: String): Contact {
+        return contactDao.getContact(id)
+    }
+
+    suspend fun deleteContacts(ownerId : String){
+        contactDao.deleteContacts(ownerId)
+    }
+
+    suspend fun deleteContact(id: String){
+        contactDao.deleteContact(id)
+    }
+
+    suspend fun editContact(contact: Contact) {
+        contactDao.editContact(contact)
+    }
+>>>>>>> Stashed changes
 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.contactbook">
 
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".di.ContactsApp"
         android:allowBackup="true"
@@ -24,4 +26,5 @@
 
         </activity>
     </application>
+
 </manifest>
