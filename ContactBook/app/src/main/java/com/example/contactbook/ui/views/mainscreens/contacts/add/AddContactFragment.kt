@@ -1,4 +1,4 @@
-package com.example.contactbook.ui.views.mainscreens.contacts
+package com.example.contactbook.ui.views.mainscreens.contacts.add
 
 import android.content.Context
 import android.os.Bundle

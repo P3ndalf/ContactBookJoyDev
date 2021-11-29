@@ -17,8 +17,7 @@ class ContactRepository(private val contactDao: ContactDao) {
         instagram: String,
         ownerId: String
     ) {
-        var id = UUID.randomUUID().toString()
-
+        val id = UUID.randomUUID().toString()
         contactDao.addContact(Contact(id, name, phoneNumber, birthday, gender, instagram, ownerId))
     }
 
@@ -26,7 +25,19 @@ class ContactRepository(private val contactDao: ContactDao) {
         return contactDao.getContacts(ownerId)
     }
 
-    suspend fun getContact(id: String): Contact {
+    fun getContact(id: String): Contact {
         return contactDao.getContact(id)
+    }
+
+    suspend fun deleteContacts(ownerId: String) {
+        contactDao.deleteContacts(ownerId)
+    }
+
+    suspend fun deleteContact(id: String) {
+        contactDao.deleteContact(id)
+    }
+
+    suspend fun editContact(contact: Contact) {
+        contactDao.editContact(contact)
     }
 }

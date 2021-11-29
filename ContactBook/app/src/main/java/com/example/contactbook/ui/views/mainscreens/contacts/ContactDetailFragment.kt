@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.example.contactbook.data.entities.Contact
 import com.example.contactbook.databinding.FragmentContactDetailBinding
-import com.example.contactbook.ui.viewModels.ContactDetailViewModel
+import com.example.contactbook.ui.viewModels.ContactViewModel
+import com.example.contactbook.ui.views.mainscreens.contacts.detail.ContactDetailFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,7 +20,7 @@ class ContactDetailFragment : Fragment() {
     private lateinit var binding: FragmentContactDetailBinding
     private val args : ContactDetailFragmentArgs by navArgs()
 
-    private val mContactDetailViewModel : ContactDetailViewModel by viewModels()
+    private val mContactDetailViewModel : ContactViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
