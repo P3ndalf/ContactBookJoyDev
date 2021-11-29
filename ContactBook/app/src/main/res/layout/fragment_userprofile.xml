@@ -58,23 +58,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/accountAvatar"
-                android:layout_marginStart="5dp"
+                android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="4dp"
-
-                android:layout_marginEnd="5dp"
                 android:background="@drawable/bg_rounded_tv"
+
                 android:fontFamily="serif"
+                android:textColor="@color/black"
+                android:textSize="14dp"
 
                 android:gravity="center|start"
                 android:minWidth="150dp"
-
                 android:minHeight="30dp"
 
                 android:paddingStart="5dp"
                 android:text="lastname"
-                android:textAlignment="viewStart"
-                android:textColor="@color/black"
-                android:textSize="14dp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/accountAvatar"

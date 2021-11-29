@@ -28,8 +28,8 @@
             android:backgroundTint="@color/main"
             android:text="@string/login_login_text"
             android:textColor="@android:color/white"
-
-            android:textSize="15dp"
+            android:fontFamily="serif"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
 
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,8 +53,9 @@
             android:backgroundTint="@android:color/white"
 
             android:text="@string/register_fragment"
+            android:fontFamily="serif"
             android:textColor="@color/main"
-            android:textSize="15dp"
+            android:textSize="14dp"
             app:layout_constraintBottom_toTopOf="@+id/emailError"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/login_fragment_button"
@@ -76,6 +77,10 @@
             app:boxStrokeWidth="2dp"
             app:counterTextColor="@color/grey"
 
+            android:fontFamily="serif"
+            android:textColor="@color/main"
+            android:textSize="14dp"
+
             app:helperText="@string/register_password_helper_text"
             app:helperTextTextColor="@color/grey"
             app:layout_constraintBottom_toTopOf="@+id/login"
@@ -91,6 +96,10 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
+                android:fontFamily="serif"
+                android:textColor="@color/main"
+                android:textSize="18dp"
 
                 android:layout_marginTop="10dp"
                 android:hint="@string/register_password_hint"
@@ -130,6 +139,10 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
+                android:fontFamily="serif"
+                android:textColor="@color/main"
+                android:textSize="18dp"
 
                 android:hint="@string/register_email_hint"
                 android:inputType="textEmailAddress"
