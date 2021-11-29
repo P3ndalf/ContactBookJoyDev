@@ -8,4 +8,11 @@
         android:title="@string/delete"
         app:showAsAction="ifRoom"
         />
+    <item
+        android:id="@+id/addExternalContactBtn"
+        android:icon="@drawable/ic_add_external_contact"
+        android:iconTint="@color/white"
+        android:title="@string/addExternalContact"
+        app:showAsAction="ifRoom"
+        />
 </menu>

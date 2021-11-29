@@ -36,6 +36,13 @@
         android:name="com.example.contactbook.ui.views.mainscreens.contacts.edit.EditContactFragment"
         android:label="EditContactFragment"
         tools:layout="@layout/fragment_edit_contact">
+        <argument
+            android:name="transfer_contact_id"
+            app:argType="string"
+            android:defaultValue='""' />
+        <action
+            android:id="@+id/action_editContactFragment_to_contactsFragment"
+            app:destination="@id/contactsFragment" />
         <action
             android:id="@+id/action_editContactFragment_to_contactDetailFragment"
             app:destination="@id/contactDetailFragment" />
@@ -54,7 +61,7 @@
         <argument
             android:name="transfer_contact_id"
             app:argType="string"
-            android:defaultValue="unknown" />
+            android:defaultValue='""' />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

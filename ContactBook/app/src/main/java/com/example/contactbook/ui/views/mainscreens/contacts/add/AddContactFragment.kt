@@ -36,19 +36,16 @@ class AddContactFragment : Fragment() {
             cancelBtn.setOnClickListener {
                 findNavController().navigate(R.id.action_addContactFragment_to_contactsFragment)
             }
-
             authorisedSharedPreferencesService = AuthorisedSharedPreferencesService(
                 requireActivity().getSharedPreferences(
                     "AuthorizedUser",
                     Context.MODE_PRIVATE
                 )
             )
-
             addBtn.setOnClickListener {
                 addContact()
             }
         }
-
         return binding.root
     }
 
@@ -82,7 +79,6 @@ class AddContactFragment : Fragment() {
                 changeLayoutValidity()
             }
         }
-
     }
 
     private fun changeLayoutValidity() {
