@@ -1,4 +1,4 @@
-package com.example.contactbook.ui.views.Main.contacts
+package com.example.contactbook.ui.views.mainscreens.contacts.add
 
 import android.content.Context
 import android.os.Bundle
@@ -7,16 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.contactbook.R
-import com.example.contactbook.data.entities.Contact
-import com.example.contactbook.data.services.InputValidationService
-import com.example.contactbook.ui.viewModels.ContactViewModel
-import com.example.contactbook.databinding.FragmentAddContactBinding
 import com.example.contactbook.data.services.AuthorisedSharedPreferencesService
 import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPreferencesService
-import com.example.contactbook.data.services.abstractions.IInputValidationService
+import com.example.contactbook.databinding.FragmentAddContactBinding
+import com.example.contactbook.ui.viewModels.ContactViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -40,19 +36,16 @@ class AddContactFragment : Fragment() {
             cancelBtn.setOnClickListener {
                 findNavController().navigate(R.id.action_addContactFragment_to_contactsFragment)
             }
-
             authorisedSharedPreferencesService = AuthorisedSharedPreferencesService(
                 requireActivity().getSharedPreferences(
                     "AuthorizedUser",
                     Context.MODE_PRIVATE
                 )
             )
-
             addBtn.setOnClickListener {
                 addContact()
             }
         }
-
         return binding.root
     }
 
@@ -63,16 +56,13 @@ class AddContactFragment : Fragment() {
             inputValidationFlags = mContactViewModel.checkInputValidation(
                 nameET.text.toString(), instagramET.text.toString(), phoneNumberET.text.toString()
             )
-            var gender = "other"
-            genderRG.setOnCheckedChangeListener { radioGroup, checkedId ->
-                maleRB.apply {
-                    gender = text.toString()
+            var gender = "Others"
+            when (genderRG.checkedRadioButtonId) {
+                maleRB.id -> {
+                    gender = "Male"
                 }
-                femaleRB.apply {
-                    gender = text.toString()
-                }
-                othersRB.apply {
-                    gender = text.toString()
+                femaleRB.id -> {
+                    gender = "Female"
                 }
             }
             if (!inputValidationFlags.contains(false)) {
@@ -89,7 +79,6 @@ class AddContactFragment : Fragment() {
                 changeLayoutValidity()
             }
         }
-
     }
 
     private fun changeLayoutValidity() {

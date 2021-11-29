@@ -1,4 +1,4 @@
-package com.example.contactbook.ui.views.Main
+package com.example.contactbook.ui.views.mainscreens
 
 import android.content.Context
 import android.content.Intent
@@ -46,9 +46,11 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun fillUserFields(user : User) {
-        binding.userNameTV.text = user.firstName
-        binding.userLastNameTV.text = user.lastName
-        binding.emailTV.text = user.email
+        with(binding){
+            userNameTV.text = user.firstName
+            userLastNameTV.text = user.lastName
+            emailTV.text = user.email
+        }
     }
 
     private fun logOut(){

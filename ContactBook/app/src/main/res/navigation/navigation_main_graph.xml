@@ -1,47 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main_graph"
     app:startDestination="@id/userProfileFragment">
 
     <fragment
         android:id="@+id/contactsFragment"
         android:name="com.example.contactbook.ui.views.mainscreens.contacts.ContactsFragment"
-        android:label="Contacts" >
+        android:label="Contacts"
+        tools:layout="@layout/fragment_contacts">
         <action
             android:id="@+id/action_contactsFragment_to_addContactFragment"
             app:destination="@id/addContactFragment" />
+        <action
+            android:id="@+id/action_contactsFragment_to_contactDetailFragment"
+            app:destination="@id/contactDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.example.contactbook.ui.views.mainscreens.UserProfileFragment"
-        android:label="User Profile" />
+        android:label="User Profile"
+        tools:layout="@layout/fragment_userprofile"/>
     <fragment
         android:id="@+id/addContactFragment"
-        android:name="com.example.contactbook.ui.views.mainscreens.contacts.AddContactFragment"
-        android:label="AddContactFragment" >
+        android:name="com.example.contactbook.ui.views.mainscreens.contacts.add.AddContactFragment"
+        android:label="AddContactFragment"
+        tools:layout="@layout/fragment_add_contact">
         <action
             android:id="@+id/action_addContactFragment_to_contactsFragment"
             app:destination="@id/contactsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editContactFragment"
-        android:name="com.example.contactbook.ui.views.mainscreens.contacts.EditContactFragment"
-        android:label="EditContactFragment" >
+        android:name="com.example.contactbook.ui.views.mainscreens.contacts.edit.EditContactFragment"
+        android:label="EditContactFragment"
+        tools:layout="@layout/fragment_edit_contact">
+        <argument
+            android:name="transfer_contact_id"
+            app:argType="string"
+            android:defaultValue='""' />
+        <action
+            android:id="@+id/action_editContactFragment_to_contactsFragment"
+            app:destination="@id/contactsFragment" />
         <action
             android:id="@+id/action_editContactFragment_to_contactDetailFragment"
             app:destination="@id/contactDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/contactDetailFragment"
-        android:name="com.example.contactbook.ui.views.mainscreens.contacts.ContactDetailFragment"
-        android:label="ContactDetailFragment" >
+        android:name="com.example.contactbook.ui.views.mainscreens.contacts.detail.ContactDetailFragment"
+        android:label="ContactDetailFragment"
+        tools:layout="@layout/fragment_contact_detail">
         <action
             android:id="@+id/action_contactDetailFragment_to_editContactFragment"
             app:destination="@id/editContactFragment" />
+        <action
+            android:id="@+id/action_contactDetailFragment_to_contactsFragment"
+            app:destination="@id/contactsFragment" />
+        <argument
+            android:name="transfer_contact_id"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.contactbook.ui.views.mainscreens.settings.SettingsFragment"
-        android:label="Settings" />
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings"/>
 </navigation>

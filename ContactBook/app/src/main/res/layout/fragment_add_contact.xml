@@ -1,217 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:background="@color/background"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_account_circle" />
+
+
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="90dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/main"
+            android:text="Cancel"
+            android:textSize="13dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.019"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/addBtn"
+            android:layout_width="90dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/main"
+            android:text="Add"
+            android:textSize="13dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/changeAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="126dp"
+            android:backgroundTint="@color/main"
+            android:text="change avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameError"
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
 
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_account_circle" />
+            android:layout_marginEnd="40dp"
 
-            <Button
-                android:id="@+id/cancelBtn"
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="Cancel"
-                android:textSize="13dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:theme="@style/MyTextInputLayout_overlay"
+            app:boxStrokeWidth="2dp"
 
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+            app:counterTextColor="@color/grey"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/changeAvatar"
+            app:startIconDrawable="@drawable/ic_account_circle"
+            app:startIconTint="@color/grey">
 
-            <Button
-                android:id="@+id/addBtn"
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="Add"
-                android:textSize="13dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameET"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/register_name_hint"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:singleLine="true"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/changeAvatar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="125dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="126dp"
-                android:text="change avatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberError"
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nameError"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:theme="@style/MyTextInputLayout_overlay"
+
+            app:boxStrokeWidth="2dp"
+
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+
+            app:counterTextColor="@color/grey"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameError"
+            app:startIconDrawable="@drawable/ic_account_circle"
+            app:startIconTint="@color/grey">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumberET"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/phoneNumber"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:singleLine="true"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/instagramError"
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+
+            android:layout_marginEnd="40dp"
+
+            android:theme="@style/MyTextInputLayout_overlay"
+            app:boxStrokeWidth="2dp"
+
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+            app:counterTextColor="@color/grey"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumberError"
+            app:startIconDrawable="@drawable/ic_account_circle"
+            app:startIconTint="@color/grey">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/instagramET"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/instagram"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:singleLine="true"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RadioGroup
+            android:id="@+id/genderRG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="200dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instagramError"
+            app:layout_constraintVertical_bias="1.0">
+
+            <RadioButton
+                android:id="@+id/maleRB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/male"
+                android:textColor="@color/additional" />
 
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
-
-                android:layout_marginEnd="40dp"
-
-                android:theme="@style/MyTextInputLayout_overlay"
-                app:boxStrokeWidth="2dp"
-
-                app:counterEnabled="true"
-                app:counterMaxLength="20"
-                app:counterTextColor="@color/grey"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/changeAvatar"
-                app:startIconDrawable="@drawable/ic_account_circle"
-                app:startIconTint="@color/grey">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nameET"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/register_name_hint"
-                    android:maxLines="1"
-                    android:paddingStart="10dp"
-                    android:singleLine="true"
-                    android:textSize="14dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phoneNumberError"
-
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <RadioButton
+                android:id="@+id/femaleRB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/female"
+                android:textColor="@color/additional" />
 
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="40dp"
-                android:theme="@style/MyTextInputLayout_overlay"
-
-                app:boxStrokeWidth="2dp"
-
-                app:counterEnabled="true"
-                app:counterMaxLength="20"
-
-                app:counterTextColor="@color/grey"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameError"
-                app:startIconDrawable="@drawable/ic_account_circle"
-                app:startIconTint="@color/grey">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phoneNumberET"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/phoneNumber"
-                    android:maxLines="1"
-                    android:paddingStart="10dp"
-                    android:singleLine="true"
-                    android:textSize="14dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/instagramError"
-
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <RadioButton
+                android:id="@+id/othersRB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/others"
+                android:textColor="@color/additional" />
+        </RadioGroup>
 
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                android:layout_marginEnd="40dp"
-
-                android:theme="@style/MyTextInputLayout_overlay"
-                app:boxStrokeWidth="2dp"
-
-                app:counterEnabled="true"
-                app:counterMaxLength="20"
-                app:counterTextColor="@color/grey"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneNumberError"
-                app:startIconDrawable="@drawable/ic_account_circle"
-                app:startIconTint="@color/grey">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/instagramET"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/instagram"
-                    android:maxLines="1"
-                    android:paddingStart="10dp"
-                    android:singleLine="true"
-                    android:textSize="14dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <RadioGroup
-                android:id="@+id/genderRG"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="200dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/instagramError"
-                app:layout_constraintVertical_bias="1.0">
-
-                <RadioButton
-                    android:id="@+id/maleRB"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/male" />
-
-                <RadioButton
-                    android:id="@+id/femaleRB"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/female" />
-
-                <RadioButton
-                    android:id="@+id/othersRB"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/others" />
-            </RadioGroup>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

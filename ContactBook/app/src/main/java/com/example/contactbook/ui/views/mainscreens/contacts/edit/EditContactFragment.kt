@@ -1,4 +1,4 @@
-package com.example.contactbook.ui.views.Main.contacts
+package com.example.contactbook.ui.views.mainscreens.contacts.edit
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.contactbook.R
 import com.example.contactbook.databinding.FragmentEditContactBinding
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class EditContactFragment : Fragment() {
     private var _binding: FragmentEditContactBinding? = null
     private val binding get() = _binding!!

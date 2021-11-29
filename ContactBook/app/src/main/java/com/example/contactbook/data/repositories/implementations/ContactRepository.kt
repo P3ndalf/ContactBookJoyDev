@@ -25,4 +25,16 @@ class ContactRepository(private val contactDao: ContactDao) {
     fun getContacts(ownerId: String): LiveData<List<Contact>> {
         return contactDao.getContacts(ownerId)
     }
+
+    fun getContact(id: String): Contact {
+        return contactDao.getContact(id)
+    }
+
+    suspend fun deleteContacts(ownerId : String){
+        contactDao.deleteContacts(ownerId)
+    }
+
+    suspend fun deleteContact(id: String){
+        contactDao.deleteContact(id)
+    }
 }
