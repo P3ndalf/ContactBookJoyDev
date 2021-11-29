@@ -16,7 +16,7 @@
     <string name="register_email_helper_text">поделитесь с нами своим email</string>
     <string name="register_password_hint">Пароль</string>
     <string name="register_password_helper_text">введите свой секретный код</string>
-    <string name="register_confirm_password_helper_text">повтори свой секретный код</string>
+    <string name="register_confirm_password_helper_text">повторите свой секретный код</string>
     <string name="register_register_confirm_button_text">Зарегистрироваться</string>
     <string name="register_confirm_password_hint">Подтверждение пароля</string>
     <string name="login_login_text">Войти</string>
@@ -42,5 +42,10 @@
     <string name="change_avatar">Изменить Аватар</string>
     <string name="contact_name">Имя контакта</string>
     <string name="user_profile">Ваш профиль</string>
-
+    <string name="emailError">введите корректную почту</string>
+    <string name="passwordError">заполните поле пароля</string>
+    <string name="nouser">неверная почта или пароль</string>
+    <string name="usernameError">введите корректное имя</string>
+    <string name="userLastNameError">введите корректную фамилию</string>
+    <string name="confrimPasswordError">повторите пароль</string>
 </resources>

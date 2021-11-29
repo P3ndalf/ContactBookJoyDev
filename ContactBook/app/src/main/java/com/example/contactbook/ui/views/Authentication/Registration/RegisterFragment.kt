@@ -94,35 +94,35 @@ class RegisterFragment : Fragment() {
         with(binding) {
             if (!inputValidationFlags[0]) {
                 nameError.isErrorEnabled = true
-                nameError.error = "Enter correct name"
+                nameError.error = getString(R.string.usernameError)
             } else {
                 nameError.isErrorEnabled = false
                 nameError.error = null
             }
             if (!inputValidationFlags[1]) {
                 lastnameError.isErrorEnabled = true
-                lastnameError.error = "Enter correct last name"
+                lastnameError.error = getString(R.string.userLastNameError)
             } else {
                 lastnameError.isErrorEnabled = false
                 lastnameError.error = null
             }
             if (!inputValidationFlags[2]) {
                 emailError.isErrorEnabled = true
-                emailError.error = "Enter correct email"
+                emailError.error = getString(R.string.emailError)
             } else {
                 emailError.isErrorEnabled = false
                 emailError.error = null
             }
             if (!inputValidationFlags[3]) {
                 passwordError.isErrorEnabled = true
-                passwordError.error = "Fill password field"
+                passwordError.error = getString(R.string.passwordError)
             } else {
                 passwordError.isErrorEnabled = false
                 passwordError.error = null
             }
             if (!inputValidationFlags[4]) {
                 confirmPasswordError.isErrorEnabled = true
-                confirmPasswordError.error = "Repeat your password"
+                confirmPasswordError.error = getString(R.string.confrimPasswordError)
             } else {
                 confirmPasswordError.isErrorEnabled = false
                 confirmPasswordError.error = null

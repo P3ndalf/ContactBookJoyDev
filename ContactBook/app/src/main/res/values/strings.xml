@@ -42,4 +42,10 @@
     <string name="change_avatar">Change avatar</string>
     <string name="contact_name">contact name</string>
     <string name="user_profile">User Profile</string>
+    <string name="emailError">enter correct email</string>
+    <string name="passwordError">fill password field</string>
+    <string name="nouser">incorrect password or email</string>
+    <string name="usernameError">enter correct name</string>
+    <string name="userLastNameError">enter correct last name</string>
+    <string name="confrimPasswordError">repeat your password</string>
 </resources>
