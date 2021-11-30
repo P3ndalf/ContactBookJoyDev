@@ -48,4 +48,7 @@
     <string name="usernameError">enter correct name</string>
     <string name="userLastNameError">enter correct last name</string>
     <string name="confrimPasswordError">repeat your password</string>
+    <string name="ContactExistsToast">Contact is already exists</string>
+    <string name="addExternalContactCanceledToast">Canceled</string>
+    <string name="userAlreadyToast">User with such email is already exists</string>
 </resources>

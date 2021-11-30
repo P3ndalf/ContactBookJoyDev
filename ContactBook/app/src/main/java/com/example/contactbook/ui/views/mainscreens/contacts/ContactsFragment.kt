@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,11 +25,16 @@ import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPrefe
 import com.example.contactbook.databinding.FragmentContactsBinding
 import com.example.contactbook.ui.viewModels.ContactsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ContactsFragment : Fragment() {
     private lateinit var binding: FragmentContactsBinding
     private lateinit var authorisedSharedPreferencesService: IAuthorisedSharedPreferencesService
+
+    private val CONTACT_PERMISSION_CODE = 1
+    private val CONTACT_PICK_CODE = 2
 
     private val mContactViewModel: ContactsViewModel by viewModels()
 
@@ -48,7 +54,6 @@ class ContactsFragment : Fragment() {
                     ContactsFragmentDirections.actionContactsFragmentToContactDetailFragment(contact.id)
                 findNavController().navigate(action)
             }
-
         }
 
         contactsRecyclerView.adapter = adapter
@@ -68,10 +73,10 @@ class ContactsFragment : Fragment() {
             .observe(viewLifecycleOwner, { contacts ->
                 adapter.setData(contacts)
             })
+
         setHasOptionsMenu(true)
         return binding.root
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.top_app_contacts_bar, menu)
@@ -106,9 +111,6 @@ class ContactsFragment : Fragment() {
         builder.setMessage("Are you sure you want to delete all your contacts?")
         builder.show()
     }
-
-    private val CONTACT_PERMISSION_CODE = 1
-    private val CONTACT_PICK_CODE = 2
 
     private fun getExternalContact() {
         val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
@@ -147,45 +149,63 @@ class ContactsFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             if (requestCode == CONTACT_PICK_CODE) {
-                val cursor: Cursor
-                val cursor2: Cursor?
+                val contactCursor: Cursor
+                val contactPhonesCursor: Cursor?
 
                 val uri = data!!.data
 
-                cursor = requireActivity().contentResolver.query(uri!!, null, null, null, null)!!
-                if (cursor.moveToFirst()) {
+                contactCursor =
+                    requireActivity().contentResolver.query(uri!!, null, null, null, null)!!
+
+                if (contactCursor.moveToFirst()) {
                     val contactId =
-                        cursor.getString((cursor.getColumnIndex(ContactsContract.Contacts._ID)))
+                        contactCursor.getString((contactCursor.getColumnIndex(ContactsContract.Contacts._ID)))
                     val contactName =
-                        cursor.getString((cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)))
+                        contactCursor.getString((contactCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)))
                     val isPhoneExist =
-                        cursor.getString((cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)))
-                    var contactPhone: String = ""
+                        contactCursor.getString((contactCursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)))
 
                     if (isPhoneExist.toInt() == 1) {
-                        cursor2 = requireActivity().contentResolver.query(
+                        contactPhonesCursor = requireActivity().contentResolver.query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + contactId,
                             null,
                             null
                         )
-                        if(cursor2!!.moveToFirst()) {
-                            contactPhone =
-                                cursor2.getString((cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)))
-                            mContactViewModel.addExternalContact(
-                                contactName,
-                                contactPhone,
-                                authorisedSharedPreferencesService.loadCurrentUser().id
-                            )
+                        if (contactPhonesCursor!!.moveToFirst()) {
+                            val contactPhone =
+                                contactPhonesCursor.getString(
+                                    (contactPhonesCursor.getColumnIndex(
+                                        ContactsContract.CommonDataKinds.Phone.NUMBER
+                                    ))
+                                )
+                            lifecycleScope.launch(Dispatchers.Main){
+                                if (!mContactViewModel.addExternalContact(
+                                        contactName,
+                                        contactPhone,
+                                        authorisedSharedPreferencesService.loadCurrentUser().id
+                                    )
+                                ) {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        getString(R.string.ContactExistsToast),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
                         }
-                        cursor2.close()
+                        contactPhonesCursor.close()
                     }
-                    cursor.close()
+                    contactCursor.close()
                 }
             }
         } else {
-            Toast.makeText(requireContext(), "Canceled", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.addExternalContactCanceledToast),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

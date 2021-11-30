@@ -25,7 +25,7 @@ class EditContactFragment : Fragment() {
     private val mContactViewModel: ContactViewModel by viewModels()
 
     private var inputValidationFlags: Array<Boolean> = Array(3) { true }
-    private lateinit var contact: Contact
+    private var contact: Contact? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,9 +44,9 @@ class EditContactFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.Main) {
             contact = mContactViewModel.getContact(args.transferContactId)
             with(binding) {
-                contactNameTV.setText(contact.contactName)
-                phoneNumberTV.setText(contact.phoneNumber)
-                instagramTV.setText(contact.instagram)
+                contactNameTV.setText(contact!!.contactName)
+                phoneNumberTV.setText(contact!!.phoneNumber)
+                instagramTV.setText(contact!!.instagram)
             }
         }
 
@@ -107,12 +107,12 @@ class EditContactFragment : Fragment() {
                 }
             }
 
-            contact.contactName = contactNameTV.text.toString()
-            contact.instagram = instagramTV.text.toString()
-            contact.phoneNumber = phoneNumberTV.text.toString()
+            contact!!.contactName = contactNameTV.text.toString()
+            contact!!.instagram = instagramTV.text.toString()
+            contact!!.phoneNumber = phoneNumberTV.text.toString()
             if (!inputValidationFlags.contains(false)) {
                 mContactViewModel.editContact(
-                    contact
+                    contact!!
                 )
                 val action =
                     EditContactFragmentDirections.actionEditContactFragmentToContactDetailFragment(

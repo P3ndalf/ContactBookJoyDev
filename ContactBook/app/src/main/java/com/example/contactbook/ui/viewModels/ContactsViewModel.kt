@@ -9,6 +9,7 @@ import com.example.contactbook.data.services.InputValidationService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,15 +21,14 @@ class ContactsViewModel @Inject constructor(
         return contactRepository.getContacts(ownerId)
     }
 
-    fun deleteContacts(ownerId: String){
-        viewModelScope.launch(Dispatchers.IO){
+    fun deleteContacts(ownerId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             contactRepository.deleteContacts(ownerId)
         }
     }
 
-    fun addExternalContact(name:String, phone: String, ownerId: String){
-        viewModelScope.launch(Dispatchers.IO){
-            contactRepository.addContact(name,phone,0,"Others","",ownerId)
+    suspend fun addExternalContact(name: String, phone: String, ownerId: String): Boolean =
+        withContext(Dispatchers.IO) {
+            return@withContext contactRepository.addContact(name, phone, 0, "Others", "", ownerId)
         }
-    }
 }

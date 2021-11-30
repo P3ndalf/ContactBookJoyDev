@@ -30,10 +30,12 @@ class ContactDetailFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.Main){
             val contact = mContactDetailViewModel.getContact(args.transferContactId)
             with(binding){
-                contactNameTV.text = contact.contactName
-                phoneNumberTV.text = contact.phoneNumber
-                instagramTV.text = contact.instagram
-                genderTV.text = contact.gender
+                if(contact != null){
+                    contactNameTV.text = contact.contactName
+                    phoneNumberTV.text = contact.phoneNumber
+                    instagramTV.text = contact.instagram
+                    genderTV.text = contact.gender
+                }
             }
         }
 

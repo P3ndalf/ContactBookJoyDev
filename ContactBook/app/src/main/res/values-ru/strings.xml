@@ -48,4 +48,7 @@
     <string name="usernameError">введите корректное имя</string>
     <string name="userLastNameError">введите корректную фамилию</string>
     <string name="confrimPasswordError">повторите пароль</string>
+    <string name="ContactExistsToast">Контакт уже создан</string>
+    <string name="addExternalContactCanceledToast">Отменено</string>
+    <string name="userAlreadyToast">User with such email is already exists</string>
 </resources>

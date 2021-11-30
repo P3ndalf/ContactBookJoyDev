@@ -8,7 +8,8 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:layout_constraintTop_toTopOf="parent"
+    tools:ignore="SpUsage,RtlSymmetry">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,17 +24,17 @@
 
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-
             android:layout_marginBottom="20dp"
+
             android:backgroundTint="@color/main"
+            android:fontFamily="serif"
+
             android:text="@string/login_login_text"
             android:textColor="@android:color/white"
-            android:fontFamily="serif"
             android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="parent"
 
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
@@ -52,10 +53,11 @@
             android:layout_weight="1"
             android:backgroundTint="@android:color/white"
 
-            android:text="@string/register_fragment"
             android:fontFamily="serif"
-            android:textColor="@color/main"
             android:textSize="14dp"
+
+            android:text="@string/register_fragment"
+
             app:layout_constraintBottom_toTopOf="@+id/emailError"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/login_fragment_button"
@@ -73,13 +75,13 @@
 
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"
-            android:theme="@style/MyTextInputLayout_overlay"
-            app:boxStrokeWidth="2dp"
-            app:counterTextColor="@color/grey"
-
             android:fontFamily="serif"
             android:textColor="@color/main"
             android:textSize="14dp"
+
+            android:theme="@style/MyTextInputLayout_overlay"
+            app:boxStrokeWidth="2dp"
+            app:counterTextColor="@color/grey"
 
             app:helperText="@string/register_password_helper_text"
             app:helperTextTextColor="@color/grey"
@@ -97,16 +99,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
-                android:fontFamily="serif"
-                android:textColor="@color/main"
-                android:textSize="18dp"
-
                 android:layout_marginTop="10dp"
+
+                android:fontFamily="serif"
                 android:hint="@string/register_password_hint"
                 android:inputType="textPassword"
+
                 android:maxLines="1"
-                android:paddingStart="10dp"
-                android:singleLine="true" />
+
+                android:paddingHorizontal="10dp"
+                android:singleLine="true"
+                android:textColor="@color/main"
+                android:textSize="18dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,15 +145,15 @@
                 android:layout_height="match_parent"
 
                 android:fontFamily="serif"
-                android:textColor="@color/main"
-                android:textSize="18dp"
-
                 android:hint="@string/register_email_hint"
+
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:paddingStart="10dp"
+                android:paddingHorizontal="10dp"
+
                 android:singleLine="true"
-                tools:ignore="RtlSymmetry" />
+                android:textColor="@color/main"
+                android:textSize="18dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -166,17 +170,16 @@
             android:layout_weight="1"
             android:backgroundTint="@color/main"
 
-            android:text="@string/login_fragment"
+            android:fontFamily="serif"
 
+            android:text="@string/login_fragment"
             android:textColor="@android:color/white"
-            android:textSize="15dp"
+            android:textSize="14dp"
             app:layout_constraintBottom_toTopOf="@+id/emailError"
             app:layout_constraintEnd_toStartOf="@+id/register_fragment_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:strokeColor="@color/main"
             app:strokeWidth="2dp" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

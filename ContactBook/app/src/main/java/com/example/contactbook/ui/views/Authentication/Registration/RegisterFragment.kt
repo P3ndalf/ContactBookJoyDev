@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -64,23 +65,28 @@ class RegisterFragment : Fragment() {
                     lifecycleScope.launch(Dispatchers.Main) {
                         var userId = UUID.randomUUID().toString()
 
-                        mRegistrationViewModel.addUser(
-                            userId,
-                            name.text.toString(),
-                            lastname.text.toString(),
-                            email.text.toString(),
-                            password.text.toString()
-                        )
-                        authorizedUserSharedPreferencesService.saveCurrentUserData(
-                            User(
+                        if(mRegistrationViewModel.addUser(
                                 userId,
                                 name.text.toString(),
                                 lastname.text.toString(),
                                 email.text.toString(),
-                                ""
+                                password.text.toString()
+                            )){
+                            authorizedUserSharedPreferencesService.saveCurrentUserData(
+                                User(
+                                    userId,
+                                    name.text.toString(),
+                                    lastname.text.toString(),
+                                    email.text.toString(),
+                                    ""
+                                )
                             )
-                        )
-                        startActivity(Intent(requireActivity(), MainActivity::class.java))
+                            startActivity(Intent(requireActivity(), MainActivity::class.java))
+                        }
+                        else{
+                            Toast.makeText(requireContext(), getString(R.string.userAlreadyToast), Toast.LENGTH_SHORT).show()
+                        }
+
                     }
                 } else {
                     changeLayoutValidity()

@@ -22,7 +22,7 @@ class ContactDetailFragment : Fragment() {
     private val args: ContactDetailFragmentArgs by navArgs()
 
     private val mContactViewModel: ContactViewModel by viewModels()
-    private lateinit var contact: Contact
+    private var contact: Contact? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,10 +32,13 @@ class ContactDetailFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.Main) {
             contact = mContactViewModel.getContact(args.transferContactId)
             with(binding) {
-                contactNameTV.text = contact.contactName
-                phoneNumberTV.text = contact.phoneNumber
-                instagramTV.text = contact.instagram
-                genderTV.text = contact.gender
+                if(contact!= null){
+                    contactNameTV.text = contact!!.contactName
+                    phoneNumberTV.text = contact!!.phoneNumber
+                    instagramTV.text = contact!!.instagram
+                    genderTV.text = contact!!.gender
+                }
+
             }
         }
         setHasOptionsMenu(true)
@@ -70,8 +73,8 @@ class ContactDetailFragment : Fragment() {
         }
         builder.setNegativeButton("No") { _, _ ->
         }
-        builder.setTitle("Delete ${contact.contactName}?")
-        builder.setMessage("Are you sure you want to delete ${contact.contactName}")
+        builder.setTitle("Delete ${contact?.contactName}?")
+        builder.setMessage("Are you sure you want to delete ${contact?.contactName}")
         builder.show()
     }
 }
