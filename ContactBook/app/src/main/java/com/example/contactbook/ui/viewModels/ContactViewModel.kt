@@ -30,13 +30,8 @@ class ContactViewModel @Inject constructor(
     }
 
     suspend fun getContact(id: String): Contact = withContext(Dispatchers.IO) {
-        val contact = contactRepository.getContact(id)
-        if(contact == null){
-            throw Exception("Contact null exception")
-        }
-        else{
-            return@withContext contact
-        }
+        val contact = contactRepository.getContact(id) ?: throw Exception("Contact null exception")
+        contact
     }
 
     fun checkInputValidation(name: String, phone: String): Array<Boolean> {
