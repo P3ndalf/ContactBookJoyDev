@@ -16,13 +16,9 @@ class LoginViewModel @Inject constructor(private val userRepository: UserReposit
 
     private val inputValidationService: IInputValidationService = InputValidationService()
 
-    suspend fun getUserByEmail(email: String): User? = withContext(Dispatchers.IO) {
-        return@withContext userRepository.getUserByEmail(email)
-    }
-
     suspend fun authenticateUser(email: String, password: String): User? =
         withContext(Dispatchers.IO) {
-            return@withContext userRepository.authenticateUser(email, password)
+            userRepository.authenticateUser(email, password)
         }
 
     fun checkInputValidation(

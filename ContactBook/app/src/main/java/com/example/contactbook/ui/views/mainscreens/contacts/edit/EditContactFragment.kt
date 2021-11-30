@@ -36,12 +36,10 @@ class EditContactFragment : Fragment() {
 
         lifecycleScope.launch(Dispatchers.Main) {
             val contact = mContactViewModel.getContact(args.transferContactId)
-            if (contact != null) {
-                with(binding) {
-                    contactNameTV.setText(contact.contactName)
-                    phoneNumberTV.setText(contact.phoneNumber)
-                    instagramTV.setText(contact.instagram)
-                }
+            with(binding) {
+                contactNameTV.setText(contact.contactName)
+                phoneNumberTV.setText(contact.phoneNumber)
+                instagramTV.setText(contact.instagram)
             }
         }
 
@@ -57,7 +55,7 @@ class EditContactFragment : Fragment() {
         return binding.root
     }
 
-    private suspend fun getGender() : String {
+    private suspend fun getGender(): String {
         var gender = when (binding.genderRG.checkedRadioButtonId) {
             binding.maleRB.id -> {
                 getString(R.string.male)
@@ -98,7 +96,6 @@ class EditContactFragment : Fragment() {
 
             lifecycleScope.launch(Dispatchers.Main) {
                 val contact = mContactViewModel.getContact(args.transferContactId)
-                if (contact != null) {
                     contact.contactName = contactNameTV.text.toString()
                     contact.instagram = instagramTV.text.toString()
                     contact.phoneNumber = phoneNumberTV.text.toString()
@@ -115,7 +112,6 @@ class EditContactFragment : Fragment() {
                     } else {
                         changeLayoutValidity()
                     }
-                }
             }
         }
     }

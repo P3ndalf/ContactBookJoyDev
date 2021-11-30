@@ -21,7 +21,7 @@ class RegistrationViewModel @Inject constructor(
     suspend fun addUser(
         userId: String, firstName: String, lastName: String, email: String, password: String
     ) : Boolean = withContext(Dispatchers.IO) {
-        return@withContext userRepository.addUser(userId, firstName, lastName, email, password)
+        userRepository.addUser(userId, firstName, lastName, email, password)
     }
 
     fun checkInputValidation(

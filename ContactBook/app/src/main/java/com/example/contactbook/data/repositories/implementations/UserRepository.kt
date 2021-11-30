@@ -19,15 +19,11 @@ class UserRepository(private val userDao: UserDao, private val hashService: IHas
         }
     }
 
-    suspend fun getUserByEmail(email: String): User? {
-        return userDao.getUserByEmail(email)
-    }
-
     fun authenticateUser(email: String, password: String): User? {
         return userDao.authenticateUser(email, hashService.getSha256Hash(password))
     }
 
-    private suspend fun findUser(email: String): User? {
+    suspend fun findUser(email: String): User? {
         return userDao.findUser(email)
     }
 }

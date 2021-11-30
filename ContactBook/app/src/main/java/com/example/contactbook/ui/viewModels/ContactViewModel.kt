@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,11 +26,17 @@ class ContactViewModel @Inject constructor(
         instagram: String,
         ownerId: String
     ): Boolean = withContext(Dispatchers.IO){
-        return@withContext contactRepository.addContact(name, phoneNumber, birthday, gender, instagram, ownerId)
+        contactRepository.addContact(name, phoneNumber, birthday, gender, instagram, ownerId)
     }
 
-    suspend fun getContact(id: String): Contact? = withContext(Dispatchers.IO) {
-        return@withContext contactRepository.getContact(id)
+    suspend fun getContact(id: String): Contact = withContext(Dispatchers.IO) {
+        val contact = contactRepository.getContact(id)
+        if(contact == null){
+            throw Exception("Contact null exception")
+        }
+        else{
+            return@withContext contact
+        }
     }
 
     fun checkInputValidation(name: String, phone: String): Array<Boolean> {

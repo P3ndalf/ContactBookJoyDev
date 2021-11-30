@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserProfileModel @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
-    suspend fun getUserById(email: String): User? = withContext(Dispatchers.IO) {
-        return@withContext userRepository.getUserByEmail(email)
+    suspend fun findUser(email: String): User? = withContext(Dispatchers.IO) {
+        userRepository.findUser(email)
     }
 }
