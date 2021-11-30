@@ -17,7 +17,7 @@ interface UserDao {
     suspend fun getUserByEmail(email: String): User?
 
     @Query("Select * FROM userTable WHERE  email = :email")
-    suspend fun isUserExists(email: String): User?
+    suspend fun findUser(email: String): User?
 
     @Query("Select * FROM userTable WHERE email = :email AND passwordHash = :passwordHash")
     fun authenticateUser(email:String, passwordHash: String) : User?

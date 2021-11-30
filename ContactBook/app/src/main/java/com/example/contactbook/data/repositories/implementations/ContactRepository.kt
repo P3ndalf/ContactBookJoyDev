@@ -18,22 +18,19 @@ class ContactRepository(private val contactDao: ContactDao) {
         if (getContact(contactName, phoneNumber, ownerId) != null) {
             return false
         }
-        else{
-            val id = UUID.randomUUID().toString()
-            contactDao.addContact(
-                Contact(
-                    id,
-                    contactName,
-                    phoneNumber,
-                    birthday,
-                    gender,
-                    instagram,
-                    ownerId
-                )
+        val id = UUID.randomUUID().toString()
+        contactDao.addContact(
+            Contact(
+                id,
+                contactName,
+                phoneNumber,
+                birthday,
+                gender,
+                instagram,
+                ownerId
             )
-            return true
-        }
-
+        )
+        return true
     }
 
     private fun getContact(name: String, phoneNumber: String, ownerId: String): Contact? {

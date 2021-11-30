@@ -58,14 +58,14 @@ class EditContactFragment : Fragment() {
     }
 
     private suspend fun getGender() : String {
-        var gender = getString(R.string.others)
-        when (binding.genderRG.checkedRadioButtonId) {
+        var gender = when (binding.genderRG.checkedRadioButtonId) {
             binding.maleRB.id -> {
-                gender = getString(R.string.male)
+                getString(R.string.male)
             }
             binding.femaleRB.id -> {
-                gender = getString(R.string.female)
+                getString(R.string.female)
             }
+            else -> "Others"
         }
         return gender
     }

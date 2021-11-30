@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class HashService @Inject constructor() : IHashService {
 
-    override fun getHash(inputString : String, algorithm : String): String{
-        val bytes = MessageDigest.getInstance(algorithm).digest(inputString.toByteArray())
+    override fun getSHA256Hash(inputString : String): String{
+        val bytes = MessageDigest.getInstance("SHA-256").digest(inputString.toByteArray())
         return toHex(bytes)
     }
 
