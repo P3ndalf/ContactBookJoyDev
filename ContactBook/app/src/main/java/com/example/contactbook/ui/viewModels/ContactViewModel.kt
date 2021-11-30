@@ -32,9 +32,8 @@ class ContactViewModel @Inject constructor(
         return@withContext contactRepository.getContact(id)
     }
 
-
-    fun checkInputValidation(name: String, instagram: String, phone: String): Array<Boolean> {
-        return inputValidationService.addContactInputValidation(name, instagram, phone)
+    fun checkInputValidation(name: String, phone: String): Array<Boolean> {
+        return inputValidationService.addContactInputValidation(name, phone)
     }
 
     fun editContact(contact: Contact) {

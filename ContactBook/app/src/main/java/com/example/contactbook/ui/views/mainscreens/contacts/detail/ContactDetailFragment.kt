@@ -29,16 +29,15 @@ class ContactDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentContactDetailBinding.inflate(inflater, container, false)
-        lifecycleScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch(Dispatchers.Main){
             contact = mContactViewModel.getContact(args.transferContactId)
-            with(binding) {
-                if(contact!= null){
+            with(binding.contactDetailColumn){
+                if(contact != null){
                     contactNameTV.text = contact!!.contactName
                     phoneNumberTV.text = contact!!.phoneNumber
                     instagramTV.text = contact!!.instagram
                     genderTV.text = contact!!.gender
                 }
-
             }
         }
         setHasOptionsMenu(true)
@@ -67,14 +66,14 @@ class ContactDetailFragment : Fragment() {
     private fun deleteContact() {
         val builder = AlertDialog.Builder(requireContext())
 
-        builder.setPositiveButton("Yes") { _, _ ->
+        builder.setPositiveButton(R.string.positiveAnswYes) { _, _ ->
             mContactViewModel.deleteContact(args.transferContactId)
             findNavController().navigate(R.id.action_contactDetailFragment_to_contactsFragment)
         }
-        builder.setNegativeButton("No") { _, _ ->
+        builder.setNegativeButton(R.string.negativeAnswNO) { _, _ ->
         }
-        builder.setTitle("Delete ${contact?.contactName}?")
-        builder.setMessage("Are you sure you want to delete ${contact?.contactName}")
+        builder.setTitle(getString(R.string.delete) + " ${contact?.contactName}?")
+        builder.setMessage(getString(R.string.deleteQstnContact) +" ${contact?.contactName}")
         builder.show()
     }
 }

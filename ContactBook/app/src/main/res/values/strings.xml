@@ -51,4 +51,11 @@
     <string name="ContactExistsToast">Contact is already exists</string>
     <string name="addExternalContactCanceledToast">Canceled</string>
     <string name="userAlreadyToast">User with such email is already exists</string>
+    <string name="positiveAnswYes">Yes</string>
+    <string name="negativeAnswNO">No</string>
+    <string name="deleteEverything">Delete everything?</string>
+    <string name="deletingContactsMessage">Are you sure you want  to delete all your contacts?</string>
+    <string name="contactNameError">Enter correct name</string>
+    <string name="contactPhoneNumberError">Enter correct phone number</string>
+    <string name="deleteQstnContact">Are you sure you want to delete</string>
 </resources>

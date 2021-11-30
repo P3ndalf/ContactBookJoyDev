@@ -9,52 +9,45 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.contactbook.R
 import com.example.contactbook.data.entities.Contact
 import com.example.contactbook.databinding.FragmentEditContactBinding
 
 import com.example.contactbook.ui.viewModels.ContactViewModel
 import com.example.contactbook.ui.views.mainscreens.contacts.detail.ContactDetailFragmentArgs
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class EditContactFragment : Fragment() {
     private lateinit var binding: FragmentEditContactBinding
     private val args: ContactDetailFragmentArgs by navArgs()
 
     private val mContactViewModel: ContactViewModel by viewModels()
 
-    private var inputValidationFlags: Array<Boolean> = Array(3) { true }
-    private var contact: Contact? = null
+    private var inputValidationFlags: Array<Boolean> = Array(2) { true }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditContactBinding.inflate(inflater, container, false)
-        var gender = "Others"
-        when (binding.genderRG.checkedRadioButtonId) {
-            binding.maleRB.id -> {
-                gender = "Male"
-            }
-            binding.femaleRB.id -> {
-                gender = "Female"
-            }
-        }
 
         lifecycleScope.launch(Dispatchers.Main) {
-            contact = mContactViewModel.getContact(args.transferContactId)
-            with(binding) {
-                contactNameTV.setText(contact!!.contactName)
-                phoneNumberTV.setText(contact!!.phoneNumber)
-                instagramTV.setText(contact!!.instagram)
+            val contact = mContactViewModel.getContact(args.transferContactId)
+            if (contact != null) {
+                with(binding) {
+                    contactNameTV.setText(contact.contactName)
+                    phoneNumberTV.setText(contact.phoneNumber)
+                    instagramTV.setText(contact.instagram)
+                }
             }
         }
 
         binding.editBtn.setOnClickListener {
             editContact()
         }
-
-
 
         binding.cancelBtn.setOnClickListener {
             val action =
@@ -64,28 +57,34 @@ class EditContactFragment : Fragment() {
         return binding.root
     }
 
+    private suspend fun getGender() : String {
+        var gender = getString(R.string.others)
+        when (binding.genderRG.checkedRadioButtonId) {
+            binding.maleRB.id -> {
+                gender = getString(R.string.male)
+            }
+            binding.femaleRB.id -> {
+                gender = getString(R.string.female)
+            }
+        }
+        return gender
+    }
+
     private fun changeLayoutValidity() {
         with(binding) {
             if (!inputValidationFlags[0]) {
                 nameError.isErrorEnabled = true
-                nameError.error = "Enter correct name"
+                nameError.error = getString(R.string.contactNameError)
             } else {
                 nameError.isErrorEnabled = false
                 nameError.error = null
             }
             if (!inputValidationFlags[1]) {
                 phoneNumberError.isErrorEnabled = true
-                phoneNumberError.error = "Enter correct phone number"
+                phoneNumberError.error = getString(R.string.contactPhoneNumberError)
             } else {
                 phoneNumberError.isErrorEnabled = false
                 phoneNumberError.error = null
-            }
-            if (!inputValidationFlags[2]) {
-                instagramError.isErrorEnabled = true
-                instagramError.error = "Enter correct instagram id  "
-            } else {
-                instagramError.isErrorEnabled = false
-                instagramError.error = null
             }
         }
     }
@@ -94,33 +93,29 @@ class EditContactFragment : Fragment() {
         with(binding) {
             inputValidationFlags = mContactViewModel.checkInputValidation(
                 contactNameTV.text.toString(),
-                instagramTV.text.toString(),
                 phoneNumberTV.text.toString()
             )
-            var gender = "Others"
-            when (genderRG.checkedRadioButtonId) {
-                maleRB.id -> {
-                    gender = "Male"
-                }
-                femaleRB.id -> {
-                    gender = "Female"
-                }
-            }
 
-            contact!!.contactName = contactNameTV.text.toString()
-            contact!!.instagram = instagramTV.text.toString()
-            contact!!.phoneNumber = phoneNumberTV.text.toString()
-            if (!inputValidationFlags.contains(false)) {
-                mContactViewModel.editContact(
-                    contact!!
-                )
-                val action =
-                    EditContactFragmentDirections.actionEditContactFragmentToContactDetailFragment(
-                        args.transferContactId
-                    )
-                findNavController().navigate(action)
-            } else {
-                changeLayoutValidity()
+            lifecycleScope.launch(Dispatchers.Main) {
+                val contact = mContactViewModel.getContact(args.transferContactId)
+                if (contact != null) {
+                    contact.contactName = contactNameTV.text.toString()
+                    contact.instagram = instagramTV.text.toString()
+                    contact.phoneNumber = phoneNumberTV.text.toString()
+                    contact.gender = getGender()
+                    if (!inputValidationFlags.contains(false)) {
+                        mContactViewModel.editContact(
+                            contact
+                        )
+                        val action =
+                            EditContactFragmentDirections.actionEditContactFragmentToContactDetailFragment(
+                                args.transferContactId
+                            )
+                        findNavController().navigate(action)
+                    } else {
+                        changeLayoutValidity()
+                    }
+                }
             }
         }
     }

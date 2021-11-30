@@ -18,17 +18,14 @@ class InputValidationService @Inject constructor(): IInputValidationService {
     }
 
     override fun addContactInputValidation(
-        name : String, instagram : String, phoneNumber : String
+        name : String, phoneNumber : String
     ): Array<Boolean> {
         var flags : Array<Boolean> = arrayOf(true, true, true)
         if (name.isBlank()){
             flags[0] = false
         }
-        if (instagram.isBlank()){
-            flags[1] = false
-        }
         if (phoneNumber.isBlank()){
-            flags[2] = false
+            flags[1] = false
         }
         return flags
     }

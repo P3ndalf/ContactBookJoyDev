@@ -27,5 +27,4 @@ interface ContactDao {
 
     @Update
     suspend fun editContact(contact: Contact)
-
 }

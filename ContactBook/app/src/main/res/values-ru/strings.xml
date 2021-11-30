@@ -4,6 +4,7 @@
     <string name="start_fragment">Всетречающая строка</string>
     <string name="login_fragment">Авторизация</string>
     <string name="register_fragment">Регистрация</string>
+    <string name="contacts_fragment">Контакты</string>
     <string name="contact_detail_fragment">Контакт</string>
     <string name="add_contact_fragment">Новый контакт</string>
     <string name="edit_contact_fragment">Изменить контакт</string>
@@ -50,5 +51,12 @@
     <string name="confrimPasswordError">повторите пароль</string>
     <string name="ContactExistsToast">Контакт уже создан</string>
     <string name="addExternalContactCanceledToast">Отменено</string>
-    <string name="userAlreadyToast">User with such email is already exists</string>
+    <string name="userAlreadyToast">Пользователь с такой почтой уже зарегестрирован</string>
+    <string name="positiveAnswYes">Да</string>
+    <string name="negativeAnswNO">Нет</string>
+    <string name="deleteEverything">Удаляем все контакты?</string>
+    <string name="deletingContactsMessage">Вы уверены что хотите удалить все свои контакты?</string>
+    <string name="contactNameError">Веедите корректное имя</string>
+    <string name="contactPhoneNumberError">Введите корректный номер телефона</string>
+    <string name="deleteQstnContact">Уверены, что хотите удалить </string>
 </resources>

@@ -27,7 +27,7 @@ class AddContactFragment : Fragment() {
 
     private val mContactViewModel: ContactViewModel by viewModels()
 
-    private var inputValidationFlags: Array<Boolean> = Array(3) { true }
+    private var inputValidationFlags: Array<Boolean> = Array(2) { true }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +61,7 @@ class AddContactFragment : Fragment() {
 
         with(binding) {
             inputValidationFlags = mContactViewModel.checkInputValidation(
-                nameET.text.toString(), instagramET.text.toString(), phoneNumberET.text.toString()
+                nameET.text.toString(), phoneNumberET.text.toString()
             )
             var gender = "other"
             genderRG.setOnCheckedChangeListener { radioGroup, checkedId ->

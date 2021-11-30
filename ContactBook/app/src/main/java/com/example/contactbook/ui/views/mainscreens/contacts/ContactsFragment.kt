@@ -102,13 +102,13 @@ class ContactsFragment : Fragment() {
     private fun deleteContacts() {
         val builder = AlertDialog.Builder(requireContext())
 
-        builder.setPositiveButton("Yes") { _, _ ->
+        builder.setPositiveButton(getString(R.string.positiveAnswYes)) { _, _ ->
             mContactViewModel.deleteContacts(authorisedSharedPreferencesService.loadCurrentUser().id)
         }
-        builder.setNegativeButton("No") { _, _ ->
+        builder.setNegativeButton(getString(R.string.negativeAnswNO)) { _, _ ->
         }
-        builder.setTitle("Delete everything?")
-        builder.setMessage("Are you sure you want to delete all your contacts?")
+        builder.setTitle(getString(R.string.deleteEverything))
+        builder.setMessage(getString(R.string.deletingContactsMessage))
         builder.show()
     }
 
