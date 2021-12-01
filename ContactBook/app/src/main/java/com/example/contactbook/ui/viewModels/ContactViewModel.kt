@@ -30,7 +30,7 @@ class ContactViewModel @Inject constructor(
     }
 
     suspend fun getContact(id: String): Contact = withContext(Dispatchers.IO) {
-        val contact = contactRepository.getContact(id) ?: throw Exception("Contact null exception")
+        val contact = contactRepository.findContact(id) ?: throw Exception("Contact null exception")
         contact
     }
 

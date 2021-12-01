@@ -14,10 +14,10 @@ interface ContactDao {
     fun getContacts(ownerId: String): LiveData<List<Contact>>
 
     @Query("SELECT * FROM contactsTable WHERE id = :id")
-    fun getContact(id: String): Contact?
+    fun findContact(id: String): Contact?
 
     @Query("SELECT * FROM contactsTable WHERE contactName = :contactName and phoneNumber = :phoneNumber and ownerId = :ownerId")
-    fun getContact(contactName: String, phoneNumber: String, ownerId: String): Contact?
+    fun findContact(contactName: String, phoneNumber: String, ownerId: String): Contact?
 
     @Query("DELETE FROM contactsTable WHERE ownerId = :ownerId")
     fun deleteContacts(ownerId: String)

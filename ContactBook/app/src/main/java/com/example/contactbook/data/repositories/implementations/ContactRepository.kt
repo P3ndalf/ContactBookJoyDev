@@ -15,7 +15,7 @@ class ContactRepository(private val contactDao: ContactDao) {
         instagram: String,
         ownerId: String
     ): Boolean {
-        if (getContact(contactName, phoneNumber, ownerId) != null) {
+        if (findContact(contactName, phoneNumber, ownerId) != null) {
             return false
         }
         val id = UUID.randomUUID().toString()
@@ -33,16 +33,16 @@ class ContactRepository(private val contactDao: ContactDao) {
         return true
     }
 
-    private fun getContact(name: String, phoneNumber: String, ownerId: String): Contact? {
-        return contactDao.getContact(name, phoneNumber, ownerId)
+    private fun findContact(name: String, phoneNumber: String, ownerId: String): Contact? {
+        return contactDao.findContact(name, phoneNumber, ownerId)
     }
 
     fun getContacts(ownerId: String): LiveData<List<Contact>> {
         return contactDao.getContacts(ownerId)
     }
 
-    fun getContact(id: String): Contact? {
-        return contactDao.getContact(id)
+    fun findContact(id: String): Contact? {
+        return contactDao.findContact(id)
     }
 
     fun deleteContacts(ownerId: String) {
