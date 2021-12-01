@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
+
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    android:background="@color/background">
+    tools:ignore="SpUsage">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,16 +21,17 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="150dp"
             android:layout_height="50dp"
-
+                
             android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
 
             android:layout_marginBottom="50dp"
             android:layout_weight="1"
             android:backgroundTint="@android:color/white"
+            android:fontFamily="serif"
+
             android:text="@string/login_fragment"
-            android:textColor="@color/main"
-            android:textSize="15dp"
+            android:textSize="14dp"
 
             app:layout_constraintBottom_toTopOf="@+id/nameError"
             app:layout_constraintEnd_toStartOf="@+id/register_fragment_button"
@@ -51,11 +54,13 @@
 
             android:layout_marginBottom="50dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/main"
-            android:text="@string/register_fragment"
-            android:textColor="@android:color/white"
 
-            android:textSize="15dp"
+            android:backgroundTint="@color/main"
+            android:fontFamily="serif"
+            android:text="@string/register_fragment"
+            android:textColor="@color/white"
+
+            android:textSize="14dp"
             app:layout_constraintBottom_toTopOf="@+id/nameError"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/login_fragment_button"
@@ -77,9 +82,10 @@
 
             android:backgroundTint="@color/main"
             android:text="@string/register_register_confirm_button_text"
-
-            android:textColor="@android:color/white"
-            android:textSize="15dp"
+                
+            android:fontFamily="serif"
+            android:textColor="@color/white"
+            android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.512"
@@ -92,18 +98,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
+                                                               
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"
             android:theme="@style/MyTextInputLayout_overlay"
             app:boxStrokeWidth="2dp"
             app:counterEnabled="true"
+
             app:counterMaxLength="20"
+            app:counterTextColor="@color/grey"
+
             app:errorEnabled="true"
             app:helperText="@string/register_name_helper_text"
             app:helperTextTextColor="@color/grey"
             app:layout_constraintBottom_toTopOf="@+id/lastnameError"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+
             app:layout_constraintStart_toStartOf="parent"
             app:startIconDrawable="@drawable/ic_account_circle"
             app:startIconTint="@color/grey">
@@ -112,10 +122,16 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="serif"
                 android:hint="@string/register_name_hint"
+
                 android:maxLines="1"
-                android:paddingStart="10dp"
-                android:singleLine="true" />
+                android:paddingHorizontal="10dp"
+                android:singleLine="true"
+
+                android:textColor="@color/main"
+                android:textSize="18dp" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -148,15 +164,19 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/lastname"
 
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="serif"
 
                 android:hint="@string/register_lastname_hint"
                 android:inputType="text"
+
                 android:maxLines="1"
-                android:paddingStart="10dp"
-                android:singleLine="true" />
+                android:paddingHorizontal="10dp"
+                android:singleLine="true"
+                android:textColor="@color/main"
+                android:textSize="18dp" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -181,7 +201,6 @@
             app:helperTextTextColor="@color/grey"
             app:layout_constraintBottom_toTopOf="@+id/passwordError"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:startIconDrawable="@drawable/ic_contact_mail"
             app:startIconTint="@color/grey">
@@ -192,11 +211,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
+                android:fontFamily="serif"
                 android:hint="@string/register_email_hint"
                 android:inputType="textEmailAddress"
+
                 android:maxLines="1"
                 android:paddingStart="10dp"
                 android:singleLine="true"
+                android:textColor="@color/main"
+                android:textSize="18dp"
                 tools:ignore="RtlSymmetry" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -230,13 +253,16 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:layout_marginTop="10dp"
+                android:fontFamily="serif"
+
                 android:hint="@string/register_password_hint"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:paddingStart="10dp"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@color/main"
+                android:textSize="18dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -271,11 +297,15 @@
                 android:layout_height="match_parent"
 
                 android:layout_marginTop="10dp"
+                android:fontFamily="serif"
                 android:hint="@string/register_confirm_password_hint"
+
                 android:maxLines="1"
                 android:paddingStart="10dp"
+                android:singleLine="true"
+                android:textColor="@color/main"
 
-                android:singleLine="true" />
+                android:textSize="18dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

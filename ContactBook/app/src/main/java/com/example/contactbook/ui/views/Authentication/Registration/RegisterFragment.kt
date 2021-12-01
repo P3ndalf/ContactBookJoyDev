@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -64,23 +65,28 @@ class RegisterFragment : Fragment() {
                     lifecycleScope.launch(Dispatchers.Main) {
                         var userId = UUID.randomUUID().toString()
 
-                        mRegistrationViewModel.addUser(
-                            userId,
-                            name.text.toString(),
-                            lastname.text.toString(),
-                            email.text.toString(),
-                            password.text.toString()
-                        )
-                        authorizedUserSharedPreferencesService.saveCurrentUserData(
-                            User(
+                        if(mRegistrationViewModel.addUser(
                                 userId,
                                 name.text.toString(),
                                 lastname.text.toString(),
                                 email.text.toString(),
-                                ""
+                                password.text.toString()
+                            )){
+                            authorizedUserSharedPreferencesService.saveCurrentUserData(
+                                User(
+                                    userId,
+                                    name.text.toString(),
+                                    lastname.text.toString(),
+                                    email.text.toString(),
+                                    ""
+                                )
                             )
-                        )
-                        startActivity(Intent(requireActivity(), MainActivity::class.java))
+                            startActivity(Intent(requireActivity(), MainActivity::class.java))
+                        }
+                        else{
+                            Toast.makeText(requireContext(), getString(R.string.userAlreadyToast), Toast.LENGTH_SHORT).show()
+                        }
+
                     }
                 } else {
                     changeLayoutValidity()
@@ -94,35 +100,35 @@ class RegisterFragment : Fragment() {
         with(binding) {
             if (!inputValidationFlags[0]) {
                 nameError.isErrorEnabled = true
-                nameError.error = "Enter correct name"
+                nameError.error = getString(R.string.usernameError)
             } else {
                 nameError.isErrorEnabled = false
                 nameError.error = null
             }
             if (!inputValidationFlags[1]) {
                 lastnameError.isErrorEnabled = true
-                lastnameError.error = "Enter correct last name"
+                lastnameError.error = getString(R.string.userLastNameError)
             } else {
                 lastnameError.isErrorEnabled = false
                 lastnameError.error = null
             }
             if (!inputValidationFlags[2]) {
                 emailError.isErrorEnabled = true
-                emailError.error = "Enter correct email"
+                emailError.error = getString(R.string.emailError)
             } else {
                 emailError.isErrorEnabled = false
                 emailError.error = null
             }
             if (!inputValidationFlags[3]) {
                 passwordError.isErrorEnabled = true
-                passwordError.error = "Fill password field"
+                passwordError.error = getString(R.string.passwordError)
             } else {
                 passwordError.isErrorEnabled = false
                 passwordError.error = null
             }
             if (!inputValidationFlags[4]) {
                 confirmPasswordError.isErrorEnabled = true
-                confirmPasswordError.error = "Repeat your password"
+                confirmPasswordError.error = getString(R.string.confrimPasswordError)
             } else {
                 confirmPasswordError.isErrorEnabled = false
                 confirmPasswordError.error = null

@@ -13,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private lateinit var fragmentContainerView : NavHostFragment
 
     private lateinit var fragmentContainerView : NavHostFragment
 
@@ -36,5 +37,4 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return fragmentContainerView.navController.navigateUp() || super.onSupportNavigateUp()
     }
-
 }

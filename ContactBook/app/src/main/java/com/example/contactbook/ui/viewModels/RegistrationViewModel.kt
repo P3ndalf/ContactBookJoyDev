@@ -18,17 +18,10 @@ class RegistrationViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-
-    suspend fun isUserExists(email: String): Boolean = withContext(Dispatchers.IO) {
-        return@withContext userRepository.isUserExists(email)
-    }
-
     suspend fun addUser(
         userId: String, firstName: String, lastName: String, email: String, password: String
-    ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            userRepository.addUser(userId, firstName, lastName, email, password)
-        }
+    ) : Boolean = withContext(Dispatchers.IO) {
+        userRepository.addUser(userId, firstName, lastName, email, password)
     }
 
     fun checkInputValidation(

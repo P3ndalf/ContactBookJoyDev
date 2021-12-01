@@ -93,14 +93,14 @@ class LoginFragment : Fragment(){
         with(binding) {
             if (!inputValidationFlags[0]) {
                 emailError.isErrorEnabled = true
-                emailError.error = "Enter correct email"
+                emailError.error = getString(R.string.emailError)
             } else {
                 emailError.isErrorEnabled = false
                 emailError.error = null
             }
             if (!inputValidationFlags[1]) {
                 passwordError.isErrorEnabled = true
-                passwordError.error = "Fill password field"
+                passwordError.error = getString(R.string.passwordError)
             } else {
                 passwordError.isErrorEnabled = false
                 passwordError.error = null
@@ -111,9 +111,9 @@ class LoginFragment : Fragment(){
     private fun setValidityWrongPassword() {
         with(binding) {
             emailError.isErrorEnabled = true
-            emailError.error = "Incorrect password or email"
+            emailError.error = getString(R.string.nouser)
             passwordError.isErrorEnabled = true
-            passwordError.error = "Incorrect password or email"
+            passwordError.error = getString(R.string.nouser)
         }
     }
 }

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/contactsFragment"
         android:name="com.example.contactbook.ui.views.mainscreens.contacts.ContactsFragment"
-        android:label="Contacts"
+        android:label="@string/contacts_fragment"
         tools:layout="@layout/fragment_contacts">
         <action
             android:id="@+id/action_contactsFragment_to_addContactFragment"
@@ -20,12 +20,12 @@
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.example.contactbook.ui.views.mainscreens.UserProfileFragment"
-        android:label="User Profile"
+        android:label="@string/user_profile"
         tools:layout="@layout/fragment_userprofile"/>
     <fragment
         android:id="@+id/addContactFragment"
         android:name="com.example.contactbook.ui.views.mainscreens.contacts.add.AddContactFragment"
-        android:label="AddContactFragment"
+        android:label="@string/add_contact_fragment"
         tools:layout="@layout/fragment_add_contact">
         <action
             android:id="@+id/action_addContactFragment_to_contactsFragment"
@@ -34,15 +34,12 @@
     <fragment
         android:id="@+id/editContactFragment"
         android:name="com.example.contactbook.ui.views.mainscreens.contacts.edit.EditContactFragment"
-        android:label="EditContactFragment"
+        android:label="@string/edit_contact_fragment"
         tools:layout="@layout/fragment_edit_contact">
         <argument
             android:name="transfer_contact_id"
             app:argType="string"
             android:defaultValue='""' />
-        <action
-            android:id="@+id/action_editContactFragment_to_contactsFragment"
-            app:destination="@id/contactsFragment" />
         <action
             android:id="@+id/action_editContactFragment_to_contactDetailFragment"
             app:destination="@id/contactDetailFragment" />
@@ -50,7 +47,7 @@
     <fragment
         android:id="@+id/contactDetailFragment"
         android:name="com.example.contactbook.ui.views.mainscreens.contacts.detail.ContactDetailFragment"
-        android:label="ContactDetailFragment"
+        android:label="@string/contact_detail_fragment"
         tools:layout="@layout/fragment_contact_detail">
         <action
             android:id="@+id/action_contactDetailFragment_to_editContactFragment"
@@ -61,11 +58,13 @@
         <argument
             android:name="transfer_contact_id"
             app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue="unknown" />
+        android:defaultValue='""' />
+
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.contactbook.ui.views.mainscreens.settings.SettingsFragment"
-        android:label="Settings"
+        android:label="@string/settings"
         tools:layout="@layout/fragment_settings"/>
 </navigation>

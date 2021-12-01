@@ -19,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class UserProfileFragment : Fragment() {
     private lateinit var binding: FragmentUserprofileBinding
-    private val mUserProfileModel: UserProfileModel by viewModels()
     private lateinit var authorisedSharedPreferencesService: IAuthorisedSharedPreferencesService
 
     override fun onCreateView(

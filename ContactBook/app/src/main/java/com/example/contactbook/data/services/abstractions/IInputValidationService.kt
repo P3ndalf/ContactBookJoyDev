@@ -7,7 +7,7 @@ interface IInputValidationService {
     ): Array<Boolean>
 
     fun addContactInputValidation(
-        name : String, instagram : String, phoneNumber : String
+        name : String, phoneNumber : String
     ): Array<Boolean>
 
     fun registerInputValidation(
