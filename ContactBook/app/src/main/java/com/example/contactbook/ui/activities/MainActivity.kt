@@ -15,6 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var fragmentContainerView : NavHostFragment
 
+    private lateinit var fragmentContainerView : NavHostFragment
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

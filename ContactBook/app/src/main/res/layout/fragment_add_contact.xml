@@ -188,16 +188,19 @@
                 android:layout_height="wrap_content"
                 android:text="@string/male" />
 
+
             <RadioButton
                 android:id="@+id/femaleRB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/female" />
 
+
             <RadioButton
                 android:id="@+id/othersRB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:text="@string/others" />
         </RadioGroup>
 

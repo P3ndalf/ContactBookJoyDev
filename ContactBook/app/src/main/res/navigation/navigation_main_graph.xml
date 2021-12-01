@@ -60,6 +60,7 @@
             app:argType="string"
             android:defaultValue="unknown" />
         android:defaultValue='""' />
+
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

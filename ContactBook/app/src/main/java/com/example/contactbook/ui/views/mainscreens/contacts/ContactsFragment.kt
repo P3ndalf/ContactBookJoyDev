@@ -37,7 +37,7 @@ class ContactsFragment : Fragment() {
     private val CONTACT_PICK_CODE = 2
 
     private val mContactViewModel: ContactsViewModel by viewModels()
-
+    
     private lateinit var contactsRecyclerView: RecyclerView
 
     override fun onCreateView(

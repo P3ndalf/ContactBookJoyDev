@@ -26,9 +26,9 @@ class ContactsViewModel @Inject constructor(
             contactRepository.deleteContacts(ownerId)
         }
     }
-
     suspend fun addExternalContact(name: String, phone: String, ownerId: String): Boolean =
         withContext(Dispatchers.IO) {
             contactRepository.addContact(name, phone, 0, "Others", "", ownerId)
         }
+
 }
