@@ -10,7 +10,7 @@ interface ContactDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addContact(contact: Contact)
 
-    @Query("SELECT * FROM contactsTable WHERE ownerId = :ownerI ORDER BY contactName")
+    @Query("SELECT * FROM contactsTable WHERE ownerId = :ownerId ORDER BY contactName")
     fun getContacts(ownerId: String): LiveData<List<Contact>>
 
     @Query("SELECT * FROM contactsTable WHERE id = :id")
