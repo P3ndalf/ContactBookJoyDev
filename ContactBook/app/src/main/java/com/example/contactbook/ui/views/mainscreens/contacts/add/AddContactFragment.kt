@@ -60,25 +60,13 @@ class AddContactFragment : Fragment() {
             inputValidationFlags = mContactViewModel.checkInputValidation(
                 nameET.text.toString(), phoneNumberET.text.toString()
             )
-            var gender = "other"
-            genderRG.setOnCheckedChangeListener { radioGroup, checkedId ->
-                maleRB.apply {
-                    gender = text.toString()
-                }
-                femaleRB.apply {
-                    gender = text.toString()
-                }
-                othersRB.apply {
-                    gender = text.toString()
-                }
-            }
             if (!inputValidationFlags.contains(false)) {
                 lifecycleScope.launch(Dispatchers.Main){
                     if(mContactViewModel.addContact(
                             nameET.text.toString(),
                             phoneNumberET.text.toString(),
                             Calendar.getInstance().timeInMillis,
-                            gender,
+                            getGender(),
                             instagramET.text.toString(),
                             ownerId
                         )){
@@ -119,5 +107,18 @@ class AddContactFragment : Fragment() {
                 instagramError.error = null
             }
         }
+    }
+
+    private suspend fun getGender(): String {
+        var gender = when (binding.genderRG.checkedRadioButtonId) {
+            binding.maleRB.id -> {
+                getString(R.string.male)
+            }
+            binding.femaleRB.id -> {
+                getString(R.string.female)
+            }
+            else -> "Others"
+        }
+        return gender
     }
 }
