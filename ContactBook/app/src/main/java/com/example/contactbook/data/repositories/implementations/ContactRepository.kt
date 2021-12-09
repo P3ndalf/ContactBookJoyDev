@@ -13,6 +13,7 @@ class ContactRepository(private val contactDao: ContactDao) {
         birthday: Long,
         gender: String,
         instagram: String,
+        picturePath: String?,
         ownerId: String
     ): Boolean {
         if (findContact(contactName, phoneNumber, ownerId) != null) {
@@ -27,6 +28,7 @@ class ContactRepository(private val contactDao: ContactDao) {
                 birthday,
                 gender,
                 instagram,
+                picturePath,
                 ownerId
             )
         )

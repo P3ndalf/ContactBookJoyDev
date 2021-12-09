@@ -40,7 +40,7 @@
     <string name="cancel">Cancel</string>
     <string name="add">Add</string>
     <string name="change_avatar">Change avatar</string>
-    <string name="contact_name">contact name</string>
+    <string name="contact_name">Contact name</string>
     <string name="user_profile">User Profile</string>
     <string name="emailError">enter correct email</string>
     <string name="passwordError">fill password field</string>
@@ -58,4 +58,7 @@
     <string name="contactNameError">Enter correct name</string>
     <string name="contactPhoneNumberError">Enter correct phone number</string>
     <string name="deleteQstnContact">Are you sure you want to delete</string>
+    <string name="chooseImage">Choose Image</string>
+    <string name="deny">Deny</string>
+    <string name="denied">Denied...</string>
 </resources>

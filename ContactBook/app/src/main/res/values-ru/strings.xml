@@ -59,4 +59,7 @@
     <string name="contactNameError">Веедите корректное имя</string>
     <string name="contactPhoneNumberError">Введите корректный номер телефона</string>
     <string name="deleteQstnContact">Уверены, что хотите удалить </string>
+    <string name="chooseImage">Выберите изображение</string>
+    <string name="deny">Отмена</string>
+    <string name="denied">Denied...</string>
 </resources>

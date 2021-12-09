@@ -3,7 +3,8 @@
     package="com.example.contactbook">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:name=".di.ContactsApp"
         android:allowBackup="true"
