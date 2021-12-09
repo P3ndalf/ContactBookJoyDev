@@ -1,64 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:background="@drawable/bg_rounded_top_corners"
-    android:backgroundTint="@color/additional"
-
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/contactName_TV"
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_rounded_tv"
-        android:paddingHorizontal="10dp"
-        android:text="@string/contact_name"
-        android:textColor="@color/black"
-        android:textSize="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/avatarIV" />
+        android:background="@drawable/bg_rounded_top_corners"
+        android:backgroundTint="@color/main"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        >
 
-    <TextView
-        android:id="@+id/phoneNumber_TV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_rounded_tv"
-        android:paddingHorizontal="10dp"
-        android:text="@string/phoneNumber"
-        android:textColor="@color/black"
-        android:textSize="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/contactName_TV" />
+        <TextView
+            android:id="@+id/contactName_TV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/bg_rounded_tv"
+            android:paddingHorizontal="10dp"
+            android:text="@string/contact_name"
+            android:fontFamily="serif"
+            android:textColor="@color/black"
+            android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contactName_title" />
 
-    <TextView
-        android:id="@+id/instagram_TV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_rounded_tv"
-        android:paddingHorizontal="10dp"
-        android:text="@string/instagram"
-        android:textColor="@color/black"
-        android:textSize="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/phoneNumber_TV" />
+        <TextView
+            android:id="@+id/phoneNumber_TV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/bg_rounded_tv"
+            android:paddingHorizontal="10dp"
+            android:text="@string/phoneNumber"
+            android:fontFamily="serif"
+            android:textColor="@color/black"
+            android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumber_title" />
+
+        <TextView
+            android:id="@+id/instagram_TV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/bg_rounded_tv"
+            android:paddingHorizontal="10dp"
+            android:text="@string/instagram"
+            android:fontFamily="serif"
+            android:textColor="@color/black"
+            android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instagram_title" />
 
     <TextView
         android:id="@+id/gender_TV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="400dp"
         android:background="@drawable/bg_rounded_tv"
+        android:fontFamily="serif"
         android:paddingHorizontal="10dp"
         android:text="@string/gender"
         android:textColor="@color/black"
         android:textSize="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/instagram_TV" />
-</androidx.appcompat.widget.LinearLayoutCompat>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gender_title" />
+
+    <TextView
+            android:id="@+id/contactName_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="serif"
+            android:text="@string/contact_name"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.003"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/phoneNumber_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="serif"
+            android:text="@string/phoneNumber"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contactName_TV" />
+
+        <TextView
+            android:id="@+id/instagram_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+
+            android:fontFamily="serif"
+            android:text="@string/instagram"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumber_TV" />
+
+        <TextView
+            android:id="@+id/gender_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="serif"
+            android:text="@string/gender"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/instagram_TV" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
