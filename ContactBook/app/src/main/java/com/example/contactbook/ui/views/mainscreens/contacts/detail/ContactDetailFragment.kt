@@ -1,6 +1,7 @@
 package com.example.contactbook.ui.views.mainscreens.contacts.detail
 
 import android.app.AlertDialog
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -22,22 +23,23 @@ class ContactDetailFragment : Fragment() {
     private val args: ContactDetailFragmentArgs by navArgs()
 
     private val mContactViewModel: ContactViewModel by viewModels()
-    private var contact: Contact? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentContactDetailBinding.inflate(inflater, container, false)
-        lifecycleScope.launch(Dispatchers.Main){
-            contact = mContactViewModel.getContact(args.transferContactId)
-            with(binding.contactDetailColumn){
-                if(contact != null){
-                    contactNameTV.text = contact!!.contactName
-                    phoneNumberTV.text = contact!!.phoneNumber
-                    instagramTV.text = contact!!.instagram
-                    genderTV.text = contact!!.gender
+        lifecycleScope.launch(Dispatchers.Main) {
+            val contact = mContactViewModel.getContact(args.transferContactId)
+            with(binding) {
+                with(contactDetailColumn) {
+                    contactNameTV.text = contact.contactName
+                    phoneNumberTV.text = contact.phoneNumber
+                    instagramTV.text = contact.instagram
+                    genderTV.text = contact.gender
                 }
+                if (contact.picturePath != null)
+                    avatarIV.setImageBitmap(BitmapFactory.decodeFile(contact.picturePath))
             }
         }
         setHasOptionsMenu(true)
@@ -64,16 +66,18 @@ class ContactDetailFragment : Fragment() {
     }
 
     private fun deleteContact() {
-        val builder = AlertDialog.Builder(requireContext())
-
-        builder.setPositiveButton(R.string.positiveAnswYes) { _, _ ->
-            mContactViewModel.deleteContact(args.transferContactId)
-            findNavController().navigate(R.id.action_contactDetailFragment_to_contactsFragment)
+        lifecycleScope.launch(Dispatchers.Main) {
+            val builder = AlertDialog.Builder(requireContext())
+            val contact = mContactViewModel.getContact(args.transferContactId)
+            builder.setPositiveButton(R.string.positiveAnswYes) { _, _ ->
+                mContactViewModel.deleteContact(args.transferContactId)
+                findNavController().navigate(R.id.action_contactDetailFragment_to_contactsFragment)
+            }
+            builder.setNegativeButton(R.string.negativeAnswNO) { _, _ ->
+            }
+            builder.setTitle(getString(R.string.delete) + " ${contact.contactName}?")
+            builder.setMessage(getString(R.string.deleteQstnContact) + " ${contact.contactName}")
+            builder.show()
         }
-        builder.setNegativeButton(R.string.negativeAnswNO) { _, _ ->
-        }
-        builder.setTitle(getString(R.string.delete) + " ${contact?.contactName}?")
-        builder.setMessage(getString(R.string.deleteQstnContact) +" ${contact?.contactName}")
-        builder.show()
     }
 }

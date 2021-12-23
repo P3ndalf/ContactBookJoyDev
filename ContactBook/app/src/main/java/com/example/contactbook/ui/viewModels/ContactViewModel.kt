@@ -24,9 +24,10 @@ class ContactViewModel @Inject constructor(
         birthday: Long,
         gender: String,
         instagram: String,
+        picturePath: String?,
         ownerId: String
     ): Boolean = withContext(Dispatchers.IO){
-        contactRepository.addContact(name, phoneNumber, birthday, gender, instagram, ownerId)
+        contactRepository.addContact(name, phoneNumber, birthday, gender, instagram, picturePath, ownerId)
     }
 
     suspend fun getContact(id: String): Contact = withContext(Dispatchers.IO) {
