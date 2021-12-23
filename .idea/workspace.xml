@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80edc539-372c-4b75-888a-96dc1bf79f3d" name="Default Changelist" comment="" />
+    <list default="true" id="80edc539-372c-4b75-888a-96dc1bf79f3d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/ContactBook/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ContactBook/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContactBook/app/src/main/java/com/example/contactbook/ui/viewModels/RegistrationViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ContactBook/app/src/main/java/com/example/contactbook/ui/viewModels/RegistrationViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContactBook/app/src/main/java/com/example/contactbook/ui/views/mainscreens/contacts/edit/EditContactFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ContactBook/app/src/main/java/com/example/contactbook/ui/views/mainscreens/contacts/edit/EditContactFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContactBook/app/src/main/res/layout/contact_detail_column.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ContactBook/app/src/main/res/layout/contact_detail_column.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContactBook/app/src/main/res/menu/bottom_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ContactBook/app/src/main/res/menu/bottom_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContactBook/app/src/main/res/values-ru/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ContactBook/app/src/main/res/values-ru/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContactBook/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ContactBook/app/src/main/res/values/strings.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

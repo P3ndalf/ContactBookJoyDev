@@ -41,7 +41,10 @@ import android.graphics.BitmapFactory
 import android.graphics.Bitmap
 
 import android.R.attr.data
+import java.io.IOException
 import java.lang.NullPointerException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -57,6 +60,7 @@ class EditContactFragment : Fragment() {
 
     private val EXTERNAL_STORAGE_PERMISSION = 1
     private val PHOTO_PICKER_CODE = 2
+    private val REQUEST_IMAGE_CAPTURE = 3
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -103,7 +107,7 @@ class EditContactFragment : Fragment() {
 
     private fun choosePhoto() {
         val builder = AlertDialog.Builder(requireContext())
-        val options: Array<String> = arrayOf(getString(R.string.chooseImage), getString(R.string.deny))
+        val options: Array<String> = arrayOf(getString(R.string.chooseImage), getString(R.string.makeImageNow), getString(R.string.deny))
 
         builder.setTitle(getString(R.string.chooseImage))
 
@@ -114,6 +118,10 @@ class EditContactFragment : Fragment() {
                 startActivityForResult(intent, 2)
             } else if (options[item].equals(getString(R.string.deny))) {
                 dialog.dismiss()
+            } else if (options[item].equals(getString(R.string.makeImageNow))){
+
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
             }
         }
 
@@ -161,6 +169,10 @@ class EditContactFragment : Fragment() {
                 cursor.close()
                 val thumbnail = BitmapFactory.decodeFile(picturePath)
                 binding.imageView.setImageBitmap(thumbnail)
+            } else if( requestCode == REQUEST_IMAGE_CAPTURE){
+                val imageBitmap = data?.extras?.get("data") as Bitmap
+                saveImage()
+                binding.imageView.setImageBitmap(imageBitmap)
             }
         } else {
             Toast.makeText(
@@ -210,13 +222,27 @@ class EditContactFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
+    @Throws(IOException::class)
+    private fun saveImage() : File{
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            editImagePath = absolutePath
+        }
+    }
+
     private fun editContact() {
         with(binding) {
             inputValidationFlags = mContactViewModel.checkInputValidation(
                 contactNameTV.text.toString(),
                 phoneNumberTV.text.toString()
             )
-
             lifecycleScope.launch(Dispatchers.Main) {
                 val contact = mContactViewModel.getContact(args.transferContactId)
                 contact.contactName = contactNameTV.text.toString()

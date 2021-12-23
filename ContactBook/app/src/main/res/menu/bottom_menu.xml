@@ -2,18 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     >
     <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/settings"
-        android:iconTint="@color/main"
-
-        />
-
-    <item
         android:id="@+id/contactsFragment"
         android:icon="@drawable/ic_contact_phone"
-        android:title="@string/contacts"
+        android:title="@string/add"
         android:iconTint="@color/main"/>
+
+    <item
+        android:id="@+id/addContactFragment"
+        android:icon="@drawable/ic_add"
+        android:title="@string/add_contact"
+        android:iconTint="@color/main"
+        />
 
     <item
         android:id="@+id/userProfileFragment"
