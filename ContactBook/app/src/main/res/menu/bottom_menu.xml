@@ -4,7 +4,7 @@
     <item
         android:id="@+id/contactsFragment"
         android:icon="@drawable/ic_contact_phone"
-        android:title="@string/add"
+        android:title="@string/contacts"
         android:iconTint="@color/main"/>
 
     <item

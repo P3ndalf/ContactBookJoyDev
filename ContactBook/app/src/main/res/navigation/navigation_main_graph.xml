@@ -34,12 +34,11 @@
     <fragment
         android:id="@+id/editContactFragment"
         android:name="com.example.contactbook.ui.views.mainscreens.contacts.edit.EditContactFragment"
-        android:label="@string/edit_contact_fragment"
-        tools:layout="@layout/fragment_edit_contact">
+        android:label="@string/edit_contact_fragment">
         <argument
             android:name="transfer_contact_id"
-            app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue='""'
+            app:argType="string" />
         <action
             android:id="@+id/action_editContactFragment_to_contactDetailFragment"
             app:destination="@id/contactDetailFragment" />

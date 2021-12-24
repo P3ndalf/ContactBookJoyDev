@@ -27,6 +27,11 @@
     <string name="phoneNumber">Номер телефона</string>
     <string name="birthday">День рождения</string>
     <string name="gender">Пол</string>
+    <string-array name="sex_array">
+        <item name="male">Мужчина</item>
+        <item name="female">Женщина</item>
+        <item name="others">Монке</item>
+    </string-array>
     <string name="male">Мужчина</string>
     <string name="female">Женщина</string>
     <string name="others">Монке</string>

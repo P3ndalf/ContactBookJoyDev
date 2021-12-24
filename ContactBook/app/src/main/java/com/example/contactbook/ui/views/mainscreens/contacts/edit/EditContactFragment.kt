@@ -41,6 +41,11 @@ import android.graphics.BitmapFactory
 import android.graphics.Bitmap
 
 import android.R.attr.data
+import android.widget.Spinner
+import androidx.core.content.FileProvider
+import androidx.databinding.DataBindingUtil
+import com.example.contactbook.databinding.FragmentContactDetailBinding
+import com.example.contactbook.ui.viewModels.EditContactVM
 import java.io.IOException
 import java.lang.NullPointerException
 import java.text.SimpleDateFormat
@@ -48,25 +53,39 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class EditContactFragment : Fragment() {
+class EditContactFragment : Fragment(R.layout.fragment_edit_contact) {
     private lateinit var binding: FragmentEditContactBinding
     private val args: ContactDetailFragmentArgs by navArgs()
 
-    private val mContactViewModel: ContactViewModel by viewModels()
+    private val viewModel: EditContactVM by viewModels()
 
     private var inputValidationFlags: Array<Boolean> = Array(2) { true }
 
-    private var editImagePath : String? = null
+    private var editImagePath: String? = null
 
     private val EXTERNAL_STORAGE_PERMISSION = 1
     private val PHOTO_PICKER_CODE = 2
     private val REQUEST_IMAGE_CAPTURE = 3
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentEditContactBinding.inflate(inflater, container, false)
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_edit_contact, container, false)
+        binding.lifecycleOwner = this
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.vm = viewModel
+
+        viewModel.setData(args.transferContactId)
 
         binding.changeAvatar.setOnClickListener {
             if (checkReadGalleryPermission()) {
@@ -76,38 +95,58 @@ class EditContactFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launch(Dispatchers.Main) {
-            val contact = mContactViewModel.getContact(args.transferContactId)
-            with(binding) {
-                contactNameTV.setText(contact.contactName)
-                phoneNumberTV.setText(contact.phoneNumber)
-                instagramTV.setText(contact.instagram)
-                when(contact.gender){
-                    getString(R.string.male) -> maleRB.isChecked = true
-                    getString(R.string.female) -> femaleRB.isChecked = true
-                    getString(R.string.others) -> othersRB.isChecked = true
-                }
-                if(contact.picturePath != null){
-                    imageView.setImageBitmap(BitmapFactory.decodeFile(contact.picturePath))
-                }
+        viewModel.gender.observe(viewLifecycleOwner, { gender ->
+            when (gender) {
+                    getString(R.string.male) -> binding.maleRB.isChecked = true
+                    getString(R.string.female) -> binding.femaleRB.isChecked = true
+                    getString(R.string.others) -> binding.othersRB.isChecked = true
             }
-        }
-
-        binding.editBtn.setOnClickListener {
-            editContact()
-        }
+        })
 
         binding.cancelBtn.setOnClickListener {
             val action =
                 EditContactFragmentDirections.actionEditContactFragmentToContactDetailFragment(args.transferContactId)
             findNavController().navigate(action)
         }
-        return binding.root
+
+        binding.editBtn.setOnClickListener {
+            editContact()
+        }
+    }
+
+    private fun editContact() {
+        inputValidationFlags = viewModel.checkInputValidation(
+            binding.contactNameTV.text.toString(),
+            binding.phoneNumberTV.text.toString()
+        )
+        if (!inputValidationFlags.contains(false)) {
+            with(binding) {
+                viewModel.name.value = contactNameTV.text.toString()
+                viewModel.phoneNumber.value = phoneNumberTV.text.toString()
+                viewModel.instagram.value = instagramTV.text.toString()
+                if (editImagePath != null) viewModel.picturePath.value = editImagePath.toString()
+                viewModel.gender.value = getGender()
+            }
+            viewModel.editContact(
+                args.transferContactId
+            )
+            val action =
+                EditContactFragmentDirections.actionEditContactFragmentToContactDetailFragment(
+                    args.transferContactId
+                )
+            findNavController().navigate(action)
+        } else {
+            changeLayoutValidity()
+        }
     }
 
     private fun choosePhoto() {
         val builder = AlertDialog.Builder(requireContext())
-        val options: Array<String> = arrayOf(getString(R.string.chooseImage), getString(R.string.makeImageNow), getString(R.string.deny))
+        val options: Array<String> = arrayOf(
+            getString(R.string.chooseImage),
+            getString(R.string.makeImageNow),
+            getString(R.string.deny)
+        )
 
         builder.setTitle(getString(R.string.chooseImage))
 
@@ -118,7 +157,7 @@ class EditContactFragment : Fragment() {
                 startActivityForResult(intent, 2)
             } else if (options[item].equals(getString(R.string.deny))) {
                 dialog.dismiss()
-            } else if (options[item].equals(getString(R.string.makeImageNow))){
+            } else if (options[item].equals(getString(R.string.makeImageNow))) {
 
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
@@ -147,7 +186,8 @@ class EditContactFragment : Fragment() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 choosePhoto()
             } else {
-                Toast.makeText(requireContext(), getString(R.string.denied), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.denied), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -160,7 +200,13 @@ class EditContactFragment : Fragment() {
                 val selectedImage: Uri = data?.data!!
                 val filePath = arrayOf(MediaStore.Images.Media.DATA)
                 val cursor =
-                    requireActivity().contentResolver.query(selectedImage, filePath, null, null, null)
+                    requireActivity().contentResolver.query(
+                        selectedImage,
+                        filePath,
+                        null,
+                        null,
+                        null
+                    )
                         ?: throw NullPointerException("Cursor is null")
                 cursor.moveToFirst()
                 val columnIndex = cursor.getColumnIndex(filePath[0])
@@ -169,9 +215,32 @@ class EditContactFragment : Fragment() {
                 cursor.close()
                 val thumbnail = BitmapFactory.decodeFile(picturePath)
                 binding.imageView.setImageBitmap(thumbnail)
-            } else if( requestCode == REQUEST_IMAGE_CAPTURE){
+            } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 val imageBitmap = data?.extras?.get("data") as Bitmap
-                saveImage()
+                Intent(MediaStore.ACTION_IMAGE_CAPTURE).also{ takePictureIntent ->
+                    takePictureIntent.resolveActivity(requireActivity().packageManager)?.also{
+                        val file = try{
+                            saveImage()
+                        } catch(ex : IOException){
+                            null
+                        }
+                        file?.also {
+                            val uri = FileProvider.getUriForFile(
+                                requireContext(),
+                                "com.example.contactbook.fileprovider"
+                            ,it
+                            )
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                            startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE)
+                        }
+                        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+                            val f = File(editImagePath)
+                            mediaScanIntent.data = Uri.fromFile(f)
+                            requireActivity().sendBroadcast(mediaScanIntent)
+                        }
+                    }
+                }
+
                 binding.imageView.setImageBitmap(imageBitmap)
             }
         } else {
@@ -190,7 +259,23 @@ class EditContactFragment : Fragment() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private suspend fun getGender(): String {
+    @SuppressLint("SimpleDateFormat")
+    @Throws(IOException::class)
+    private fun saveImage(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File =
+            requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            editImagePath = absolutePath
+        }
+    }
+
+    private fun getGender(): String {
         var gender = when (binding.genderRG.checkedRadioButtonId) {
             binding.maleRB.id -> {
                 getString(R.string.male)
@@ -202,6 +287,7 @@ class EditContactFragment : Fragment() {
         }
         return gender
     }
+
 
     private fun changeLayoutValidity() {
         with(binding) {
@@ -222,47 +308,5 @@ class EditContactFragment : Fragment() {
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
-    @Throws(IOException::class)
-    private fun saveImage() : File{
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
-        return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            editImagePath = absolutePath
-        }
-    }
 
-    private fun editContact() {
-        with(binding) {
-            inputValidationFlags = mContactViewModel.checkInputValidation(
-                contactNameTV.text.toString(),
-                phoneNumberTV.text.toString()
-            )
-            lifecycleScope.launch(Dispatchers.Main) {
-                val contact = mContactViewModel.getContact(args.transferContactId)
-                contact.contactName = contactNameTV.text.toString()
-                contact.instagram = instagramTV.text.toString()
-                contact.phoneNumber = phoneNumberTV.text.toString()
-                contact.gender = getGender()
-                contact.picturePath = editImagePath
-                if (!inputValidationFlags.contains(false)) {
-                    mContactViewModel.editContact(
-                        contact
-                    )
-                    val action =
-                        EditContactFragmentDirections.actionEditContactFragmentToContactDetailFragment(
-                            args.transferContactId
-                        )
-                    findNavController().navigate(action)
-                } else {
-                    changeLayoutValidity()
-                }
-            }
-        }
-    }
 }

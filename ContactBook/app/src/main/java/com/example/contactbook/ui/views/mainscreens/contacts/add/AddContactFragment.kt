@@ -43,6 +43,7 @@ class AddContactFragment : Fragment() {
     private var entityImagePath: String? = null
     private val EXTERNAL_STORAGE_PERMISSION = 1
     private val PHOTO_PICKER_CODE = 2
+    private val REQUEST_IMAGE_CAPTURE = 3
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -137,7 +138,7 @@ class AddContactFragment : Fragment() {
         }
     }
 
-    private suspend fun getGender(): String {
+    private fun getGender(): String {
         var gender = when (binding.genderRG.checkedRadioButtonId) {
             binding.maleRB.id -> {
                 getString(R.string.male)
@@ -152,8 +153,11 @@ class AddContactFragment : Fragment() {
 
     private fun choosePhoto() {
         val builder = AlertDialog.Builder(requireContext())
-        val options: Array<String> =
-            arrayOf(getString(R.string.chooseImage), getString(R.string.deny))
+        val options: Array<String> = arrayOf(
+            getString(R.string.chooseImage),
+            getString(R.string.makeImageNow),
+            getString(R.string.deny)
+        )
 
         builder.setTitle(getString(R.string.chooseImage))
 
@@ -164,6 +168,10 @@ class AddContactFragment : Fragment() {
                 startActivityForResult(intent, 2)
             } else if (options[item].equals(getString(R.string.deny))) {
                 dialog.dismiss()
+            } else if (options[item].equals(getString(R.string.makeImageNow))) {
+
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
             }
         }
         builder.show()

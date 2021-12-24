@@ -6,26 +6,39 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.contactbook.data.entities.User
+import com.example.contactbook.R
 import com.example.contactbook.data.services.AuthorisedSharedPreferencesService
 import com.example.contactbook.data.services.abstractions.IAuthorisedSharedPreferencesService
-import com.example.contactbook.databinding.FragmentUserprofileBinding
+import com.example.contactbook.databinding.UserProfileFragmentBinding
 import com.example.contactbook.ui.activities.AuthenticationActivity
-import com.example.contactbook.ui.viewModels.UserProfileModel
+import com.example.contactbook.ui.viewModels.UserProfileVM
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UserProfileFragment : Fragment() {
-    private lateinit var binding: FragmentUserprofileBinding
+class UserProfileFragment : Fragment(R.layout.fragment_userprofile) {
+    private lateinit var binding: UserProfileFragmentBinding
     private lateinit var authorisedSharedPreferencesService: IAuthorisedSharedPreferencesService
 
+    private val viewModel: UserProfileVM by viewModels()
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentUserprofileBinding.inflate(inflater, container, false)
+        super.onCreateView(inflater, container, savedInstanceState)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_userprofile, container, false)
+        binding.lifecycleOwner = this
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.vm = viewModel
 
         authorisedSharedPreferencesService = AuthorisedSharedPreferencesService(
             requireActivity().getSharedPreferences(
@@ -36,23 +49,15 @@ class UserProfileFragment : Fragment() {
 
         val user = authorisedSharedPreferencesService.loadCurrentUser()
 
-        fillUserFields(user)
+        viewModel.setData(user.firstName, user.lastName, user.email)
 
-        binding.logOutBtn.setOnClickListener{
+        binding.logOutBtn.setOnClickListener {
             logOut()
         }
-        return binding.root
     }
 
-    private fun fillUserFields(user : User) {
-        with(binding){
-            userNameTV.text = user.firstName
-            userLastNameTV.text = user.lastName
-            emailTV.text = user.email
-        }
-    }
 
-    private fun logOut(){
+    private fun logOut() {
         authorisedSharedPreferencesService.deleteCurrentUserData()
         startActivity(Intent(requireActivity(), AuthenticationActivity::class.java))
     }

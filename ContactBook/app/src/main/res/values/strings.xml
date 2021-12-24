@@ -26,6 +26,11 @@
     <string name="phoneNumber">Phone number</string>
     <string name="birthday">Birthday</string>
     <string name="gender">Gender</string>
+    <string-array name="sex_array">
+        <item name="male">Male</item>
+        <item name="female">Female</item>
+        <item name="others">Others</item>
+    </string-array>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="others">Others</string>
