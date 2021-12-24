@@ -217,30 +217,24 @@ class EditContactFragment : Fragment(R.layout.fragment_edit_contact) {
                 binding.imageView.setImageBitmap(thumbnail)
             } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 val imageBitmap = data?.extras?.get("data") as Bitmap
-                Intent(MediaStore.ACTION_IMAGE_CAPTURE).also{ takePictureIntent ->
-                    takePictureIntent.resolveActivity(requireActivity().packageManager)?.also{
-                        val file = try{
-                            saveImage()
-                        } catch(ex : IOException){
-                            null
-                        }
-                        file?.also {
+                /*Intent(MediaStore.ACTION_IMAGE_CAPTURE).also{ takePictureIntent ->
+                    takePictureIntent.resolveActivity(requireContext().packageManager).also{
+                        val file = saveImage()
+                        file.also {
                             val uri = FileProvider.getUriForFile(
                                 requireContext(),
-                                "com.example.contactbook.fileprovider"
-                            ,it
+                                "Pictures",
+                                it
                             )
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                            startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE)
-                        }
-                        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
-                            val f = File(editImagePath)
-                            mediaScanIntent.data = Uri.fromFile(f)
-                            requireActivity().sendBroadcast(mediaScanIntent)
                         }
                     }
+                }*/
+                Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+                    val f = saveImage()
+                    mediaScanIntent.data = Uri.fromFile(f)
+                    requireActivity().sendBroadcast(mediaScanIntent)
                 }
-
                 binding.imageView.setImageBitmap(imageBitmap)
             }
         } else {
