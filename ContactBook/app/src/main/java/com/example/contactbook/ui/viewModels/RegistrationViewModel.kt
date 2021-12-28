@@ -20,7 +20,10 @@ class RegistrationViewModel @Inject constructor(
 
     suspend fun addUser(
         userId: String, firstName: String, lastName: String, email: String, password: String
-    ) : Boolean = withContext(Dispatchers.IO) {
+    ): Boolean = withContext(Dispatchers.IO) {
+        if(isUserExists(email)){
+            return@withContext false
+        }
         userRepository.addUser(userId, firstName, lastName, email, password)
     }
 
@@ -38,5 +41,9 @@ class RegistrationViewModel @Inject constructor(
             password,
             confirmedPassword
         )
+    }
+
+    private suspend fun isUserExists(email: String): Boolean = withContext(Dispatchers.IO) {
+        userRepository.findUser(email) != null
     }
 }

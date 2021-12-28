@@ -28,7 +28,7 @@ class ContactsViewModel @Inject constructor(
     }
     suspend fun addExternalContact(name: String, phone: String, ownerId: String): Boolean =
         withContext(Dispatchers.IO) {
-            contactRepository.addContact(name, phone, 0, "Others", "", ownerId)
+            contactRepository.addContact(name, phone, 0, "Others", "", null, ownerId)
         }
 
 }

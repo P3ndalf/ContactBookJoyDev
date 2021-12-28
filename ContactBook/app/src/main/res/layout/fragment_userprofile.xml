@@ -1,138 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:ignore="SpUsage">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <Button
-        android:id="@+id/logOutBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+    <data class="UserProfileFragmentBinding">
 
-        android:fontFamily="serif"
-        android:text="@string/log_out"
-        android:textColor="@color/white"
+        <variable
+            name="vm"
+            type="com.example.contactbook.ui.viewModels.UserProfileVM" />
+    </data>
 
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.922" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        tools:ignore="SpUsage">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/userProfileCardFile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/main"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="20dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
+        <Button
+            android:id="@+id/logOutBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+            android:fontFamily="serif"
+            android:text="@string/log_out"
+            android:textColor="@color/white"
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:ignore="SpUsage,RtlSymmetry,RtlCompat">
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.922" />
 
-            <ImageView
-                android:id="@+id/accountAvatar"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:backgroundTint="@color/white"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/userProfileCardFile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/main"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="20dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
 
-                app:layout_constraintBottom_toTopOf="@+id/userLastNameTV"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/userLastNameTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/accountAvatar"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/bg_rounded_tv"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="SpUsage,RtlSymmetry,RtlCompat">
 
-                android:fontFamily="serif"
-                android:gravity="center|start"
-                android:minWidth="150dp"
+                <ImageView
+                    android:id="@+id/accountAvatar"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:backgroundTint="@color/white"
 
-                android:minHeight="30dp"
-                android:paddingStart="5dp"
-                android:text="lastname"
+                    app:layout_constraintBottom_toTopOf="@+id/userLastNameTV"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/ic_launcher_foreground" />
 
-                android:textColor="@color/black"
-                android:textSize="14dp"
+                <TextView
+                    android:id="@+id/userLastNameTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/accountAvatar"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_rounded_tv"
 
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/accountAvatar"
-                app:layout_constraintTop_toBottomOf="@+id/userNameTV" />
+                    android:fontFamily="serif"
+                    android:gravity="center|start"
+                    android:minWidth="150dp"
 
-            <TextView
-                android:id="@+id/userNameTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/accountAvatar"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/bg_rounded_tv"
-                android:fontFamily="serif"
+                    android:minHeight="30dp"
+                    android:paddingStart="5dp"
+                    android:text="@{vm.lastName}"
+                    tools:text="@string/register_lastname_hint"
 
-                android:gravity="center|start"
-                android:minWidth="150dp"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
 
-                android:minHeight="30dp"
-                android:paddingStart="5dp"
-                android:text="name"
-                android:textAlignment="viewStart"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="14dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/accountAvatar"
-                app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/accountAvatar"
+                    app:layout_constraintTop_toBottomOf="@+id/userNameTV" />
 
-            <TextView
-                android:id="@+id/emailTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/userNameTV"
-                android:layout_marginStart="5dp"
+                <TextView
+                    android:id="@+id/userNameTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/accountAvatar"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/bg_rounded_tv"
+                    android:fontFamily="serif"
 
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/bg_rounded_tv"
-                android:fontFamily="serif"
+                    android:gravity="center|start"
+                    android:minWidth="150dp"
 
-                android:gravity="center|start"
+                    android:minHeight="30dp"
+                    android:paddingStart="5dp"
+                    android:text="@{vm.name}"
+                    tools:text="@string/register_name_hint"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/accountAvatar"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                android:minWidth="150dp"
-                android:minHeight="30dp"
-                android:paddingStart="5dp"
-                android:text="@string/register_email_hint"
-                android:textColor="@color/black"
-                android:textSize="14dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/accountAvatar"
-                app:layout_constraintTop_toBottomOf="@+id/userLastNameTV" />
+                <TextView
+                    android:id="@+id/emailTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/userNameTV"
+                    android:layout_marginStart="5dp"
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/bg_rounded_tv"
+                    android:fontFamily="serif"
+
+                    android:gravity="center|start"
+
+                    android:minWidth="150dp"
+                    android:minHeight="30dp"
+                    android:paddingStart="5dp"
+                    android:text="@{vm.email}"
+                    tools:text="@string/register_email_hint"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/accountAvatar"
+                    app:layout_constraintTop_toBottomOf="@+id/userLastNameTV" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -3,7 +3,10 @@
     package="com.example.contactbook">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
     <application
         android:name=".di.ContactsApp"
         android:allowBackup="true"
@@ -23,8 +26,16 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true">
-
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="Pictures"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
     </application>
 
 </manifest>

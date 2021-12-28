@@ -1,11 +1,24 @@
 package com.example.contactbook.ui.views.mainscreens.contacts.add
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +31,10 @@ import com.example.contactbook.ui.viewModels.ContactViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.IOException
+import java.lang.NullPointerException
+import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
@@ -28,6 +45,11 @@ class AddContactFragment : Fragment() {
     private val mContactViewModel: ContactViewModel by viewModels()
 
     private var inputValidationFlags: Array<Boolean> = Array(2) { true }
+
+    private var entityImagePath: String? = null
+    private val EXTERNAL_STORAGE_PERMISSION = 1
+    private val PHOTO_PICKER_CODE = 2
+    private val REQUEST_IMAGE_CAPTURE = 3
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +68,14 @@ class AddContactFragment : Fragment() {
                     Context.MODE_PRIVATE
                 )
             )
+            changeAvatar.setOnClickListener {
+                if (checkReadGalleryPermission()) {
+                    choosePhoto()
+                } else {
+                    requestReadStoragePermission()
+                }
+            }
+
             addBtn.setOnClickListener {
                 addContact()
             }
@@ -61,20 +91,25 @@ class AddContactFragment : Fragment() {
                 nameET.text.toString(), phoneNumberET.text.toString()
             )
             if (!inputValidationFlags.contains(false)) {
-                lifecycleScope.launch(Dispatchers.Main){
-                    if(mContactViewModel.addContact(
+                lifecycleScope.launch(Dispatchers.Main) {
+                    if (mContactViewModel.addContact(
                             nameET.text.toString(),
                             phoneNumberET.text.toString(),
                             Calendar.getInstance().timeInMillis,
                             getGender(),
                             instagramET.text.toString(),
+                            entityImagePath,
                             ownerId
-                        )){
+                        )
+                    ) {
                         findNavController().navigate(R.id.action_addContactFragment_to_contactsFragment)
-                    }
-                    else{
-                        inputValidationFlags = Array(inputValidationFlags.size){false}
-                        Toast.makeText(requireContext(), getString(R.string.ContactExistsToast), Toast.LENGTH_SHORT).show()
+                    } else {
+                        inputValidationFlags = Array(inputValidationFlags.size) { false }
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.ContactExistsToast),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } else {
@@ -109,7 +144,7 @@ class AddContactFragment : Fragment() {
         }
     }
 
-    private suspend fun getGender(): String {
+    private fun getGender(): String {
         var gender = when (binding.genderRG.checkedRadioButtonId) {
             binding.maleRB.id -> {
                 getString(R.string.male)
@@ -121,4 +156,139 @@ class AddContactFragment : Fragment() {
         }
         return gender
     }
+
+    private fun choosePhoto() {
+        val builder = AlertDialog.Builder(requireContext())
+        val options: Array<String> = arrayOf(
+            getString(R.string.chooseImage),
+            getString(R.string.makeImageNow),
+            getString(R.string.deny)
+        )
+
+        builder.setTitle(getString(R.string.chooseImage))
+
+        builder.setItems(options) { dialog, item ->
+            if (options[item].equals(getString(R.string.chooseImage))) {
+                val intent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(intent, 2)
+            } else if (options[item].equals(getString(R.string.deny))) {
+                dialog.dismiss()
+            } else if (options[item].equals(getString(R.string.makeImageNow))) {
+
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+            }
+        }
+        builder.show()
+    }
+
+    private fun requestReadStoragePermission() {
+        val permission = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            permission,
+            EXTERNAL_STORAGE_PERMISSION
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == EXTERNAL_STORAGE_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                choosePhoto()
+            } else {
+                Toast.makeText(requireContext(), getString(R.string.denied), Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+    }
+
+    @SuppressLint("Recycle")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PHOTO_PICKER_CODE) {
+                val selectedImage: Uri = data?.data!!
+                val filePath = arrayOf(MediaStore.Images.Media.DATA)
+                val cursor =
+                    requireActivity().contentResolver.query(
+                        selectedImage,
+                        filePath,
+                        null,
+                        null,
+                        null
+                    )
+                        ?: throw NullPointerException("Cursor is null")
+                cursor.moveToFirst()
+                val columnIndex = cursor.getColumnIndex(filePath[0])
+                val picturePath = cursor.getString(columnIndex)
+                entityImagePath = picturePath
+                cursor.close()
+                val thumbnail = BitmapFactory.decodeFile(picturePath)
+                binding.imageView.setImageBitmap(thumbnail)
+            } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                val imageBitmap = data?.extras?.get("data") as Bitmap
+                Intent(MediaStore.ACTION_IMAGE_CAPTURE).also{ takePictureIntent ->
+                    takePictureIntent.resolveActivity(requireActivity().packageManager)?.also{
+                        val file = try{
+                            saveImage()
+                        } catch(ex : IOException){
+                            null
+                        }
+                        file?.also {
+                            val uri = FileProvider.getUriForFile(
+                                requireContext(),
+                                "com.example.contactbook.fileprovider",
+                                it
+                            )
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                            startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE)
+                        }
+                        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+                            val f = File(entityImagePath)
+                            mediaScanIntent.data = Uri.fromFile(f)
+                            requireActivity().sendBroadcast(mediaScanIntent)
+                        }
+                    }
+                }
+
+                binding.imageView.setImageBitmap(imageBitmap)
+            }
+        } else {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.addExternalContactCanceledToast),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun checkReadGalleryPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireActivity(),
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    @Throws(IOException::class)
+    private fun saveImage(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File =
+            requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            entityImagePath= absolutePath
+        }
+    }
+
 }

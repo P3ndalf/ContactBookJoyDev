@@ -3,6 +3,8 @@ package com.example.contactbook.data.repositories.implementations
 import androidx.lifecycle.LiveData
 import com.example.contactbook.data.daos.ContactDao
 import com.example.contactbook.data.entities.Contact
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class ContactRepository(private val contactDao: ContactDao) {
@@ -13,6 +15,7 @@ class ContactRepository(private val contactDao: ContactDao) {
         birthday: Long,
         gender: String,
         instagram: String,
+        picturePath: String?,
         ownerId: String
     ): Boolean {
         if (findContact(contactName, phoneNumber, ownerId) != null) {
@@ -27,6 +30,7 @@ class ContactRepository(private val contactDao: ContactDao) {
                 birthday,
                 gender,
                 instagram,
+                picturePath,
                 ownerId
             )
         )
@@ -41,8 +45,8 @@ class ContactRepository(private val contactDao: ContactDao) {
         return contactDao.getContacts(ownerId)
     }
 
-    fun findContact(id: String): Contact? {
-        return contactDao.findContact(id)
+    suspend fun findContact(id: String): Contact? = withContext(Dispatchers.IO) {
+        contactDao.findContact(id)
     }
 
     fun deleteContacts(ownerId: String) {

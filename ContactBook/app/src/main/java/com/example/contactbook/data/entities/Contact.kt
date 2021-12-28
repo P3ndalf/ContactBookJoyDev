@@ -30,5 +30,7 @@ data class Contact (
 
     var instagram : String,
 
+    var picturePath : String?,
+
     var ownerId : String
 )

@@ -27,6 +27,11 @@
     <string name="phoneNumber">Номер телефона</string>
     <string name="birthday">День рождения</string>
     <string name="gender">Пол</string>
+    <string-array name="sex_array">
+        <item name="male">Мужчина</item>
+        <item name="female">Женщина</item>
+        <item name="others">Монке</item>
+    </string-array>
     <string name="male">Мужчина</string>
     <string name="female">Женщина</string>
     <string name="others">Монке</string>
@@ -59,4 +64,8 @@
     <string name="contactNameError">Веедите корректное имя</string>
     <string name="contactPhoneNumberError">Введите корректный номер телефона</string>
     <string name="deleteQstnContact">Уверены, что хотите удалить </string>
+    <string name="chooseImage">Выберите изображение</string>
+    <string name="deny">Отмена</string>
+    <string name="denied">Denied...</string>
+    <string name="makeImageNow">Make image now</string>
 </resources>
